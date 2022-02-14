@@ -1,0 +1,47 @@
+version: "3"
+
+#
+# sub namespace: https://taskfile.dev/#/usage?id=including-other-taskfiles
+#
+#includes:
+#  rs:
+#    taskfile: ./iDev/coding/rs/
+#    dir: ./iDev/coding/rs/
+
+#
+# global vars: https://taskfile.dev/#/usage?id=variables
+#
+vars:
+  VAR1: "some-var"
+
+# global env:
+env:
+  ENV1: testing
+
+# env file:
+dotenv:
+  - .env
+
+################################################################################################
+
+tasks:
+  default:
+    cmds:
+      - task: install
+      - task: run
+
+  init:
+    cmds:
+      - cp .env.local .env
+
+  install:
+    cmds:
+      - cargo update
+
+  push:
+    cmds:
+      - git push origin main --tags
+
+
+
+
