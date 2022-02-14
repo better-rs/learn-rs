@@ -2,6 +2,11 @@
 
 - rust 练习代码
 
+## related:
+
+- https://github.com/better-rs/annotated-rs
+    - 注解 rust 知名项目源码
+
 ## Clion:
 
 - https://www.jetbrains.com/help/clion/rust-support.html#tests
