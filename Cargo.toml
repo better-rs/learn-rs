@@ -1,5 +1,8 @@
 [workspace]
 members = [
     "packages/basic",
+    "packages/rust-by-example",
+    "packages/rust-programming-in-action",
+    "packages/rust-programming-cookbook",
     #    "packages/axum/axum-axum-v0.4.5",
 ]

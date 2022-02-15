@@ -42,6 +42,7 @@ tasks:
     cmds:
       - git push origin main --tags
 
-
-
-
+  new:
+    cmds:
+      - cargo new --lib rust-by-example
+      - cargo new --lib rust-programming-in-action
