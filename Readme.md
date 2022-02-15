@@ -22,8 +22,12 @@
 - https://github.com/PacktPublishing/Creative-Projects-for-Rust-Programmers
 - https://github.com/PacktPublishing/Speed-up-your-Python-with-Rust
 
+## 准备工作:
 
-## Clion:
+- 配置 rust 开发环境
+- 安装 Clion
+
+### Clion:
 
 - https://www.jetbrains.com/help/clion/rust-support.html#tests
 - https://plugins.jetbrains.com/plugin/8182-rust/docs/rust-testing.html
@@ -32,6 +36,7 @@
 
 ## reference:
 
+- https://github.com/rust-unofficial/awesome-rust
 - [通过例子学 Rust](https://rustwiki.org/zh-CN/rust-by-example/index.html)
 - https://github.com/rust-lang/rust-by-example
 - https://github.com/rust-lang/rustlings
