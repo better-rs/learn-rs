@@ -31,3 +31,110 @@ fn ex02() {
     struct Structure(i32);
     // println!("This struct `{}` won't print...", Structure(3));
 }
+
+#[test]
+fn ex02_01_debug() {
+    #[derive(Debug)]
+    struct Structure(i32);
+
+    #[derive(Debug)]
+    struct Deep(Structure);
+
+    // fmt:
+    println!("{:?} months in a year", 12);
+    println!(
+        "{1:?} {0:?} is the {actor:?} name.",
+        "Slater",
+        "Christian",
+        actor = "actor's"
+    );
+
+    // print struct:
+    println!("Now {:?} will print!", Structure(3));
+
+    // print Deep:
+    println!("Now {:?} will print!", Deep(Structure(7)));
+
+    // 结构体定义:
+    #[derive(Debug)]
+    struct Person<'a> {
+        name: &'a str, // & = 只读引用 // a' = 生命周期标记
+        age: u8,       // 无符号类型
+    }
+
+    let name = "Peter";
+    let age = 27;
+    let perter = Person { name, age };
+
+    println!(
+        "person: {:#?}, name:{}, age:{}",
+        perter, perter.name, perter.age,
+    );
+}
+
+#[test]
+fn ex02_02_display() {
+    use std::fmt;
+    use std::fmt::Formatter;
+
+    // 类型定义
+    struct Structure(i32);
+
+    // 接口实现:
+    impl fmt::Display for Structure {
+        // 接口方法实现:
+        fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+            write!(f, "struct: {}", self.0) // 注意是表达式,  自动 return
+        }
+    }
+
+    //
+    println!("{}", Structure(2233));
+
+    ////////////////////////////////////////////////////////////////////////
+
+    // 数字类型:
+    #[derive(Debug)]
+    struct MinMax(i64, i64);
+
+    impl fmt::Display for MinMax {
+        fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+            write!(f, "({}, {})", self.0, self.1) // 注意是表达式,  自动 return
+        }
+    }
+
+    //
+    #[derive(Debug)]
+    struct Point2D {
+        x: f64,
+        y: f64,
+    }
+
+    impl fmt::Display for Point2D {
+        fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+            write!(f, "x: {}, y: {}", self.x, self.y) // 注意是表达式,  自动 return
+        }
+    }
+
+    let minmax = MinMax(0, 14);
+    println!("Compare Structures:");
+    println!("Display: {}", minmax);
+    println!("Debug: {:?}", minmax);
+
+    //
+    let big_range = MinMax(-300, 300);
+    let small_range = MinMax(-3, 3);
+    println!(
+        "big range: {big}, small range: {small}",
+        big = big_range,
+        small = small_range
+    );
+
+    //
+    let point = Point2D { x: 3.3, y: 7.2 };
+    println!("Compare Point: ");
+    println!("Display: {}", point);
+    println!("Debug: {:?}", point);
+    // 报错。`Debug` 和 `Display` 都被实现了，但 `{:b}` 需要 `fmt::Binary`
+    // println!("What does Point2D look like in binary: {:b}?", point);
+}
