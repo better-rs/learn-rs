@@ -27,22 +27,31 @@ dotenv:
 tasks:
   default:
     cmds:
-      - task: install
+      - task: init
       - task: run
 
   init:
     cmds:
       - cp .env.local .env
+      - task: install
 
   install:
     cmds:
       - cargo update
 
-  push:
-    cmds:
-      - git push origin main --tags
-
   new:
     cmds:
       - cargo new --lib rust-by-example
       - cargo new --lib rust-programming-in-action
+
+  run:
+    cmds:
+      - cargo run
+
+  ###########################################################################
+
+  push:
+    cmds:
+      - git push origin main --tags
+      - repo_url=`git remote -v | grep push | awk -F ":" '{print $2}' | awk -F ".git" '{print "https://github.com/"$1}'`; open $repo_url
+
