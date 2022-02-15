@@ -1,5 +1,6 @@
 mod ch01_hello;
 mod ch02_primitives; // 必须导入, 否则内部的 #[test] 标记, 无法识别
+mod ch03_custom_types;
 
 /*
 
