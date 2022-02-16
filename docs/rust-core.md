@@ -29,6 +29,9 @@ Rust 也通过 {:#?} 提供了 “美化打印” 的功能：
 // 不显示类型转换产生的溢出警告。
 #![allow(overflowing_literals)]
 
+// 计算内存占用:
+std::mem::size_of_val(&x)
+
 
 ```
 

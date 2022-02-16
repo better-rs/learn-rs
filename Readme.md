@@ -9,9 +9,12 @@
 
 ## 练习:
 
-- [通过例子学 Rust](https://rustwiki.org/zh-CN/rust-by-example/index.html)
+- 官方教程 [rust-by-example](https://doc.rust-lang.org/rust-by-example/index.html)
+    - [通过例子学 Rust](https://rustwiki.org/zh-CN/rust-by-example/index.html)
     - https://github.com/rust-lang/rust-by-example
-    - Rust 官方教程
+    - ⭐⭐⭐⭐⭐
+    - Rust 官方教程, 以英文版为主学习
+    - 中文版有些例子(ch05章节)已过时(未更新, 在最新 rust2021 版本, 有报错)
 - [Rust-Programming-in-Action](https://github.com/inrust/Rust-Programming-in-Action)
     - 《Rust编程：入门、实战与进阶》源码
 - [Rust Programming Cookbook](https://github.com/PacktPublishing/Rust-Programming-Cookbook)
