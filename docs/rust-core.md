@@ -26,6 +26,9 @@ Rust 也通过 {:#?} 提供了 “美化打印” 的功能：
 #![allow(dead_code)]
 
 
+// 不显示类型转换产生的溢出警告。
+#![allow(overflowing_literals)]
+
 
 ```
 
