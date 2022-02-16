@@ -3,7 +3,11 @@ mod ch02_primitives; // 必须导入, 否则内部的 #[test] 标记, 无法识�
 mod ch03_custom_types;
 mod ch04_variable_bindings;
 mod ch05_types;
+mod ch06_conversion;
 
+//
+// extends:
+//
 pub mod x; // TODO X: 添加的一些扩展辅助函数 // 对应 ch05/ex03.rs
 
 // use x::types::*; // TODO X: 导包方式 1, 项目内导包
