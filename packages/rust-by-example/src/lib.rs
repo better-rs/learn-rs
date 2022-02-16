@@ -4,9 +4,9 @@ mod ch03_custom_types;
 mod ch04_variable_bindings;
 mod ch05_types;
 
-pub mod x; // TODO X: 添加的一些辅助函数
+pub mod x; // TODO X: 添加的一些扩展辅助函数 // 对应 ch05/ex03.rs
 
-// use x::types::*; // TODO X: 导包方式 1
+// use x::types::*; // TODO X: 导包方式 1, 项目内导包
 
 /*
 
