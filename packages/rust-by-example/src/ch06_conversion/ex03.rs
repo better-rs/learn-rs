@@ -1,3 +1,6 @@
+use std::fmt;
+use std::fmt::Formatter;
+
 #[test]
 fn ex03_string() {
     // 要把任何类型转换成 String，只需要实现那个类型的 ToString trait。
@@ -6,9 +9,16 @@ fn ex03_string() {
         radius: i32,
     }
 
-    impl ToString for Circle {
-        fn to_string(&self) -> String {
-            format!("Circle of radius {:?}", self.radius)
+    // TODO X: 旧版本实现, 废弃
+    // impl ToString for Circle {
+    //     fn to_string(&self) -> String {
+    //         format!("Circle of radius {:?}", self.radius)
+    //     }
+    // }
+
+    impl fmt::Display for Circle {
+        fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+            write!(f, "Circle of radius {}", self.radius)
         }
     }
 
