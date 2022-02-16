@@ -33,6 +33,11 @@ Rust 也通过 {:#?} 提供了 “美化打印” 的功能：
 std::mem::size_of_val(&x)
 
 
+// 数据类型判断: // 基于标准库扩展
+fn type_of<T>(_: T) -> &'static str {
+    std::any::type_name::<T>()
+}
+
 ```
 
 

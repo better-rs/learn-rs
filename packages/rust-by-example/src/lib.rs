@@ -4,6 +4,10 @@ mod ch03_custom_types;
 mod ch04_variable_bindings;
 mod ch05_types;
 
+pub mod x; // TODO X: 添加的一些辅助函数
+
+// use x::types::*; // TODO X: 导包方式 1
+
 /*
 
 参考:
