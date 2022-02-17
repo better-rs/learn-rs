@@ -43,3 +43,20 @@ fn ch02_01_nested() {
 
     println!("Exited the outer loop");
 }
+
+#[test]
+fn ch02_02_return() {
+    let mut counter = 0;
+
+    // TODO X: 循环跳转
+    let result = loop {
+        counter += 1;
+
+        if counter == 10 {
+            break counter * 2;
+        }
+    };
+
+    println!("The result is {}", result);
+    assert_eq!(result, 20, "The result should be 20");
+}
