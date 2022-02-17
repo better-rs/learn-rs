@@ -43,4 +43,6 @@ fn type_of<T>(_: T) -> &'static str {
 
 ```
 
+> 单元测试:
 
+- https://rustwiki.org/zh-CN/book/ch11-03-test-organization.html
