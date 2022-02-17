@@ -26,10 +26,11 @@ Rust 也通过 {:#?} 提供了 “美化打印” 的功能：
 #[allow(dead_code)]
 
 
-// 不显示类型转换产生的溢出警告。
-#[allow(overflowing_literals)]
-
+// 忽略警告:
+#[allow(overflowing_literals)] // 不显示类型转换产生的溢出警告。
 #[allow(unused_must_use)] // 忽略警告(未使用)
+#[allow(unreachable_code)] // 禁用 check: 无法达到的代码
+#[allow(unused_labels)] // 禁用 check: 未使用的标签
 
 // 计算内存占用:
 std::mem::size_of_val(&x)
