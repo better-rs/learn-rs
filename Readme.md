@@ -39,6 +39,8 @@
 
 ## reference:
 
+- https://play.rust-lang.org/
+    - 官方练习+分享代码
 - https://github.com/rust-unofficial/awesome-rust
 - [通过例子学 Rust](https://rustwiki.org/zh-CN/rust-by-example/index.html)
 - https://github.com/rust-lang/rust-by-example

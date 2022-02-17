@@ -4,6 +4,7 @@ mod ch03_custom_types;
 mod ch04_variable_bindings;
 mod ch05_types;
 mod ch06_conversion;
+mod ch07_expressions;
 
 //
 // extends:
