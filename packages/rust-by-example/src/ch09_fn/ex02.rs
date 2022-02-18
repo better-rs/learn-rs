@@ -1,3 +1,4 @@
+use std::iter::Iterator;
 use std::mem;
 
 #[test]
@@ -159,6 +160,7 @@ fn ex02_03_anonymity() {
     apply2(print);
 }
 
+// 函数参数:
 #[test]
 fn ex02_04_input_functions() {
     // TODO X: 闭包函数做参数
@@ -175,4 +177,120 @@ fn ex02_04_input_functions() {
     let closure = || println!("I'm a closure!");
     call_me(closure);
     call_me(function);
+}
+
+// 函数返回值:
+#[test]
+fn ex02_05_output_parameters() {
+    /*
+    TODO X:
+        返回闭包的有效特征是：
+            Fn
+            FnMut
+            FnOnce
+        除此之外，还必须使用 move 关键字，它表明所有的捕获都是通过值进行的。
+
+    */
+
+    fn create_fn() -> impl Fn() {
+        let text = "Fn".to_owned();
+
+        // TODO X: Move+闭包 => 返回值
+        move || println!("This is a: {}", text)
+    }
+
+    fn create_fn_mut() -> impl FnMut() {
+        let text = "FnMut".to_owned();
+
+        // TODO X: Move+闭包 => 返回值
+        move || println!("This is a: {}", text)
+    }
+
+    fn create_fn_once() -> impl FnOnce() {
+        let text = "FnOnce".to_owned();
+
+        // TODO X: Move+闭包 => 返回值
+        move || println!("This is a: {}", text)
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////
+
+    let fn_plain = create_fn();
+    let mut fn_mut = create_fn_mut();
+    let fn_once = create_fn_once();
+
+    // TODO X: call
+    fn_plain();
+    fn_mut();
+    fn_once();
+}
+
+#[test]
+fn ex02_06_01_iter_any() {
+    /*
+    TODO X:
+        Iterator::any 是一个函数，若传给它一个迭代器（iterator），
+        当其中任一元素满足谓词（predicate）时它将返回 true，否则返回 false
+
+    TODO X:
+        pub trait Iterator {
+            type Item;
+            fn any<F>(&mut self, f: F) -> bool
+            where
+                F: FnMut(Self::Item) -> bool,
+            {
+                f()
+            }
+        }
+    */
+
+    let vec1 = vec![1, 2, 3];
+    let vec2 = vec![4, 5, 6];
+
+    // TODO X: iter + &x
+    println!("2 in vec1: {}", vec1.iter().any(|&x| x == 2));
+    // TODO X: into_iter + x
+    println!("2 in vec2: {}", vec2.into_iter().any(|x| x == 2));
+
+    let array1 = [1, 2, 3];
+    let array2 = [4, 5, 6];
+    println!("2 in array1: {}", array1.iter().any(|&x| x == 2));
+    println!("2 in array2: {}", array2.into_iter().any(|x| x == 2));
+}
+
+#[test]
+fn ex02_06_02_iter_find() {
+    /*
+    TODO X:
+        Iterator::find 是一个函数，在传给它一个迭代器时，将用 Option 类型返回第一个满足谓词的元素。
+        pub trait Iterator {
+            type Item;
+            fn find<P>(&mut self, predicate: P) -> Option<Self::Item>
+            where
+                P: FnMut(&Self::Item) -> bool,
+            {
+                predicate
+            }
+        }
+
+    */
+
+    let vec1 = vec![1, 2, 3];
+    let vec2 = vec![4, 5, 6];
+
+    let mut iter = vec1.iter();
+    let mut into_iter = vec2.into_iter();
+
+    // TODO X:
+    println!("Find 2 in vec1: {:?}", iter.find(|&&x| x == 2));
+    println!("Find 2 in vec2: {:?}", into_iter.find(|&x| x == 2));
+
+    let array1 = [1, 2, 3];
+    let array2 = [4, 5, 6];
+
+    println!("Find 2 in array1: {:?}", array1.iter().find(|&&x| x == 2));
+    println!(
+        "Find 2 in array2: {:?}",
+        array2.into_iter().find(|&x| x == 2)
+    );
 }
