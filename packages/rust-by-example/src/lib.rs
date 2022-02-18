@@ -7,6 +7,16 @@ mod ch06_conversion;
 mod ch07_expressions;
 mod ch08_flow_control;
 mod ch09_fn;
+mod ch13_attribute;
+mod ch14_generics;
+mod ch15_scope;
+mod ch16_trait;
+mod ch17_macros;
+mod ch18_error;
+mod ch19_std;
+mod ch20_std_misc;
+mod ch21_testing;
+mod ch22_unsafe;
 
 //
 // extends:
