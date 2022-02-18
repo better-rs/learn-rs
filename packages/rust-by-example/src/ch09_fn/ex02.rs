@@ -28,7 +28,7 @@ fn ex02_closures() {
 
 // 捕获:
 #[test]
-fn ch02_01_capture() {
+fn ex02_01_capture() {
     let color = String::from("green");
 
     let print = || println!("`color`: {}", color);
@@ -83,4 +83,96 @@ fn ch02_01_capture() {
 
     // error: value moved
     // println!("`haystack`: {}", haystack.len());
+}
+
+#[test]
+fn ex02_02_input_parameters() {
+    /*
+    TODO X:
+        Fn：表示捕获方式为通过引用（&T）的闭包 // 只读引用
+        FnMut：表示捕获方式为通过可变引用（&mut T）的闭包 // 可变引用
+        FnOnce：表示捕获方式为通过值（T）的闭包 // 值获取
+    */
+
+    // TODO X: 值获取
+    fn apply<F>(f: F)
+    where
+        F: FnOnce(),
+    {
+        f();
+    }
+
+    // TODO X: 闭包函数做参数
+    fn apply_to_3<F>(f: F) -> i32
+    where
+        F: Fn(i32) -> i32,
+    {
+        f(3)
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////
+
+    let greeting = "hello";
+    let mut farewell = "goodbye".to_owned();
+
+    let diary = || {
+        println!("I said {}.", greeting);
+        farewell.push_str("!!!");
+        println!("Then I screamed {}.", farewell);
+        println!("Now I can sleep. zzzzz");
+
+        // todo x:
+        mem::drop(farewell);
+    };
+
+    apply(diary);
+
+    let double = |x| 2 * x;
+
+    println!("3 doubled: {}", apply_to_3(double));
+}
+
+#[test]
+fn ex02_03_anonymity() {
+    // TODO X: 闭包函数做参数
+    fn apply<F>(f: F)
+    where
+        F: FnOnce(),
+    {
+        f();
+    }
+
+    // TODO X: 闭包函数做参数
+    fn apply2<F>(f: F)
+    where
+        F: Fn(),
+    {
+        f();
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////
+
+    let x = 7;
+    let print = || println!("x={}", x);
+
+    apply(print);
+    apply2(print);
+}
+
+#[test]
+fn ex02_04_input_functions() {
+    // TODO X: 闭包函数做参数
+    fn call_me<F: Fn()>(f: F) {
+        f()
+    }
+
+    fn function() {
+        println!("I'm a function!");
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////
+
+    let closure = || println!("I'm a closure!");
+    call_me(closure);
+    call_me(function);
 }

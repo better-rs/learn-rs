@@ -24,7 +24,7 @@ fn ex02_loop() {
 #[test]
 #[allow(unreachable_code)] // 禁用 check: 无法达到的代码
 #[allow(unused_labels)] // 禁用 check: 未使用的标签
-fn ch02_01_nested() {
+fn ex02_01_nested() {
     // TODO X: 外部循环
     'outer: loop {
         println!("Entered the outer loop");
@@ -45,7 +45,7 @@ fn ch02_01_nested() {
 }
 
 #[test]
-fn ch02_02_return() {
+fn ex02_02_return() {
     let mut counter = 0;
 
     // TODO X: 循环跳转
