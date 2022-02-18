@@ -6,6 +6,7 @@ mod ch05_types;
 mod ch06_conversion;
 mod ch07_expressions;
 mod ch08_flow_control;
+mod ch09_fn;
 
 //
 // extends:
