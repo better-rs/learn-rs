@@ -36,7 +36,7 @@ fn ex03_01_custom() {
         println!("condition met!");
     }
 
-    conditional_function();
+    // conditional_function();
 }
 
 /*
