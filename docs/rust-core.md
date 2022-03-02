@@ -2,6 +2,11 @@
 
 - Rust 核心语法点
 
+## reference:
+
+- https://www.zhihu.com/column/rust-lang
+- https://zhuanlan.zhihu.com/p/357909664
+
 ## 基础:
 
 - `# [test]`: 用于标记测试方法

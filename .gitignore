@@ -30,3 +30,4 @@ Cargo.lock
 # 2022:
 tmp/
 *.log
+.history/
