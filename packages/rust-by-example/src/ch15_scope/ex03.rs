@@ -118,3 +118,74 @@ fn ex03_02_borrow_alias() {
         new_borrowed_point.x, new_borrowed_point.y, new_borrowed_point.z
     );
 }
+
+#[test]
+fn ex03_03_borrow_ref() {
+    /*
+        TODO X:
+            在通过 let 绑定来进行模式匹配或解构时，ref 关键字可用来创建结构体/元组的 字段的引用。
+
+    */
+
+    #[derive(Copy, Clone)]
+    struct Point {
+        x: i32,
+        y: i32,
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////
+
+    let c = 'Q';
+
+    // TODO X: 赋值语句中左边的 `ref` 关键字等价于右边的 `&` 符号。
+    let ref ref_c1 = c; // TODO X: 写法1
+    let ref_c2 = &c; // TODO X: 写法2
+
+    println!("ref_c1 equals ref_c2: {}", *ref_c1 == *ref_c2);
+
+    let point = Point { x: 0, y: 0 };
+
+    // 解构:
+    let _copy_of_x = {
+        let Point {
+            x: ref ref_to_x, // TODO X: 只读引用
+            y: _,
+        } = point;
+
+        // TODO X: 返回
+        *ref_to_x
+    };
+
+    ////////////////////////////////////////////////////////////////////////////////
+
+    let mut mutable_point = Point { x: 0, y: 0 };
+
+    {
+        let Point {
+            x: _,
+            y: ref mut mut_ref_to_y, // TODO X: 可写引用
+        } = mutable_point;
+
+        // TODO X: 修改值
+        *mut_ref_to_y = 1;
+    }
+
+    println!("point is ({}, {})", point.x, point.y);
+    println!(
+        "mutable_point is ({}, {})",
+        mutable_point.x, mutable_point.y
+    );
+
+    ////////////////////////////////////////////////////////////////////////////////
+
+    let mut mutable_tuple = (Box::new(5u32), 3u32);
+
+    {
+        let (_, ref mut last) = mutable_tuple; // TODO X: 可写引用
+
+        // TODO X: 修改值
+        *last = 2;
+    }
+
+    println!("tuple is {:?}", mutable_tuple);
+}
