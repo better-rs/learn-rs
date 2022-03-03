@@ -1,3 +1,5 @@
+use std::fmt::Debug;
+
 #[test]
 fn ex04_lifetime() {
     /*
@@ -176,4 +178,35 @@ fn ex04_05_lifetime_trait() {
 
     println!("b is {:?}", b);
     println!("c is {:?}", c);
+}
+
+#[test]
+fn ex04_06_lifetime_bounds() {
+    use std::fmt::Debug;
+
+    /// todo x: 泛型约束
+    #[derive(Debug)]
+    struct Ref<'a, T: 'a>(&'a T);
+
+    fn print<T>(t: T)
+    where
+        T: Debug,
+    {
+        println!("`print`: t = {:?}", t);
+    }
+
+    fn print_ref<'a, T>(t: &'a T)
+    where
+        T: Debug + 'a,
+    {
+        println!("`print_ref`: t = {:?}", t);
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////
+
+    let x = 7;
+    let ref_x = Ref(&x);
+
+    print_ref(&ref_x);
+    print(ref_x);
 }
