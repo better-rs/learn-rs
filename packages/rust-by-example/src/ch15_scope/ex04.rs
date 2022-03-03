@@ -115,3 +115,65 @@ fn ex04_03_lifetime_methods() {
     owner.add_one();
     owner.print();
 }
+
+#[test]
+#[allow(dead_code)]
+fn ex04_04_lifetime_struct() {
+    #[derive(Debug)]
+    struct Borrowed<'a>(&'a i32); // 内嵌: 引用类型
+
+    #[derive(Debug)]
+    struct NamedBorrowed<'a> {
+        x: &'a i32, // 引用类型
+        y: &'a i32,
+    }
+
+    // 枚举类型
+    #[derive(Debug)]
+    enum Either<'a> {
+        Num(i32),
+        Ref(&'a i32), // 引用类型
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////
+
+    let x = 18;
+    let y = 15;
+
+    let single = Borrowed(&x);
+    let double = NamedBorrowed { x: &x, y: &y };
+
+    // todo x: 枚举
+    let reference = Either::Ref(&x);
+    let number = Either::Num(x);
+
+    println!("x is borrowed in {:?}", single);
+    println!("x and y are borrowed in {:?}", double);
+    println!("x is borrowed in {:?}", reference);
+    println!("y is not borrowed in {:?}", number);
+}
+
+#[test]
+#[allow(dead_code)]
+fn ex04_05_lifetime_trait() {
+    #[derive(Debug)]
+    struct Borrowed<'a> {
+        x: &'a i32,
+    }
+
+    /// TODO X: trait 标注 'a
+    impl<'a> Default for Borrowed<'a> {
+        fn default() -> Self {
+            // 默认值
+            Self { x: &10 }
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////
+
+    let b: Borrowed = Default::default();
+    let c = Borrowed::default(); // 换一种写法
+
+    println!("b is {:?}", b);
+    println!("c is {:?}", c);
+}
