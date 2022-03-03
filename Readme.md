@@ -7,6 +7,14 @@
 - https://github.com/better-rs/annotated-rs
     - 注解 rust 知名项目源码
 
+## Rust 目录规范:
+
+- https://github.com/rust-lang/cargo
+    - 参考 cargo 的目录结构(monorepo)
+- https://github.com/rust-lang/crates.io
+    - 参考一个 web 应用项目的目录结构
+
+
 ## 练习:
 
 - 官方教程 [rust-by-example](https://doc.rust-lang.org/rust-by-example/index.html)
