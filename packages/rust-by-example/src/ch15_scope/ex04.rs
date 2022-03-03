@@ -89,3 +89,29 @@ fn ex04_02_lifetime_fn() {
     add_one(&mut t);
     print_one(&t);
 }
+
+#[test]
+fn ex04_03_lifetime_methods() {
+    ///
+    /// todo x: 单个属性, int32
+    ///    - 方法一般是不需要标明生命周期的，因为 self 的生命周期会赋给所有的输出 生命周期参数
+    ///
+    struct Owner(i32);
+
+    impl Owner {
+        fn add_one<'a>(&'a mut self) {
+            self.0 += 1;
+        }
+
+        fn print<'a>(&'a self) {
+            println!("print: {}", self.0);
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////
+
+    let mut owner = Owner(18);
+
+    owner.add_one();
+    owner.print();
+}
