@@ -22,6 +22,70 @@ fn ex04_lifetime() {
 }
 
 #[test]
-fn ex04_01_explicit() {
+fn ex04_01_lifetime_explicit() {
     // TODO X: 显式标注生命周期
+
+    fn print_refs<'a, 'b>(x: &'a i32, y: &'b i32) {
+        println!("x is {}, y is {}", x, y);
+    }
+
+    fn failed_borrow<'a>() {
+        let _x = 12;
+
+        // error[E0597]:
+        // let y: &'a i32 = &_x;
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////
+
+    let (four, nine) = (4, 9);
+
+    // 引用传参
+    print_refs(&four, &nine);
+
+    failed_borrow();
+}
+
+#[test]
+fn ex04_02_lifetime_fn() {
+    ///
+    /// todo x:
+    ///     - 传参: 只读引用
+    fn print_one<'a>(x: &'a i32) {
+        println!("print_one: x = {}", x);
+    }
+
+    ///
+    /// TODO X:
+    ///     - 传数: 可变引用
+    fn add_one<'a>(x: &'a mut i32) {
+        // 类似 C 指针, 取值
+        *x += 1;
+    }
+
+    fn print_multi<'a, 'b>(x: &'a i32, y: &'b i32) {
+        println!("print_multi: x = {}, y = {}", x, y);
+    }
+
+    fn pass_x<'a, 'b>(x: &'a i32, _: &'b i32) -> &'a i32 {
+        x
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////
+
+    let x = 7;
+    let y = 9;
+
+    print_one(&x);
+    print_multi(&x, &y);
+
+    let z = pass_x(&x, &y);
+    print_one(z);
+
+    // 值
+    let mut t = 3;
+
+    // todo x: 改变值: 传入的是可变引用
+    add_one(&mut t);
+    print_one(&t);
 }
