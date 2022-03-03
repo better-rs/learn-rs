@@ -210,3 +210,102 @@ fn ex04_06_lifetime_bounds() {
     print_ref(&ref_x);
     print(ref_x);
 }
+
+#[test]
+fn ex04_07_lifetime_coercion() {
+    /*
+        TODO X:
+            一个较长的生命周期可以强制转成一个较短的生命周期，使它在一个通常情况下不能工作 的作用域内也能正常工作。
+            强制转换可由编译器隐式地推导并执行，也可以通过声明不同 的生命周期的形式实现。
+    */
+
+    fn multiply<'a>(first: &'a i32, second: &'a i32) -> i32 {
+        first * second
+    }
+
+    /// todo x: 生命周期长度
+    fn choose_first<'a: 'b, 'b>(first: &'a i32, _: &'b i32) -> &'b i32 {
+        first
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////
+
+    // 较长的生命周期
+    let first = 2;
+    {
+        // 较短的生命周期
+        let second = 3;
+
+        println!("The product is {}", multiply(&first, &second));
+        println!("{} is the first", choose_first(&first, &second));
+    }
+}
+
+#[test]
+fn ex04_08_lifetime_static() {
+    /*
+    TODO X:
+        'static 生命周期是可能的生命周期中最长的，它会在整个程序运行的时期中 存在。
+        'static 生命周期也可被强制转换成一个更短的生命周期
+    */
+
+    static NUM: i32 = 18;
+
+    fn coerce_static<'a>(_: &'a i32) -> &'a i32 {
+        &NUM
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////
+
+    {
+        let static_string = "I'm in read-only memory";
+
+        println!("static_string: {}", static_string);
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////
+
+    {
+        let lifetime_num = 9;
+        let coerced_static = coerce_static(&lifetime_num);
+
+        println!("coerced_static: {}", coerced_static);
+    }
+
+    println!("NUM: {} stays accessible", NUM);
+}
+
+#[test]
+fn ex04_09_lifetime_elision() {
+    /*
+    TODO X:
+        有些生命周期的模式太常用了，所以借用检查器将会隐式地添加它们以减少程序输入量 和增强可读性。
+        这种隐式添加生命周期的过程称为省略（elision）。
+    */
+
+    fn elided_input(x: &i32) {
+        println!("`elided_input`: {}", x);
+    }
+
+    fn annotated_input<'a>(x: &'a i32) {
+        println!("`annotated_input`: {}", x);
+    }
+
+    fn elided_pass(x: &i32) -> &i32 {
+        x
+    }
+
+    fn annotated_pass<'a>(x: &'a i32) -> &'a i32 {
+        x
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////
+
+    let x = 3;
+
+    elided_input(&x);
+    annotated_input(&x);
+
+    println!("`elided_pass`: {}", elided_pass(&x));
+    println!("`annotated_pass`: {}", annotated_pass(&x));
+}
