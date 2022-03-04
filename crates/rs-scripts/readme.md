@@ -7,7 +7,19 @@
 - 包名: 通常是 - 分隔符(官方 cargo 使用), 少数用 _ 下划线.
 - rust 导包规则, 非常让人迷惑:
     - https://learnku.com/articles/31161
+    - https://doc.rust-lang.org/cargo/guide/project-layout.html
     - lib.rs 是很特殊的文件
+
+
+```ruby
+
+源代码在src目录中。
+默认库文件是src/lib.rs.
+默认的可执行文件是src/main.rs.
+其他可执行文件可以放在src/bin/.
+
+
+```
 
 ## 用法:
 

@@ -6,13 +6,13 @@ use clap::{Parser, Subcommand};
 #[derive(Parser)]
 #[clap(name = "eth")]
 #[clap(about = "A ETH Cli Tool", long_about = None)]
-pub(crate) struct Cli {
+pub struct Cli {
     #[clap(subcommand)]
     pub command: Commands,
 }
 
 #[derive(Subcommand)]
-pub(crate) enum Commands {
+pub enum Commands {
     /// Scan ETH Address
     #[clap(arg_required_else_help = true)]
     Scan {
