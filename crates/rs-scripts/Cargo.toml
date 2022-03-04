@@ -5,10 +5,28 @@ edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
+################################################################################
+
+
+
 [[bin]]
 name = "rs-scripts"
 path = "src/bin/main.rs"
 
+[[bin]]
+name = "rs-address-scanner"
+path = "src/bin/address_scanner.rs"
+
+[[bin]]
+name = "rs-eth-scanner"
+path = "src/bin/eth.rs"
+
+
+
+################################################################################
+
 [dependencies]
 clap = { version = "3.1.5", features = ["derive"] }
+web3 = "0.18.0"
+tokio = "1.17.0"
 

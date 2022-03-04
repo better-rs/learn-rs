@@ -23,6 +23,9 @@ cargo run --bin rs-scripts -- -h
 cargo run --bin rs-scripts -- -n "Henry"
 ```
 
+> cli 示例: 
+
+- https://github.com/clap-rs/clap/blob/master/examples/git-derive.rs
 
 
 

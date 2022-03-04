@@ -1,4 +1,4 @@
-extern crate clap;
+use clap;
 
 use clap::Parser;
 
