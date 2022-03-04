@@ -3,13 +3,12 @@ use clap::Parser;
 
 mod commands;
 
-////////////////////////////////////////////////////////////////////////////////
 #[allow(unused_doc_comments)]
 #[tokio::main]
 async fn main() -> web3::Result<()> {
     /*
     cli 传参示例:
-        cargo run --bin rs-address-scanner2 -- scan "http://abc.url" "0xxxxx" "deposit" "100"
+        cargo run --bin rs-eth-scanner -- scan "http://abc.url" "0xxxxx" "deposit" "100"
     */
 
     let args = Cli::parse();
@@ -40,7 +39,6 @@ async fn main() -> web3::Result<()> {
     return Ok(());
 }
 
-#[allow(dead_code)]
 #[allow(unused_variables)]
 async fn eth_scan_address(
     rpc_url: &str,

@@ -7,15 +7,9 @@ edition = "2021"
 
 ################################################################################
 
-
-
 [[bin]]
 name = "rs-scripts"
 path = "src/bin/main.rs"
-
-[[bin]]
-name = "rs-address-scanner"
-path = "src/bin/address_scanner.rs"
 
 [[bin]]
 name = "rs-eth-scanner"
