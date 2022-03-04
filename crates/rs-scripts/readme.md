@@ -5,14 +5,15 @@
 ## notes:
 
 - 包名: 通常是 - 分隔符(官方 cargo 使用), 少数用 _ 下划线.
+- rust 导包规则, 非常让人迷惑:
+    - https://learnku.com/articles/31161
+    - lib.rs 是很特殊的文件
 
-
-## 用法: 
+## 用法:
 
 - `--` 方式: 传参
 
 - 在项目根目录执行:
-
 
 ```ruby
 
@@ -23,11 +24,9 @@ cargo run --bin rs-scripts -- -h
 cargo run --bin rs-scripts -- -n "Henry"
 ```
 
-> cli 示例: 
+> cli 示例:
 
 - https://github.com/clap-rs/clap/blob/master/examples/git-derive.rs
-
-
 
 ## reference:
 
