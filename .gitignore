@@ -31,3 +31,5 @@ Cargo.lock
 tmp/
 *.log
 .history/
+.env*
+!.env.local

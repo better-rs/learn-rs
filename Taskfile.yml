@@ -17,6 +17,7 @@ vars:
 # global env:
 env:
   ENV1: testing
+  WORKSPACE: "crates/"
 
 # env file:
 dotenv:
@@ -32,17 +33,31 @@ tasks:
 
   init:
     cmds:
-      - cp .env.local .env
+      - task: init:env
       - task: install
+
+  init:env:
+    cmds:
+      - cp .env.local .env
 
   install:
     cmds:
       - cargo update
 
+  ################################################################################
+
+
   new:
     cmds:
       - cargo new --lib rust-by-example
       - cargo new --lib rust-programming-in-action
+
+  new:bin:
+    cmds:
+      - cd ${WORKSPACE}; cargo new ${NEW_PROJECT_NAME}
+
+  ################################################################################
+
 
   run:
     cmds:
