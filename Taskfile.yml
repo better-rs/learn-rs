@@ -63,6 +63,20 @@ tasks:
     cmds:
       - cargo run
 
+  run:scripts:
+    cmds:
+      - cargo run --bin rs-scripts -- -n "Henry"
+
+  run:scripts:help:
+    cmds:
+      - cargo run --bin rs-scripts -- -h
+
+      # search lib:
+  search:
+    cmds:
+      - cargo search
+
+
   ###########################################################################
 
   push:

@@ -1,6 +1,7 @@
 [workspace]
 members = [
     "crates/basic",
+    "crates/rs-scripts",
     "crates/rust-by-example",
     "crates/rust-programming-in-action",
     "crates/rust-programming-cookbook",

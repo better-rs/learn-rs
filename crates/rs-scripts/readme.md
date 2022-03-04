@@ -6,6 +6,26 @@
 
 - 包名: 通常是 - 分隔符(官方 cargo 使用), 少数用 _ 下划线.
 
+
+## 用法: 
+
+- `--` 方式: 传参
+
+- 在项目根目录执行:
+
+
+```ruby
+
+# 查看 cli 工具的帮助
+cargo run --bin rs-scripts -- -h  
+
+# 示例传参:
+cargo run --bin rs-scripts -- -n "Henry"
+```
+
+
+
+
 ## reference:
 
 - https://github.com/topics/rust
