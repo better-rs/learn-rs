@@ -10,6 +10,17 @@
     - https://doc.rust-lang.org/cargo/guide/project-layout.html
     - lib.rs 是很特殊的文件
 
+- src/lib.rs: 是特殊文件
+    - 可以串连整个项目的模块, 对外暴露.
+
+- src/bin: 目录也是特殊目录
+    - https://rustcc.cn/article?id=dcc947c4-21a9-4ba0-ba59-43f6b580aae6
+    - rust 隐含规则太坑爹
+    - bin/ 目录, 是独立/隔离的 crate 包, 不可直接访问上层目录.
+    - 需要借助 src/lib.rs 文件. 这是 hack 做法, 不值得使用.
+    - 妥协做法: src/bin/下写模块, 局部导入模块, 而不要在上层组织目录.
+    - rust 这个设计, 有点过度设计. src/bin 内, 应该可以单向访问外层目录, 而不允许外部访问内部.
+
 
 ```ruby
 
