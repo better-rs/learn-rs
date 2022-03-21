@@ -1,8 +1,8 @@
-#![allow(unused)]
-fn main() {
-    use std::sync::{Arc, Condvar, Mutex};
-    use std::thread;
+use std::sync::{Arc, Condvar, Mutex};
+use std::thread;
 
+#[allow(unused)]
+fn main() {
     let pair = Arc::new((Mutex::new(false), Condvar::new()));
     let pair2 = Arc::clone(&pair);
 
@@ -24,6 +24,8 @@ fn main() {
         println!("\tsub: task finished")
     });
 
+    t.join().ok().unwrap();
+
     // Wait for the thread to start up.
     let (l, cv) = &*pair;
 
@@ -34,6 +36,4 @@ fn main() {
         started = cv.wait(started).unwrap();
     }
     println!("main: finished waiting!");
-
-    t.join().unwrap();
 }

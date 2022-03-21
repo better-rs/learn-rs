@@ -22,7 +22,7 @@ fn main() {
         ///
         /// todo x: 无效
         ///
-        // drop(started); // todo x: 无效
+        // drop(ok); // todo x: 无效
         std::mem::drop(ok); // todo x: 无效
 
         ///
