@@ -3,11 +3,13 @@ use std::thread;
 #[allow(unused)]
 fn main() {
     //! 异步管道: 多个发送者 vs 1个接收者
+    //!     - 内部带有缓冲区
+    //!     - 可以一直填充数据, 非阻塞
 
     let (tx, rx) = std::sync::mpsc::channel();
 
     /// multi sender:
-    for i in 0..10 {
+    for i in 0..5 {
         let tx = tx.clone();
 
         // 并发:
