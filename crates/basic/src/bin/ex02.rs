@@ -19,11 +19,14 @@ fn main() {
     let pair2 = Arc::clone(&pair);
 
     let t = thread::spawn(move || {
-        let (lock, cvar) = &*pair2;
+        let (l, cv) = &*pair2;
+
+        /// todo x: 提前切换线程
+        cv.notify_one();
 
         /// todo x: 释放锁
         {
-            let mut ok = lock.lock().unwrap();
+            let mut ok = l.lock().unwrap();
             *ok = true;
 
             eprintln!("\tSub >> I'm a happy worker!");
@@ -31,8 +34,8 @@ fn main() {
 
         /// todo x: 局部释放
         {
-            // 通知主线程
-            cvar.notify_one();
+            /// todo x: 再次切换线程
+            cv.notify_one();
         }
 
         ///
@@ -45,27 +48,37 @@ fn main() {
         }
     });
 
+    // todo x: join 位置影响
+    // t.join().ok();
+
     println!("Main >> waiting worker to start!");
-    // 等待工作线程的通知
-    let (l, cv) = &*pair;
 
-    ///
-    /// todo x: 阻塞等待 获取锁
-    ///
-    let mut ok = l.lock().unwrap();
-    while !*ok {
-        println!("Main >> waiting before: {}", ok);
+    {
+        // 等待工作线程的通知
+        let (l, cv) = &*pair;
 
-        //
-        // todo x: 阻塞等待 通知
-        //
-        ok = cv.wait(ok).unwrap();
-        println!("Main >> waiting after: {}", ok);
+        ///
+        /// todo x: 阻塞等待 获取锁
+        ///
+        let mut ok = l.lock().unwrap();
+        println!("Main >> thread status: {}", ok);
+        while !*ok {
+            println!("Main >> waiting before: {}", ok);
+
+            //
+            // todo x: 阻塞等待 通知
+            //
+            ok = cv.wait(ok).unwrap();
+            println!("Main >> waiting after: {}", ok);
+            thread::sleep(Duration::from_secs(2));
+        }
     }
 
-    //
-    //
-    //
-    println!("Main >> Worker started!");
+    // todo x: join 位置影响
     t.join().unwrap();
+
+    //
+    //
+    //
+    println!("Main >> run done!");
 }

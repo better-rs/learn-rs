@@ -36,7 +36,8 @@ fn main() {
         }
     });
 
-    t.join().ok().unwrap();
+    // todo x: join 位置:
+    // t.join().ok().unwrap();
 
     println!("main: waiting worker to start!");
 
@@ -52,5 +53,8 @@ fn main() {
         ok = cv.wait(ok).unwrap();
         println!("main: while after... {}", *ok);
     }
+
+    t.join().ok().unwrap();
+
     println!("main: run done!");
 }
