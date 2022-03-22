@@ -21,22 +21,21 @@ fn main() {
     let t = thread::spawn(move || {
         let (l, cv) = &*pair2;
 
+        println!("[t] Sub thread: entering...");
+
         /// todo x: 提前切换线程
-        cv.notify_one();
+        // cv.notify_one();
 
         /// todo x: 释放锁
         {
             let mut ok = l.lock().unwrap();
             *ok = true;
 
-            eprintln!("\tSub >> I'm a happy worker!");
+            println!("\tSub >> I'm a happy worker!");
         }
 
-        /// todo x: 局部释放
-        {
-            /// todo x: 再次切换线程
-            cv.notify_one();
-        }
+        /// todo x: 再次切换线程
+        cv.notify_one();
 
         ///
         ///

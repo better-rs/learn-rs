@@ -20,6 +20,7 @@ fn main() {
 
     let t = thread::spawn(move || {
         let (l, cv) = &*pair2;
+        println!("[t] Sub Thread in...");
 
         /// todo x: 提前切换线程
         // cv.notify_one();
@@ -32,7 +33,7 @@ fn main() {
         }
 
         /// todo x: 再次切换线程
-        // cv.notify_one();
+        cv.notify_one();
 
         ///
         ///
