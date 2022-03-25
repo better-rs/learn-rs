@@ -30,6 +30,9 @@ fn main() {
             ///     否则, 锁会放大到代码段最后.
             let mut ok = l.lock().unwrap();
             *ok = true;
+
+            Mutex::unlock(ok);
+
             eprintln!("\tSub >> I'm a happy worker!");
         }
 

@@ -25,14 +25,13 @@ fn main() {
 
         /// todo x: 提前切换线程
         // cv.notify_one();
+        let mut ok = l.lock().unwrap();
+        *ok = true;
 
-        /// todo x: 释放锁
-        {
-            let mut ok = l.lock().unwrap();
-            *ok = true;
-
-            println!("\tSub >> I'm a happy worker!");
-        }
+        // Mutex::unlock(ok);
+        // drop(ok); // todo x: = Mutex::unlock(ok); 内部实现
+        Mutex::unlock(ok);
+        println!("\tSub >> I'm a happy worker!");
 
         /// todo x: 再次切换线程
         cv.notify_one();
