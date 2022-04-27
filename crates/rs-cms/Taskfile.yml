@@ -5,8 +5,9 @@ tasks:
     - echo "init"
 
   install:
-    - cargo install cargo-watch  # auto compile and run:
-    - cargo install diesel_cli
+    cmds:
+      - cargo install cargo-watch  # auto compile and run:
+      - cargo install diesel_cli
 
   run:
     cmds:
@@ -27,4 +28,32 @@ tasks:
       - open https://github.com/diesel-rs/diesel
       - open https://diesel.rs/
       - open https://crates.io/crates/tracing
+
+
+  ###############################################################################
+
+  db:setup:
+    cmds:
+      - diesel setup
+
+  db:add:
+    cmds:
+      - diesel migration generate posts
+
+  db:init:
+    cmds:
+      - diesel migration run
+
+  db:redo:
+    cmds:
+      - diesel migration redo
+
+  db:help:
+    cmds:
+      - diesel help
+
+  db:show:
+    cmds:
+      - diesel print-schema
+
 

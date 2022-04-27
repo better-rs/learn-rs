@@ -41,3 +41,8 @@ task run
 - https://github.com/LemmyNet/lemmy
     - rust 实现的类似 reddit 的社区系统
 - https://github.com/TianLangStudio/rust_cms
+
+> docs:
+
+- https://learnku.com/docs/rust-irwa/create-database-access-layer/10353
+    - orm 使用

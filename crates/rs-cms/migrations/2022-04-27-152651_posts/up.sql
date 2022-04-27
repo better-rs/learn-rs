@@ -1,0 +1,17 @@
+CREATE TABLE posts
+(
+    id        INTEGER AUTO_INCREMENT PRIMARY KEY,
+    title     VARCHAR(255) NOT NULL,
+    body      TEXT         NOT NULL,
+    published BOOLEAN      NOT NULL DEFAULT FALSE
+);-- Your SQL goes here
+
+
+CREATE TABLE users
+(
+    id         INTEGER PRIMARY KEY AUTO_INCREMENT,
+    name       TEXT      NOT NULL,
+    hair_color TEXT,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
