@@ -65,13 +65,11 @@ tasks:
 
   run:scripts:
     cmds:
-      - cargo run --bin rs-scripts -- -n "Henry"
-      - cargo run --bin rs-address-scanner -- -n "Henry"
+      - task: scripts:run:scripts
 
   run:eth:scanner:
     cmds:
-      - cargo run --bin rs-eth-scanner -- scan ${INFURA_RPC_URL} ${ETH_ADDRESS} ${TX_TYPE} ${TX_COUNT}
-
+      - task: scripts:run:eth:scanner
 
   run:discord:
     cmds:

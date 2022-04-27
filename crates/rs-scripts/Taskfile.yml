@@ -4,6 +4,18 @@ tasks:
   init:
     - echo "init"
 
+  run:scripts:
+    cmds:
+      - cargo run --bin rs-scripts -- -n "Henry"
+
+  #
+  # parse env vars:
+  #
+  run:eth:scanner:
+    cmds:
+      - echo "run:eth scanner"
+      - cargo run --bin rs-eth-scanner -- scan ${INFURA_RPC_URL} ${ETH_ADDRESS} ${TX_TYPE} ${TX_COUNT}
+
   run:discord:
     cmds:
       - echo "run discord bot"
