@@ -8,6 +8,11 @@ includes:
     taskfile: ./crates/rs-scripts/Taskfile.yml
     dir: ./crates/rs-scripts/
 
+  cms:
+    taskfile: ./crates/rs-cms/Taskfile.yml
+    dir: ./crates/rs-cms/
+
+
 #
 # global vars: https://taskfile.dev/#/usage?id=variables
 #
@@ -49,8 +54,8 @@ tasks:
 
   new:
     cmds:
-      - cargo new --lib rust-by-example
-      - cargo new --lib rust-programming-in-action
+      - cd ${WORKSPACE}; cargo new --lib rust-by-example
+      - cd ${WORKSPACE}; cargo new --lib ${NEW_PROJECT_NAME}
 
   new:bin:
     cmds:

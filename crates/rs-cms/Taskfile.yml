@@ -1,0 +1,9 @@
+version: "3"
+
+tasks:
+  init:
+    - echo "init"
+
+  run:
+    cmds:
+      - echo "run cms"
