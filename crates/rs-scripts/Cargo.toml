@@ -6,11 +6,18 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 ################################################################################
+# 自定义 bin script 名称 和 源码文件对应关系
+################################################################################
 
 [[bin]]
 name = "rs-scripts"
 path = "src/bin/main.rs"
 
+
+#
+# cli usage:
+#   -  cargo run --bin rs-eth-scanner -- scan "http://abc.url" "0xxxxx" "deposit" "100"
+#
 [[bin]]
 name = "rs-eth-scanner"
 path = "src/bin/eth.rs"
