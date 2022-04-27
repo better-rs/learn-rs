@@ -12,12 +12,27 @@
 ## requirements:
 
 - Rust 1.60.0+
+- go-task 
+- https://github.com/watchexec/cargo-watch
 
 > 模块:
 
 - ORM:
 - DB:
 - Cache: Redis
+
+
+## Quick Start:
+
+
+
+```rust shell   
+
+task run
+
+```
+
+
 
 ## reference:
 
