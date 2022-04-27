@@ -44,5 +44,8 @@ task run
 
 > docs:
 
-- https://learnku.com/docs/rust-irwa/create-database-access-layer/10353
-    - orm 使用
+- ORM 使用:
+    - https://learnku.com/docs/rust-irwa/create-database-access-layer/10353
+    - https://www.ancii.com/ab3q5edb5/
+    - https://github.com/diesel-rs/diesel/blob/master/examples/mysql/getting_started_step_1/src/schema.rs
+    
