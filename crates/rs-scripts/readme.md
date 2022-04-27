@@ -32,6 +32,23 @@
 
 ```
 
+## 脚本功能集: 
+
+
+> discord bot: 
+
+- 基于 rust 实现的 discord bot 小工具
+
+```ruby
+
+task run:discord
+
+```
+
+
+
+
+
 ## 用法:
 
 - `--` 方式: 传参

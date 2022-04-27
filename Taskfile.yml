@@ -3,10 +3,10 @@ version: "3"
 #
 # sub namespace: https://taskfile.dev/#/usage?id=including-other-taskfiles
 #
-#includes:
-#  rs:
-#    taskfile: ./iDev/coding/rs/
-#    dir: ./iDev/coding/rs/
+includes:
+  scripts:
+    taskfile: ./crates/rs-scripts/Taskfile.yml
+    dir: ./crates/rs-scripts/
 
 #
 # global vars: https://taskfile.dev/#/usage?id=variables
@@ -72,11 +72,18 @@ tasks:
     cmds:
       - cargo run --bin rs-eth-scanner -- scan ${INFURA_RPC_URL} ${ETH_ADDRESS} ${TX_TYPE} ${TX_COUNT}
 
+
+  run:discord:
+    cmds:
+      - task: scripts:run:discord
+
   run:scripts:help:
     cmds:
       - cargo run --bin rs-scripts -- -h
 
-      # search lib:
+  ################################################################################
+
+  # search lib:
   search:
     cmds:
       - cargo search

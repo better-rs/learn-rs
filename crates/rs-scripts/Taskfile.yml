@@ -1,0 +1,10 @@
+version: "3"
+
+tasks:
+  init:
+    - echo "init"
+
+  run:discord:
+    cmds:
+      - echo "run discord bot"
+      - cargo run --bin discord-bot -- -h
