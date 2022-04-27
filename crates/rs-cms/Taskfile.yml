@@ -7,3 +7,9 @@ tasks:
   run:
     cmds:
       - echo "run cms"
+      - cargo run
+
+
+  open:
+    cmds:
+      - open http://localhost:3000
