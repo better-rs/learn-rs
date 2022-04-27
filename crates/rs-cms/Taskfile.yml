@@ -5,13 +5,14 @@ tasks:
     - echo "init"
 
   install:
-    - cargo install cargo-watch
+    - cargo install cargo-watch  # auto compile and run:
 
   run:
     cmds:
       - echo "run cms"
       - cargo run
 
+  # auto compile and run:
   watch:
     - cargo watch -x run
 
