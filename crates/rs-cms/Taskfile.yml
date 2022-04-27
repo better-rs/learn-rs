@@ -4,11 +4,16 @@ tasks:
   init:
     - echo "init"
 
+  install:
+    - cargo install cargo-watch
+
   run:
     cmds:
       - echo "run cms"
       - cargo run
 
+  watch:
+    - cargo watch -x run
 
   open:
     cmds:
