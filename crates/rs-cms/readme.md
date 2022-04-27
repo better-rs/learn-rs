@@ -12,7 +12,7 @@
 ## requirements:
 
 - Rust 1.60.0+
-- go-task 
+- go-task
 - https://github.com/watchexec/cargo-watch
 
 > 模块:
@@ -21,18 +21,13 @@
 - DB:
 - Cache: Redis
 
-
 ## Quick Start:
-
-
 
 ```rust shell   
 
 task run
 
 ```
-
-
 
 ## reference:
 
@@ -43,4 +38,6 @@ task run
 
 > 参考 CMS:
 
+- https://github.com/LemmyNet/lemmy
+    - rust 实现的类似 reddit 的社区系统
 - https://github.com/TianLangStudio/rust_cms

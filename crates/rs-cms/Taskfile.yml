@@ -19,3 +19,11 @@ tasks:
   open:
     cmds:
       - open http://localhost:3000
+
+  docs:
+    cmds:
+      - open https://github.com/tokio-rs/axum
+      - open https://github.com/diesel-rs/diesel
+      - open https://diesel.rs/
+      - open https://crates.io/crates/tracing
+
