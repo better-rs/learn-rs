@@ -6,6 +6,7 @@ tasks:
 
   install:
     - cargo install cargo-watch  # auto compile and run:
+    - cargo install diesel_cli
 
   run:
     cmds:
