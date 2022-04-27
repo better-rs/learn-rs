@@ -23,7 +23,11 @@ async fn main() {
 
     // Login with a bot token from the environment
     let token = env::var("DISCORD_TOKEN").expect("token");
-    let intents = GatewayIntents::non_privileged() | GatewayIntents::MESSAGE_CONTENT;
+    println!("input discord bot token: {}", token);
+
+    // let intents = GatewayIntents::non_privileged() | GatewayIntents::MESSAGE_CONTENT;
+    let intents = GatewayIntents::default();
+
     let mut client = Client::builder(token, intents)
         .event_handler(Handler)
         .framework(framework)
