@@ -13,6 +13,8 @@
 //! cargo run -p example-todos
 //! ```
 
+use axum::handler::Handler;
+use axum::http::{Method, Uri};
 use axum::{
     error_handling::HandleErrorLayer,
     extract::{Extension, Path, Query},
@@ -48,6 +50,7 @@ async fn main() {
 
     // Compose the routes
     let app = Router::new()
+        .fallback(handler_404.into_service())
         .route("/", get(todos_index).post(todos_create))
         .route("/todos", get(todos_index).post(todos_create))
         .route("/todos/:id", patch(todos_update).delete(todos_delete))
@@ -69,6 +72,11 @@ async fn main() {
                 .layer(Extension(db))
                 .into_inner(),
         );
+
+    // add a fallback service for handling routes to unknown paths
+    // let app = app.fallback(handler_404());
+
+    // app.fallback(handler_404());
 
     let addr = SocketAddr::from(([127, 0, 0, 1], 3000));
     println!("Listening on http://{}", addr);
@@ -174,6 +182,15 @@ struct Todo {
     completed: bool,
 }
 
+// 统一处理404:
+async fn handler_404(method: Method, uri: Uri) -> impl IntoResponse {
+    (
+        StatusCode::NOT_FOUND,
+        format!("Opps! 404\n\nNothing to see at {} {}", method, uri),
+    )
+}
+
+// 优雅退出:
 async fn shutdown_signal() {
     let ctrl_c = async {
         signal::ctrl_c()
