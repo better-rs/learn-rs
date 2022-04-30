@@ -14,7 +14,6 @@
 //! ```
 
 use axum::handler::Handler;
-use axum::http::{Method, Uri};
 use axum::{
     error_handling::HandleErrorLayer,
     extract::{Extension, Path, Query},
@@ -36,6 +35,7 @@ use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
 use uuid::Uuid;
 
 mod utils;
+use crate::utils::route;
 use crate::utils::shutdown;
 
 #[tokio::main]
@@ -52,7 +52,7 @@ async fn main() {
 
     // Compose the routes
     let app = Router::new()
-        .fallback(handler_404.into_service())
+        .fallback(route::handler_404.into_service())
         .route("/", get(todos_index).post(todos_create))
         .route("/todos", get(todos_index).post(todos_create))
         .route("/todos/:id", patch(todos_update).delete(todos_delete))
@@ -182,12 +182,4 @@ struct Todo {
     id: Uuid,
     text: String,
     completed: bool,
-}
-
-// 统一处理404:
-async fn handler_404(method: Method, uri: Uri) -> impl IntoResponse {
-    (
-        StatusCode::NOT_FOUND,
-        format!("Opps! 404\n\nNothing to see at {} {}", method, uri),
-    )
 }
