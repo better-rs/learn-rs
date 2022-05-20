@@ -45,6 +45,8 @@ task run
 > docs:
 
 - ORM 使用:
+    - https://diesel.rs/guides/getting-started
+    - https://diesel.rs/guides/all-about-inserts.html
     - https://www.rectcircle.cn/posts/rust-diesel/
     - https://learnku.com/docs/rust-irwa/create-database-access-layer/10353
     - https://www.cnblogs.com/rongfengliang/p/12256614.html
