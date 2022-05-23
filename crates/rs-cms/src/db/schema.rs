@@ -12,14 +12,133 @@ table! {
 }
 
 table! {
+    order (id) {
+        id -> Unsigned<Integer>,
+        order_id -> Unsigned<Integer>,
+        buyer_id -> Unsigned<Integer>,
+        payment_id -> Unsigned<Integer>,
+        total -> Unsigned<Decimal>,
+        status -> Integer,
+        created_at -> Timestamp,
+        updated_at -> Timestamp,
+    }
+}
+
+table! {
+    order_item (id) {
+        id -> Unsigned<Integer>,
+        item_id -> Unsigned<Integer>,
+        order_id -> Unsigned<Integer>,
+        buyer_id -> Unsigned<Integer>,
+        shop_id -> Unsigned<Integer>,
+        product_id -> Unsigned<Integer>,
+        quantity -> Unsigned<Integer>,
+        price -> Unsigned<Decimal>,
+        discount -> Unsigned<Decimal>,
+        created_at -> Timestamp,
+        updated_at -> Timestamp,
+    }
+}
+
+table! {
+    order_template (id) {
+        id -> Unsigned<Integer>,
+        mid -> Unsigned<Integer>,
+        order_no -> Varchar,
+        merchant_id -> Unsigned<Integer>,
+        product_id -> Unsigned<Integer>,
+        product_type -> Unsigned<Tinyint>,
+        product_sku -> Unsigned<Integer>,
+        product_title -> Varchar,
+        product_num -> Unsigned<Integer>,
+        product_price -> Decimal,
+        product_discount -> Decimal,
+        cost -> Decimal,
+        status -> Integer,
+        ver -> Integer,
+        ctime -> Timestamp,
+        mtime -> Timestamp,
+    }
+}
+
+table! {
     product (id) {
-        id -> Integer,
-        product_id -> Text,
-        name -> Text,
-        description -> Text,
-        version -> Text,
-        status -> Text,
-        price -> Integer,
+        id -> Unsigned<Integer>,
+        product_id -> Unsigned<Integer>,
+        title -> Varchar,
+        brief -> Varchar,
+        description -> Varchar,
+        version -> Varchar,
+        price -> Unsigned<Decimal>,
+        status -> Integer,
+        created_at -> Timestamp,
+        updated_at -> Timestamp,
+    }
+}
+
+table! {
+    shop (id) {
+        id -> Unsigned<Integer>,
+        shop_id -> Unsigned<Integer>,
+        owner_id -> Unsigned<Integer>,
+        name -> Varchar,
+        title -> Varchar,
+        level -> Unsigned<Integer>,
+        description -> Varchar,
+        status -> Integer,
+        created_at -> Timestamp,
+        updated_at -> Timestamp,
+    }
+}
+
+table! {
+    shop_bill_daily (id) {
+        id -> Unsigned<Integer>,
+        shop_id -> Unsigned<Integer>,
+        income -> Decimal,
+        date -> Date,
+        ver -> Integer,
+        created_at -> Timestamp,
+        updated_at -> Timestamp,
+    }
+}
+
+table! {
+    shop_employee (id) {
+        id -> Unsigned<Integer>,
+        shop_id -> Unsigned<Integer>,
+        user_id -> Unsigned<Integer>,
+        name -> Varchar,
+        remark -> Varchar,
+        role -> Unsigned<Integer>,
+        status -> Integer,
+        created_at -> Timestamp,
+        updated_at -> Timestamp,
+    }
+}
+
+table! {
+    shop_order (id) {
+        id -> Unsigned<Integer>,
+        shop_id -> Unsigned<Integer>,
+        order_id -> Unsigned<Integer>,
+        order_item_id -> Unsigned<Integer>,
+        income -> Decimal,
+        ver -> Integer,
+        status -> Integer,
+        created_at -> Timestamp,
+        updated_at -> Timestamp,
+    }
+}
+
+table! {
+    shop_product (id) {
+        id -> Unsigned<Integer>,
+        shop_id -> Unsigned<Integer>,
+        product_id -> Unsigned<Integer>,
+        stock -> Unsigned<Integer>,
+        ver -> Integer,
+        status -> Integer,
         created_at -> Timestamp,
         updated_at -> Timestamp,
     }
@@ -27,12 +146,29 @@ table! {
 
 table! {
     user (id) {
-        id -> Integer,
-        username -> Text,
-        email -> Text,
-        password -> Text,
-        role -> Text,
-        is_active -> Bool,
+        id -> Unsigned<Integer>,
+        user_id -> Unsigned<Integer>,
+        username -> Varchar,
+        email -> Varchar,
+        password -> Varchar,
+        role -> Integer,
+        status -> Integer,
+        created_at -> Timestamp,
+        updated_at -> Timestamp,
+    }
+}
+
+table! {
+    user_3rd_account (id) {
+        id -> Unsigned<Integer>,
+        user_id -> Unsigned<Integer>,
+        provider -> Varchar,
+        openid -> Varchar,
+        access_token -> Varchar,
+        refresh_token -> Varchar,
+        expires_in -> Unsigned<Integer>,
+        scope -> Varchar,
+        meta -> Varchar,
         created_at -> Timestamp,
         updated_at -> Timestamp,
     }
@@ -40,12 +176,44 @@ table! {
 
 table! {
     user_address (id) {
-        id -> Integer,
-        user_id -> Integer,
-        street -> Text,
-        city -> Text,
-        state -> Text,
-        zip -> Text,
+        id -> Unsigned<Integer>,
+        user_id -> Unsigned<Integer>,
+        order -> Unsigned<Integer>,
+        label -> Varchar,
+        name -> Varchar,
+        mobile -> Varchar,
+        desc -> Varchar,
+        country -> Varchar,
+        province -> Varchar,
+        city -> Varchar,
+        district -> Varchar,
+        street -> Varchar,
+        address -> Varchar,
+        zipcode -> Varchar,
+        created_at -> Timestamp,
+        updated_at -> Timestamp,
+    }
+}
+
+table! {
+    user_auth (id) {
+        id -> Unsigned<Integer>,
+        auth_id -> Varchar,
+        auth_provider -> Unsigned<Tinyint>,
+        user_id -> Unsigned<Integer>,
+        status -> Integer,
+        created_at -> Timestamp,
+        updated_at -> Timestamp,
+    }
+}
+
+table! {
+    user_auth_log (id) {
+        id -> Unsigned<Integer>,
+        user_id -> Unsigned<Integer>,
+        ip -> Varchar,
+        device -> Varchar,
+        meta -> Varchar,
         created_at -> Timestamp,
         updated_at -> Timestamp,
     }
@@ -83,26 +251,14 @@ table! {
 }
 
 table! {
-    user_order (id) {
-        id -> Integer,
-        order_id -> Integer,
-        user_id -> Integer,
-        payment_id -> Integer,
-        total -> Integer,
-        status -> Integer,
-        created_at -> Timestamp,
-        updated_at -> Timestamp,
-    }
-}
-
-table! {
-    user_order_item (id) {
-        id -> Integer,
-        order_id -> Integer,
-        product_id -> Integer,
-        price -> Integer,
-        amount -> Integer,
-        discount -> Integer,
+    user_order_refund (id) {
+        id -> Unsigned<Integer>,
+        refund_id -> Unsigned<Integer>,
+        order_id -> Unsigned<Integer>,
+        user_id -> Unsigned<Integer>,
+        refund_type -> Unsigned<Integer>,
+        refund_sn -> Varchar,
+        total -> Unsigned<Decimal>,
         created_at -> Timestamp,
         updated_at -> Timestamp,
     }
@@ -110,14 +266,13 @@ table! {
 
 table! {
     user_payment (id) {
-        id -> Integer,
-        payment_id -> Integer,
-        order_id -> Integer,
-        user_id -> Integer,
-        pay_type -> Integer,
-        pay_sn -> Text,
-        total -> Integer,
-        status -> Integer,
+        id -> Unsigned<Integer>,
+        payment_id -> Unsigned<Integer>,
+        order_id -> Unsigned<Integer>,
+        user_id -> Unsigned<Integer>,
+        pay_type -> Unsigned<Integer>,
+        pay_sn -> Varchar,
+        total -> Unsigned<Decimal>,
         created_at -> Timestamp,
         updated_at -> Timestamp,
     }
@@ -125,10 +280,16 @@ table! {
 
 table! {
     user_profile (id) {
-        id -> Integer,
-        user_id -> Integer,
-        first_name -> Text,
-        last_name -> Text,
+        id -> Unsigned<Integer>,
+        user_id -> Unsigned<Integer>,
+        username -> Varchar,
+        email -> Varchar,
+        mobile -> Varchar,
+        nickname -> Varchar,
+        avatar -> Varchar,
+        real_name -> Varchar,
+        first_name -> Varchar,
+        last_name -> Varchar,
         created_at -> Timestamp,
         updated_at -> Timestamp,
     }
@@ -136,13 +297,23 @@ table! {
 
 allow_tables_to_appear_in_same_query!(
     license_capacity,
+    order,
+    order_item,
+    order_template,
     product,
+    shop,
+    shop_bill_daily,
+    shop_employee,
+    shop_order,
+    shop_product,
     user,
+    user_3rd_account,
     user_address,
+    user_auth,
+    user_auth_log,
     user_license,
     user_license_active_log,
-    user_order,
-    user_order_item,
+    user_order_refund,
     user_payment,
     user_profile,
 );
