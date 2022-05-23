@@ -2,6 +2,62 @@
 
 - 基于 rust 实现的 cms.
 
+## 架构说明:
+
+- 用户系统设计(C 端)
+    - 用户注册、登录、登出
+    - 用户角色、权限
+    - 用户组
+    - 用户认证
+    - 用户状态
+    - 用户支付
+    - 用户订单管理
+    - 用户账单管理
+- 店铺系统设计(B 端)
+    - 店铺管理
+    - 店铺订单
+    - 店铺商品
+    - 店铺营销
+    - 店铺支付
+    - 店铺统计
+    - 店铺推广
+    - 店铺财务
+    - 店铺物流管理
+    - 店铺组织管理
+    - 店铺库存管理
+- 商品系统设计
+    - 商品管理
+        - 商品定义
+        - SKU
+    - 商品分类
+    - 商品规格
+    - 商品属性
+- 购物车系统
+    - 添加/删除/更新购物车
+- 秒杀系统
+    - 开启/关闭秒杀
+    - 秒杀商品
+    - 秒杀订单
+- 订单系统设计
+    - 订单管理
+    - 订单支付
+    - 订单发货
+    - 订单退款/退货
+- IM 系统:
+    - 客服沟通
+    - 申诉/投诉/仲裁
+- 内容评价系统设计
+    - 商品评价
+    - 店铺评价
+    - 订单评价
+    - 商品咨询
+- 平台管理系统设计
+    - 审核平台
+        - 商品/店铺上下架审核
+    - 工单系统
+    - 客户投诉管理平台
+    - 广告管理平台
+
 ## db model 设计:
 
 - user: 用户表
@@ -127,3 +183,13 @@ status:
 ## ref:
 
 - https://github.com/one-ai/one-license-server
+
+> sql:
+
+- https://github.com/macrozheng/mall/blob/master/document/sql/mall.sql
+
+> mall 设计参考:
+
+- http://static.kancloud.cn/yejingjing/hcclub_v7/1241902
+    - 购物车: http://static.kancloud.cn/yejingjing/hcclub_v7/1241916
+    - 订单流程: http://static.kancloud.cn/yejingjing/hcclub_v7/1241917

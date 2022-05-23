@@ -197,6 +197,41 @@ CREATE TABLE `product`
 -- ################################################################################################################
 
 
+--  购物车: (由缓存实现, 不使用 db 实现)
+CREATE TABLE `cart`
+(
+    `id`               int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增主键(pk)',
+    -- 购买者信息:
+    `buyer_id`         int(11) unsigned NOT NULL DEFAULT '0' COMMENT '购买者ID',
+
+    -- 店铺信息:
+    `store_id`         int(11) unsigned NOT NULL DEFAULT '0' COMMENT '店铺ID',
+    `store_name`       varchar(128) CHARACTER SET utf8mb4 NOT NULL DEFAULT '' COMMENT '店铺名称',
+
+    -- 商品信息:
+    `product_id`       int(11) unsigned NOT NULL DEFAULT '0' COMMENT '商品ID',
+    `product_title`    varchar(128) CHARACTER SET utf8mb4 NOT NULL DEFAULT '' COMMENT '商品标题',
+    `product_image`    varchar(255) CHARACTER SET utf8mb4 NOT NULL DEFAULT '' COMMENT '商品图片',
+    `product_price`    decimal(10, 2) unsigned NOT NULL DEFAULT '0.00' COMMENT '商品价格',
+    `product_amount`   int(11) unsigned NOT NULL DEFAULT '0' COMMENT '商品数量',
+    `product_discount` decimal(10, 2) unsigned NOT NULL DEFAULT '0.00' COMMENT '商品折扣',
+    `product_total`    decimal(10, 2) unsigned NOT NULL DEFAULT '0.00' COMMENT '商品总价',
+
+    -- common fields:
+    `created_at`       TIMESTAMP                          NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `updated_at`       TIMESTAMP                          NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+    -- index fields:
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `uk_product_id` (`buyer_id`, `product_id`),
+    KEY                `idx_created_at` (`created_at`), -- 建索引
+    KEY                `idx_updated_at` (`updated_at`)  -- 建索引
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='购物车表';
+
+
+
+-- ################################################################################################################
+
+
 -- 用户订单表:
 CREATE TABLE `order`
 (
@@ -409,6 +444,37 @@ CREATE TABLE `shop_bill_daily`
     KEY          `idx_created_at` (`created_at`), -- 建索引
     KEY          `idx_updated_at` (`updated_at`)  -- 建索引
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='店铺员工表';
+
+
+-- ################################################################################################################
+-- 评论系统: 商品评价/店铺评价/社区讨论/工单/投诉/建议
+-- ################################################################################################################
+
+
+-- 评价表: (1:多)
+CREATE TABLE `comment`
+(
+    `id`         int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增主键(pk)',
+    `comment_id` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '评价ID',
+    `user_id`    int(11) unsigned NOT NULL DEFAULT '0' COMMENT '用户ID',
+    `relate_id`  int(11) unsigned NOT NULL DEFAULT '0' COMMENT '关联ID: 商品ID/店铺ID/社区ID/工单ID/投诉ID/建议ID/评论 ID',
+    `type`       int(11) unsigned NOT NULL DEFAULT '0' COMMENT '类型: 0=商品评价, 1=店铺评价, 2=社区讨论, 3=工单, 4=投诉, 5=建议',
+    -- 内容:
+    `content`    varchar(255) CHARACTER SET utf8mb4 NOT NULL DEFAULT '' COMMENT '评价内容',
+    `score`      int(11) unsigned NOT NULL DEFAULT '0' COMMENT '评分: 1=差评, 2=中评, 3=好评',
+    -- common fields:
+    `status`     int(11) NOT NULL DEFAULT '1' COMMENT '状态: -1=封禁, 0=未定义, 1=正常, 2=预售',
+    `created_at` TIMESTAMP                          NOT NULL DEFAULT (CURRENT_TIMESTAMP) COMMENT '创建时间',
+    `updated_at` TIMESTAMP                          NOT NULL DEFAULT (CURRENT_TIMESTAMP) ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+    -- index fields:
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `uk_comment_id` (`comment_id`),    -- 建索引: 唯一
+    KEY          `idx_user_id` (`user_id`),       -- 建索引
+    KEY          `idx_relate_id` (`relate_id`),   -- 建索引
+    KEY          `idx_created_at` (`created_at`), -- 建索引
+    KEY          `idx_updated_at` (`updated_at`)  -- 建索引
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='评论系统表';
+
 
 
 -- ################################################################################################################

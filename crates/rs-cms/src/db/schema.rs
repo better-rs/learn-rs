@@ -1,4 +1,38 @@
 table! {
+    cart (id) {
+        id -> Unsigned<Integer>,
+        buyer_id -> Unsigned<Integer>,
+        store_id -> Unsigned<Integer>,
+        store_name -> Varchar,
+        product_id -> Unsigned<Integer>,
+        product_title -> Varchar,
+        product_image -> Varchar,
+        product_price -> Unsigned<Decimal>,
+        product_amount -> Unsigned<Integer>,
+        product_discount -> Unsigned<Decimal>,
+        product_total -> Unsigned<Decimal>,
+        created_at -> Timestamp,
+        updated_at -> Timestamp,
+    }
+}
+
+table! {
+    comment (id) {
+        id -> Unsigned<Integer>,
+        comment_id -> Unsigned<Integer>,
+        user_id -> Unsigned<Integer>,
+        relate_id -> Unsigned<Integer>,
+        #[sql_name = "type"]
+        type_ -> Unsigned<Integer>,
+        content -> Varchar,
+        score -> Unsigned<Integer>,
+        status -> Integer,
+        created_at -> Timestamp,
+        updated_at -> Timestamp,
+    }
+}
+
+table! {
     license_capacity (id) {
         id -> Integer,
         license_id -> Text,
@@ -296,6 +330,8 @@ table! {
 }
 
 allow_tables_to_appear_in_same_query!(
+    cart,
+    comment,
     license_capacity,
     order,
     order_item,
