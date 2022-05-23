@@ -1,4 +1,21 @@
 table! {
+    brand (id) {
+        id -> Unsigned<Integer>,
+        brand_id -> Unsigned<Integer>,
+        name -> Varchar,
+        brief -> Varchar,
+        description -> Varchar,
+        logo -> Varchar,
+        meta -> Varchar,
+        status -> Integer,
+        score -> Unsigned<Decimal>,
+        recommend -> Integer,
+        created_at -> Timestamp,
+        updated_at -> Timestamp,
+    }
+}
+
+table! {
     cart (id) {
         id -> Unsigned<Integer>,
         buyer_id -> Unsigned<Integer>,
@@ -111,6 +128,36 @@ table! {
 }
 
 table! {
+    product_attribute (id) {
+        id -> Unsigned<Integer>,
+        product_id -> Unsigned<Integer>,
+        lang_id -> Unsigned<Integer>,
+        attr_key -> Varchar,
+        attr_key_name -> Varchar,
+        attr_value -> Varchar,
+        status -> Integer,
+        created_at -> Timestamp,
+        updated_at -> Timestamp,
+    }
+}
+
+table! {
+    product_category (id) {
+        id -> Unsigned<Integer>,
+        category_id -> Unsigned<Integer>,
+        parent_id -> Unsigned<Integer>,
+        level -> Unsigned<Integer>,
+        order -> Unsigned<Integer>,
+        name -> Varchar,
+        icon -> Varchar,
+        description -> Varchar,
+        status -> Integer,
+        created_at -> Timestamp,
+        updated_at -> Timestamp,
+    }
+}
+
+table! {
     shop (id) {
         id -> Unsigned<Integer>,
         shop_id -> Unsigned<Integer>,
@@ -119,6 +166,8 @@ table! {
         title -> Varchar,
         level -> Unsigned<Integer>,
         description -> Varchar,
+        is_verified -> Unsigned<Tinyint>,
+        is_official -> Unsigned<Tinyint>,
         status -> Integer,
         created_at -> Timestamp,
         updated_at -> Timestamp,
@@ -172,6 +221,83 @@ table! {
         product_id -> Unsigned<Integer>,
         stock -> Unsigned<Integer>,
         ver -> Integer,
+        status -> Integer,
+        created_at -> Timestamp,
+        updated_at -> Timestamp,
+    }
+}
+
+table! {
+    shop_setting_delivery (id) {
+        id -> Unsigned<Integer>,
+        shop_id -> Unsigned<Integer>,
+        delivery_id -> Unsigned<Integer>,
+        name -> Varchar,
+        description -> Varchar,
+        is_default -> Bool,
+        delivery_type -> Unsigned<Integer>,
+        delivery_scope -> Unsigned<Integer>,
+        delivery_fee -> Unsigned<Decimal>,
+        delivery_free_fee -> Unsigned<Decimal>,
+        delivery_free_fee_type -> Unsigned<Integer>,
+        delivery_free_fee_count -> Unsigned<Integer>,
+        delivery_free_fee_weight -> Unsigned<Decimal>,
+        delivery_free_fee_volume -> Unsigned<Decimal>,
+        status -> Integer,
+        created_at -> Timestamp,
+        updated_at -> Timestamp,
+    }
+}
+
+table! {
+    shop_setting_financial (id) {
+        id -> Unsigned<Integer>,
+        shop_id -> Unsigned<Integer>,
+        owner_id -> Unsigned<Integer>,
+        bank_no -> Varchar,
+        bank_name -> Varchar,
+        bank_branch -> Varchar,
+        bank_account_name -> Varchar,
+        bank_account_address -> Varchar,
+        bank_account_phone -> Varchar,
+        bank_account_identity_no -> Varchar,
+        alipay_account -> Varchar,
+        alipay_name -> Varchar,
+        wechat_account -> Varchar,
+        wechat_name -> Varchar,
+        paypal_account -> Varchar,
+        paypal_name -> Varchar,
+        eth_address -> Varchar,
+        usdt_address -> Varchar,
+        btc_address -> Varchar,
+        doge_address -> Varchar,
+        status -> Integer,
+        created_at -> Timestamp,
+        updated_at -> Timestamp,
+    }
+}
+
+table! {
+    shop_verify (id) {
+        id -> Unsigned<Integer>,
+        shop_id -> Unsigned<Integer>,
+        owner_id -> Unsigned<Integer>,
+        verify_type -> Unsigned<Integer>,
+        owner_corp -> Varchar,
+        owner_corp_code -> Varchar,
+        owner_corp_file -> Varchar,
+        owner_corp_address -> Varchar,
+        owner_corp_tel -> Varchar,
+        owner_corp_fax -> Varchar,
+        owner_name -> Varchar,
+        owner_phone -> Varchar,
+        owner_email -> Varchar,
+        owner_id_card -> Varchar,
+        owner_id_card_front -> Varchar,
+        owner_id_card_back -> Varchar,
+        owner_id_card_hand_front -> Varchar,
+        owner_id_card_hand_back -> Varchar,
+        verify_status -> Unsigned<Integer>,
         status -> Integer,
         created_at -> Timestamp,
         updated_at -> Timestamp,
@@ -330,6 +456,7 @@ table! {
 }
 
 allow_tables_to_appear_in_same_query!(
+    brand,
     cart,
     comment,
     license_capacity,
@@ -337,11 +464,16 @@ allow_tables_to_appear_in_same_query!(
     order_item,
     order_template,
     product,
+    product_attribute,
+    product_category,
     shop,
     shop_bill_daily,
     shop_employee,
     shop_order,
     shop_product,
+    shop_setting_delivery,
+    shop_setting_financial,
+    shop_verify,
     user,
     user_3rd_account,
     user_address,

@@ -194,6 +194,81 @@ CREATE TABLE `product`
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='商品表';
 
 
+-- 商品分类表:
+CREATE TABLE `product_category`
+(
+    `id`          int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增主键(pk)',
+    `category_id` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '分类ID',
+    `parent_id`   int(11) unsigned NOT NULL DEFAULT '0' COMMENT '父级分类ID',
+    --
+    `level`       int(11) unsigned NOT NULL DEFAULT '0' COMMENT '分类级别',
+    `order`       int(11) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
+    --
+    `name`        varchar(128) CHARACTER SET utf8mb4 NOT NULL DEFAULT '' COMMENT '分类名称',
+    `icon`        varchar(255) CHARACTER SET utf8mb4 NOT NULL DEFAULT '' COMMENT '分类图标',
+    `description` varchar(255) CHARACTER SET utf8mb4 NOT NULL DEFAULT '' COMMENT '分类描述',
+    `status`      int(11) NOT NULL DEFAULT '0' COMMENT '状态: -1=下架, 0=未定义, 1=上架, 2=预发布',
+    -- common fields:
+    `created_at`  TIMESTAMP                          NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `updated_at`  TIMESTAMP                          NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+    -- index fields:
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `uk_category_id` (`category_id`),
+    KEY           `idx_created_at` (`created_at`), -- 建索引
+    KEY           `idx_updated_at` (`updated_at`)  -- 建索引
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='商品分类表';
+
+
+
+-- ################################################################################################################
+
+-- 商品属性表: 支持多语言(kv 表)
+CREATE TABLE `product_attribute`
+(
+    `id`            int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增主键(pk)',
+    `product_id`    int(11) unsigned NOT NULL DEFAULT '0' COMMENT '商品ID',
+    `lang_id`       int(11) unsigned NOT NULL DEFAULT '1' COMMENT '语言ID: 0=默认语言, 1=中文, 2=英文',
+    `attr_key`      varchar(128) CHARACTER SET utf8mb4 NOT NULL DEFAULT '' COMMENT '属性键',
+    --
+    `attr_key_name` varchar(128) CHARACTER SET utf8mb4 NOT NULL DEFAULT '' COMMENT '属性键名称',
+    `attr_value`    varchar(128) CHARACTER SET utf8mb4 NOT NULL DEFAULT '' COMMENT '属性值',
+    `status`        int(11) NOT NULL DEFAULT '0' COMMENT '状态: -1=下架, 0=未定义, 1=上架, 2=预发布',
+    -- common fields:
+    `created_at`    TIMESTAMP                          NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `updated_at`    TIMESTAMP                          NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+    -- index fields:
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `uk_category_id_lang_id_attr_key` (`product_id`, `lang_id`, `attr_key`),
+    KEY             `idx_created_at` (`created_at`), -- 建索引
+    KEY             `idx_updated_at` (`updated_at`)  -- 建索引
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='商品属性表';
+
+
+--  品牌表:
+CREATE TABLE `brand`
+(
+    `id`          int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增主键(pk)',
+    `brand_id`    int(11) unsigned NOT NULL DEFAULT '0' COMMENT '品牌ID',
+    `name`        varchar(128) CHARACTER SET utf8mb4 NOT NULL DEFAULT '' COMMENT '品牌名称',
+    `brief`       varchar(128) CHARACTER SET utf8mb4 NOT NULL DEFAULT '' COMMENT '品牌简介',
+    `description` varchar(255) CHARACTER SET utf8mb4 NOT NULL DEFAULT '' COMMENT '品牌描述',
+    `logo`        varchar(255) CHARACTER SET utf8mb4 NOT NULL DEFAULT '' COMMENT '品牌logo',
+    `meta`        varchar(255) CHARACTER SET utf8mb4 NOT NULL DEFAULT '' COMMENT '品牌元数据',
+    --
+    `status`      int(11) NOT NULL DEFAULT '0' COMMENT '状态: -1=下架, 0=未定义, 1=上架, 2=预发布',
+    `score`       decimal(10, 2) unsigned NOT NULL DEFAULT '0.00' COMMENT '品牌评分',
+    `recommend`   int(11) NOT NULL DEFAULT '0' COMMENT '推荐指数: 0=不推荐, 1=推荐',
+    -- common fields:
+    `created_at`  TIMESTAMP                          NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `updated_at`  TIMESTAMP                          NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+    -- index fields:
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `uk_brand_id` (`brand_id`),
+    KEY           `idx_created_at` (`created_at`), -- 建索引
+    KEY           `idx_updated_at` (`updated_at`)  -- 建索引
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='品牌表';
+
+
 -- ################################################################################################################
 
 
@@ -345,6 +420,9 @@ CREATE TABLE `shop`
     `title`       varchar(128) NOT NULL DEFAULT '' COMMENT '店铺标题',
     `level`       int(11) unsigned NOT NULL DEFAULT '0' COMMENT '店铺等级',
     `description` varchar(255) NOT NULL DEFAULT '' COMMENT '店铺描述',
+    -- 店铺状态:
+    `is_verified` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否已认证: 0=未认证, 1=已认证',
+    `is_official` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否官方店铺: 0=非官方店铺, 1=官方店铺',
     -- common fields:
     `status`      int(11) NOT NULL DEFAULT '0' COMMENT '状态: -1=封禁, 0=未定义, 1=正常',
     `created_at`  TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
@@ -355,6 +433,122 @@ CREATE TABLE `shop`
     KEY           `idx_owner_id` (`owner_id`),     -- 建索引
     KEY           `idx_created_at` (`created_at`), -- 建索引
     KEY           `idx_updated_at` (`updated_at`)  -- 建索引
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='店铺表';
+
+
+-- 店铺设置: 财务账号表
+CREATE TABLE `shop_setting_financial`
+(
+    `id`                       int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增主键(pk)',
+    `shop_id`                  int(11) unsigned NOT NULL DEFAULT '0' COMMENT '店铺ID',
+    `owner_id`                 int(11) unsigned NOT NULL DEFAULT '0' COMMENT '店铺所有者ID',
+    --
+    `bank_no`                  varchar(64) NOT NULL DEFAULT '' COMMENT '银行卡号',
+    `bank_name`                varchar(64) NOT NULL DEFAULT '' COMMENT '开户行',
+    `bank_branch`              varchar(64) NOT NULL DEFAULT '' COMMENT '开户支行',
+    `bank_account_name`        varchar(64) NOT NULL DEFAULT '' COMMENT '开户名',
+    `bank_account_address`     varchar(64) NOT NULL DEFAULT '' COMMENT '开户地址',
+    `bank_account_phone`       varchar(64) NOT NULL DEFAULT '' COMMENT '开户电话',
+    `bank_account_identity_no` varchar(64) NOT NULL DEFAULT '' COMMENT '开户身份证号',
+    --
+    `alipay_account`           varchar(64) NOT NULL DEFAULT '' COMMENT '支付宝账号',
+    `alipay_name`              varchar(64) NOT NULL DEFAULT '' COMMENT '支付宝姓名',
+    --
+    `wechat_account`           varchar(64) NOT NULL DEFAULT '' COMMENT '微信账号',
+    `wechat_name`              varchar(64) NOT NULL DEFAULT '' COMMENT '微信姓名',
+    --
+    `paypal_account`           varchar(64) NOT NULL DEFAULT '' COMMENT 'PayPal账号',
+    `paypal_name`              varchar(64) NOT NULL DEFAULT '' COMMENT 'PayPal姓名',
+    -- 数字货币:
+    `eth_address`              varchar(64) NOT NULL DEFAULT '' COMMENT 'ETH地址',
+    `usdt_address`             varchar(64) NOT NULL DEFAULT '' COMMENT 'USDT地址',
+    `btc_address`              varchar(64) NOT NULL DEFAULT '' COMMENT 'BTC地址',
+    `doge_address`             varchar(64) NOT NULL DEFAULT '' COMMENT 'DOGE地址',
+    -- common fields:
+    `status`                   int(11) NOT NULL DEFAULT '0' COMMENT '状态: -1=封禁, 0=未定义, 1=正常',
+    `created_at`               TIMESTAMP   NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `updated_at`               TIMESTAMP   NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+    -- index fields:
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `uk_shop_id` (`shop_id`),
+    KEY                        `idx_owner_id` (`owner_id`),     -- 建索引
+    KEY                        `idx_created_at` (`created_at`), -- 建索引
+    KEY                        `idx_updated_at` (`updated_at`)  -- 建索引
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='店铺表';
+
+
+-- 店铺设置: 物流设置表(方案)
+CREATE TABLE `shop_setting_delivery`
+(
+    `id`                       int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增主键(pk)',
+    `shop_id`                  int(11) unsigned NOT NULL DEFAULT '0' COMMENT '店铺ID',
+    --
+    `delivery_id`              int(11) unsigned NOT NULL DEFAULT '0' COMMENT '物流方案ID',
+    `name`                     varchar(64)  NOT NULL DEFAULT '' COMMENT '方案名称',
+    `description`              varchar(255) NOT NULL DEFAULT '' COMMENT '方案描述',
+    `is_default`               tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否默认方案',
+    -- 类型:
+    `delivery_type`            int(11) unsigned NOT NULL DEFAULT '0' COMMENT '配送方式: 0=未定义, 1=快递, 2=EMS, 3=平邮, 4=自提',
+    `delivery_scope`           int(11) unsigned NOT NULL DEFAULT '0' COMMENT '配送范围: 0=未定义, 1=全国, 2=省内, 3=市内, 4=区内',
+    -- 具体设置:
+    `delivery_fee`             decimal(10, 2) unsigned NOT NULL DEFAULT '0.00' COMMENT '配送费用',
+    `delivery_free_fee`        decimal(10, 2) unsigned NOT NULL DEFAULT '0.00' COMMENT '配送免费金额',
+    `delivery_free_fee_type`   int(11) unsigned NOT NULL DEFAULT '0' COMMENT '配送免费金额类型: 0=未定义, 1=按金额, 2=按件数',
+    `delivery_free_fee_count`  int(11) unsigned NOT NULL DEFAULT '0' COMMENT '配送免费金额按件数',
+    `delivery_free_fee_weight` decimal(10, 2) unsigned NOT NULL DEFAULT '0.00' COMMENT '配送免费金额按重量',
+    `delivery_free_fee_volume` decimal(10, 2) unsigned NOT NULL DEFAULT '0.00' COMMENT '配送免费金额按体积',
+    -- common fields:
+    `status`                   int(11) NOT NULL DEFAULT '0' COMMENT '状态: -1=封禁, 0=未定义, 1=正常',
+    `created_at`               TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `updated_at`               TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+    -- index fields:
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `uk_delivery_id` (`delivery_id`),
+    KEY                        `idx_shop_id` (`shop_id`),       -- 建索引
+    KEY                        `idx_created_at` (`created_at`), -- 建索引
+    KEY                        `idx_updated_at` (`updated_at`)  -- 建索引
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='店铺表';
+
+
+-- 店铺认证信息表:
+CREATE TABLE `shop_verify`
+(
+    `id`                       int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增主键(pk)',
+    `shop_id`                  int(11) unsigned NOT NULL DEFAULT '0' COMMENT '店铺ID',
+    `owner_id`                 int(11) unsigned NOT NULL DEFAULT '0' COMMENT '店铺所有者ID',
+    `verify_type`              int(11) unsigned NOT NULL DEFAULT '0' COMMENT '认证类型: 1=身份证, 2=营业执照',
+
+    -- 企业认证信息:
+    `owner_corp`               varchar(64)  NOT NULL DEFAULT '' COMMENT '店铺所有者公司名称',
+    `owner_corp_code`          varchar(64)  NOT NULL DEFAULT '' COMMENT '店铺所有者公司统一社会信用代码',
+    `owner_corp_file`          varchar(255) NOT NULL DEFAULT '' COMMENT '店铺营业执照: 图片',
+    `owner_corp_address`       varchar(64)  NOT NULL DEFAULT '' COMMENT '店铺所有者公司地址',
+    `owner_corp_tel`           varchar(64)  NOT NULL DEFAULT '' COMMENT '店铺所有者公司电话',
+    `owner_corp_fax`           varchar(64)  NOT NULL DEFAULT '' COMMENT '店铺所有者公司传真',
+
+    -- 个人认证信息:
+    `owner_name`               varchar(64)  NOT NULL DEFAULT '' COMMENT '店铺所有者姓名',
+    `owner_phone`              varchar(64)  NOT NULL DEFAULT '' COMMENT '店铺所有者手机号',
+    `owner_email`              varchar(128) NOT NULL DEFAULT '' COMMENT '店铺所有者邮箱',
+    `owner_id_card`            varchar(64)  NOT NULL DEFAULT '' COMMENT '店铺所有者身份证号',
+    `owner_id_card_front`      varchar(255) NOT NULL DEFAULT '' COMMENT '店铺所有者身份证正面照',
+    `owner_id_card_back`       varchar(255) NOT NULL DEFAULT '' COMMENT '店铺所有者身份证背面照',
+    `owner_id_card_hand_front` varchar(255) NOT NULL DEFAULT '' COMMENT '店铺所有者手持身份证正面照',
+    `owner_id_card_hand_back`  varchar(255) NOT NULL DEFAULT '' COMMENT '店铺所有者手持身份证背面照',
+
+    -- 认证状态:
+    `verify_status`            int(11) unsigned NOT NULL DEFAULT '0' COMMENT '认证状态: 0=未认证, 1=个人认证, 2=企业认证, 3=个人+企业认证',
+
+    -- common fields:
+    `status`                   int(11) NOT NULL DEFAULT '0' COMMENT '状态: -1=封禁, 0=未定义, 1=正常',
+    `created_at`               TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `updated_at`               TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+    -- index fields:
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `uk_shop_id` (`shop_id`),
+    KEY                        `idx_owner_id` (`owner_id`),     -- 建索引
+    KEY                        `idx_created_at` (`created_at`), -- 建索引
+    KEY                        `idx_updated_at` (`updated_at`)  -- 建索引
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='店铺表';
 
 
