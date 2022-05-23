@@ -40,6 +40,7 @@ tasks:
     cmds:
       - diesel migration generate posts
 
+  # create tables:
   db:init:
     cmds:
       - diesel migration run
@@ -47,6 +48,15 @@ tasks:
   db:redo:
     cmds:
       - diesel migration redo
+
+  # delete all tables:
+  db:revert:
+    cmds:
+      - diesel migration revert
+
+  db:reset:
+    cmds:
+      - diesel database reset
 
   db:help:
     cmds:

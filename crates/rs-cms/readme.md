@@ -23,8 +23,31 @@
 
 ## Quick Start:
 
+- setup env: (.env.local)
+
+```bash
+
+# cms db:
+DATABASE_URL=postgres://username:password@localhost/diesel_demo
+
+
+```
+
+- run:
+
 ```rust shell   
 
+# install:
+task install 
+
+# set db env:
+task init:env 
+
+# create db:
+task db:setup
+task db:init 
+
+# run:
 task run
 
 ```
