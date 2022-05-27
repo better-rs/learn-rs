@@ -28,6 +28,10 @@ name = "discord-bot"
 path = "src/bin/discord_bot.rs"
 
 
+[[bin]]
+name = "rs-binance"
+path = "src/bin/binance.rs"
+
 
 ################################################################################
 
@@ -37,3 +41,7 @@ web3 = "0.18.0"
 tokio = "1.17.0"
 #serenity = "0.11.1" # discord api
 serenity = { version = "0.11.1", default-features = true, features = ["client", "gateway", "rustls_backend", "model"] }
+binance = "0.18.4"  # binance api
+
+
+

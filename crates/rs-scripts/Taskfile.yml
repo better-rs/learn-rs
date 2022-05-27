@@ -16,6 +16,13 @@ tasks:
       - echo "run:eth scanner"
       - cargo run --bin rs-eth-scanner -- scan ${INFURA_RPC_URL} ${ETH_ADDRESS} ${TX_TYPE} ${TX_COUNT}
 
+  run:binance:
+    cmds:
+      - echo "run:binance api tool"
+      - cargo run --bin rs-binance -- scan ${INFURA_RPC_URL} ${ETH_ADDRESS} ${TX_TYPE} ${TX_COUNT}
+
+
+
   run:discord:
     cmds:
       - echo "run discord bot"
