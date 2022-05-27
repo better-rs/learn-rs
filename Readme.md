@@ -14,6 +14,9 @@
     - 官方练习代码
 - [rs-scripts](./crates/rs-scripts)
     - 写的一些 rust 脚本工具
+        - [x] ETH 链上交易查询
+        - [x] Binance 交易所个人交易数据查询/K 线数据查询(支持 api key 方式下单/撤单)
+
 
 ## Project Structure:
 
