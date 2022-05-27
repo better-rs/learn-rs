@@ -32,6 +32,11 @@ path = "src/bin/discord_bot.rs"
 name = "rs-binance"
 path = "src/bin/binance.rs"
 
+[[bin]]
+name = "rs-tui"
+path = "src/bin/tui.rs"
+
+
 
 ################################################################################
 
@@ -41,7 +46,7 @@ web3 = "0.18.0"
 tokio = "1.17.0"
 #serenity = "0.11.1" # discord api
 serenity = { version = "0.11.1", default-features = true, features = ["client", "gateway", "rustls_backend", "model"] }
-binance = "0.18.4"  # binance api
-
-
+binance = "0.18.4"   # binance api
+tui = "0.18.0"       # terminal ui
+crossterm = "0.23.2" # terminal ui required
 

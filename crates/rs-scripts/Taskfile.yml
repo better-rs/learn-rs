@@ -26,7 +26,9 @@ tasks:
       - echo "run:binance api tool"
       - cargo run --bin rs-binance -- market empty
 
-
+  run:tui:
+    cmds:
+      - cargo run --bin rs-tui -- market empty
 
   run:discord:
     cmds:

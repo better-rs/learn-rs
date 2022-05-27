@@ -117,3 +117,9 @@ cargo run --bin rs-scripts -- -n "Henry"
 
 - https://binance-docs.github.io/apidocs/spot/cn/#185368440e
 - https://github.com/binance/binance-spot-api-docs
+
+> terminal ui:
+
+- https://github.com/fdehau/tui-rs
+- https://github.com/tarkah/tickrs
+
