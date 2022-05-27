@@ -112,3 +112,8 @@ cargo run --bin rs-scripts -- -n "Henry"
 - https://github.com/valeriansaliou/sonic
     - 目录结构
     - https://github.com/valeriansaliou/sonic/blob/master/src/main.rs#L130
+
+> binance api:
+
+- https://binance-docs.github.io/apidocs/spot/cn/#185368440e
+- https://github.com/binance/binance-spot-api-docs
