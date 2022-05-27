@@ -19,7 +19,12 @@ tasks:
   run:binance:
     cmds:
       - echo "run:binance api tool"
-      - cargo run --bin rs-binance -- scan ${INFURA_RPC_URL} ${ETH_ADDRESS} ${TX_TYPE} ${TX_COUNT}
+      - cargo run --bin rs-binance -- auth ${BINANCE_API_KEY} ${BINANCE_SECRET_KEY}
+
+  run:binance:market:
+    cmds:
+      - echo "run:binance api tool"
+      - cargo run --bin rs-binance -- market empty
 
 
 

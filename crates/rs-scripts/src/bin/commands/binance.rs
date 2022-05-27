@@ -15,7 +15,7 @@ pub struct BinanceCli {
 
 #[derive(Subcommand)]
 pub enum BinanceCommands {
-    /// auth:
+    /// auth: get user account data
     #[clap(arg_required_else_help = true)]
     Auth {
         /// api key
@@ -23,5 +23,12 @@ pub enum BinanceCommands {
 
         /// api secret
         api_secret: String,
+    },
+
+    /// market: get market data
+    #[clap(arg_required_else_help = true)]
+    Market {
+        /// allow empty
+        empty: String,
     },
 }

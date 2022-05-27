@@ -2,8 +2,31 @@ use binance::api::*;
 use binance::market::*;
 use binance::model::KlineSummary;
 
+use clap::Parser;
+
+use crate::commands::binance::{BinanceCli, BinanceCommands};
+
+mod commands;
+
 fn main() {
-    market_data();
+    let args = BinanceCli::parse();
+
+    match &args.command {
+        // user account data:
+        BinanceCommands::Auth {
+            api_key,
+            api_secret,
+        } => {
+            println!("binance api key: {}", api_key);
+
+            account_data(Some(api_key.into()), Some(api_secret.into()));
+        }
+
+        // market data:
+        BinanceCommands::Market { empty: _ } => {
+            market_data();
+        }
+    }
 }
 
 fn market_data() {
@@ -79,5 +102,79 @@ fn market_data() {
             }
         }
         Err(e) => println!("Error: {}", e),
+    }
+}
+
+fn account_data(api_key: Option<String>, secret_key: Option<String>) {
+    use binance::account::*;
+    use binance::api::*;
+
+    // let api_key = Some("YOUR_API_KEY".into());
+    // let secret_key = Some("YOUR_SECRET_KEY".into());
+
+    let account: Account = Binance::new(api_key, secret_key);
+
+    let coin_pair = "DOTBUSD";
+    let coin = "DOT";
+
+    match account.get_account() {
+        Ok(answer) => println!("{:?}", answer.balances),
+        Err(e) => println!("Error: {:?}", e),
+    }
+
+    match account.get_open_orders(coin_pair) {
+        Ok(answer) => println!("{:?}", answer),
+        Err(e) => println!("Error: {:?}", e),
+    }
+
+    // match account.limit_buy(coin_pair, 10, 0.014000) {
+    //     Ok(answer) => println!("{:?}", answer),
+    //     Err(e) => println!("Error: {:?}", e),
+    // }
+    //
+    // match account.market_buy(coin_pair, 5) {
+    //     Ok(answer) => println!("{:?}", answer),
+    //     Err(e) => println!("Error: {:?}", e),
+    // }
+
+    // match account.limit_sell(coin_pair, 10, 0.035000) {
+    //     Ok(answer) => println!("{:?}", answer),
+    //     Err(e) => println!("Error: {:?}", e),
+    // }
+    //
+    // match account.market_sell(coin_pair, 5) {
+    //     Ok(answer) => println!("{:?}", answer),
+    //     Err(e) => println!("Error: {:?}", e),
+    // }
+
+    // match account.custom_order(coin_pair, 9999, 0.0123, "SELL", "LIMIT", "IOC") {
+    //     Ok(answer) => println!("{:?}", answer),
+    //     Err(e) => println!("Error: {:?}", e),
+    // }
+
+    let order_id = 1_957_528;
+    match account.order_status(coin_pair, order_id) {
+        Ok(answer) => println!("{:?}", answer),
+        Err(e) => println!("Error: {:?}", e),
+    }
+
+    // match account.cancel_order(coin_pair, order_id) {
+    //     Ok(answer) => println!("{:?}", answer),
+    //     Err(e) => println!("Error: {:?}", e),
+    // }
+
+    // match account.cancel_all_open_orders(coin_pair) {
+    //     Ok(answer) => println!("{:?}", answer),
+    //     Err(e) => println!("Error: {:?}", e),
+    // }
+
+    match account.get_balance(coin) {
+        Ok(answer) => println!("{:?}", answer),
+        Err(e) => println!("Error: {:?}", e),
+    }
+
+    match account.trade_history(coin_pair) {
+        Ok(answer) => println!("{:?}", answer),
+        Err(e) => println!("Error: {:?}", e),
     }
 }
