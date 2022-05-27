@@ -2,6 +2,7 @@
 members = [
     "crates/basic",
     "crates/rs-cms",
+    "crates/rs-leetcode",
     "crates/rs-scripts",
     "crates/rust-by-example",
     "crates/rust-programming-in-action",

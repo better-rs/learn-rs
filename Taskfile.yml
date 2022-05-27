@@ -61,6 +61,10 @@ tasks:
     cmds:
       - cd ${WORKSPACE}; cargo new ${NEW_PROJECT_NAME}
 
+  new:lib:
+    cmds:
+      - cd ${WORKSPACE}; cargo new --lib ${NEW_PROJECT_NAME}
+
   ################################################################################
 
 
