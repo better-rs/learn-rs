@@ -1,5 +1,6 @@
 use web3;
 
+#[allow(dead_code)]
 #[allow(unused_variables)]
 pub async fn eth_scan_address(
     rpc_url: &str,

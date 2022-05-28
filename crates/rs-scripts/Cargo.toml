@@ -49,4 +49,5 @@ serenity = { version = "0.11.1", default-features = true, features = ["client", 
 binance = "0.18.4"   # binance api
 tui = "0.18.0"       # terminal ui
 crossterm = "0.23.2" # terminal ui required
-
+chrono = "0.4.19"    # time format
+chrono-tz = "0.6.1"  # time zone

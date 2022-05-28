@@ -2,6 +2,8 @@ use binance::api::*;
 use binance::market::*;
 use binance::model::KlineSummary;
 
+use chrono::{TimeZone, Utc};
+
 pub fn market_data() {
     let market: Market = Binance::new(None, None);
 
@@ -91,14 +93,25 @@ pub fn account_data(api_key: Option<String>, secret_key: Option<String>) {
     let coin = "DOT";
 
     match account.get_account() {
-        Ok(answer) => println!("account balance: {:?}\n\n", answer.balances),
+        Ok(answer) => {
+            for balance in answer.balances {
+                let free: f64 = balance.free.parse().unwrap();
+                let locked: f64 = balance.locked.parse().unwrap();
+                if free + locked > 0.0 {
+                    println!(
+                        "{:8} balance: \tfree: {:20}, \tlocked: {:20}",
+                        balance.asset, free, locked
+                    );
+                }
+            }
+        }
         Err(e) => println!("Error: {:?}", e),
     }
 
-    match account.get_open_orders(coin_pair) {
-        Ok(answer) => println!("open orders: {:?}\n\n", answer),
-        Err(e) => println!("Error: {:?}", e),
-    }
+    // match account.get_open_orders(coin_pair) {
+    //     Ok(answer) => println!("open orders: {:?}\n\n", answer),
+    //     Err(e) => println!("Error: {:?}", e),
+    // }
 
     // match account.limit_buy(coin_pair, 10, 0.014000) {
     //     Ok(answer) => println!("{:?}", answer),
@@ -142,12 +155,28 @@ pub fn account_data(api_key: Option<String>, secret_key: Option<String>) {
     // }
 
     match account.get_balance(coin) {
-        Ok(answer) => println!("get balance: {:?}\n\n", answer),
+        Ok(answer) => {
+            println!("get balance: {:?}\n\n", answer);
+        }
         Err(e) => println!("Error: {:?}", e),
     }
 
+    // my_trades:
     match account.trade_history(coin_pair) {
-        Ok(answer) => println!("trade history: {:?}\n\n", answer),
+        Ok(answer) => {
+            println!("coin pair: {:?} trade history:", coin_pair);
+            for trade in answer {
+                let ts = Utc.timestamp((trade.time as i64) / 1000, 0); // fix
+                println!(
+                    "{:?},  id={:?}, {:?}, price: {:?}, qty: {:?}",
+                    ts.to_string(),
+                    trade.id,
+                    coin_pair,
+                    trade.price,
+                    trade.qty,
+                );
+            }
+        }
         Err(e) => println!("Error: {:?}", e),
     }
 }
