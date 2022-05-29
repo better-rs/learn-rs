@@ -4,6 +4,9 @@ use binance::market::*;
 use binance::model::KlineSummary;
 
 use chrono::{TimeZone, Utc};
+use log::{debug, error, info, warn};
+#[allow(unused_imports)]
+use pretty_env_logger;
 
 pub fn market_data() {
     let market: Market = Binance::new(None, None);
@@ -89,10 +92,9 @@ pub fn account_data(api_key: Option<String>, secret_key: Option<String>) {
     // let secret_key = Some("YOUR_SECRET_KEY".into());
 
     let account: Account = Binance::new(api_key, secret_key);
-    let cli2 = account.clone();
 
-    let coin_pair = "DOTBUSD";
-    let coin = "DOT";
+    // 多个币种计算:
+    let coins = vec!["BTC", "ETH", "BNB", "DOT"];
 
     match account.get_account() {
         Ok(answer) => {
@@ -140,11 +142,11 @@ pub fn account_data(api_key: Option<String>, secret_key: Option<String>) {
     //     Err(e) => println!("Error: {:?}", e),
     // }
 
-    let order_id = 1_957_528;
-    match account.order_status(coin_pair, order_id) {
-        Ok(answer) => println!("order status: {:?}\n\n", answer),
-        Err(e) => println!("Error: {:?}", e),
-    }
+    // let order_id = 1_957_528;
+    // match account.order_status(coin_pair, order_id) {
+    //     Ok(answer) => println!("order status: {:?}\n\n", answer),
+    //     Err(e) => println!("Error: {:?}", e),
+    // }
 
     // match account.cancel_order(coin_pair, order_id) {
     //     Ok(answer) => println!("{:?}", answer),
@@ -156,103 +158,35 @@ pub fn account_data(api_key: Option<String>, secret_key: Option<String>) {
     //     Err(e) => println!("Error: {:?}", e),
     // }
 
-    match account.get_balance(coin) {
-        Ok(answer) => {
-            println!("get balance: {:?}\n\n", answer);
-        }
-        Err(e) => println!("Error: {:?}", e),
-    }
+    // 批量计算多个币种:
+    calc_avg_cost_by_coins(&account, &coins); // todo x: fix 参数类型, 改为 引用类型, 否则会出现 move 错误, rust 的生命周期
 
-    trade_avg_by_coin(account, "DOT");
-
-    // trade_avg(account, coin_pair);
-    // trade_avg(cli2, "DOTUSDT");
+    // 查询币种余额:
+    get_balance_by_coins(&account, &coins);
 }
 
-fn trade_avg(account: Account, coin_pair: &str) {
-    // my_trades:
-    match account.trade_history(coin_pair) {
-        Ok(answer) => {
-            println!("coin pair: {:?} trade history:", coin_pair);
-
-            // 买单:
-            let mut buy_total_qty: f64 = 0.0;
-            let mut buy_total_cost: f64 = 0.0;
-            let mut buy_avg_price: f64 = 0.0;
-
-            // 卖单:
-            let mut sell_total_qty: f64 = 0.0;
-            let mut sell_total_cost: f64 = 0.0;
-            let mut sell_avg_price: f64 = 0.0;
-
-            // 当前平均持有成本:
-            let mut current_avg_price: f64 = 0.0;
-            let mut current_total_qty: f64 = 0.0;
-
-            // 计算:
-            for trade in answer {
-                let ts = Utc.timestamp((trade.time as i64) / 1000, 0); // fix
-
-                // buy:
-                if trade.is_buyer {
-                    // 买单: 总数量
-                    buy_total_qty += trade.qty;
-                    // 买单: 总成本
-                    buy_total_cost += trade.qty * trade.price;
-
-                    println!(
-                        " {:?}, buyer={:?},  id={:?}, {:?}, price: {:?}, qty: {:?}",
-                        ts.to_string(),
-                        trade.is_buyer,
-                        trade.id,
-                        coin_pair,
-                        trade.price,
-                        trade.qty,
-                    );
-                } else {
-                    // 卖单: 总数量
-                    sell_total_qty += trade.qty;
-                    // 卖单: 总成本
-                    sell_total_cost += trade.qty * trade.price;
-
-                    println!(
-                        "\t{:?}, buyer={:?}, id={:?}, {:?}, price: {:?}, qty: {:?}",
-                        ts.to_string(),
-                        trade.is_buyer,
-                        trade.id,
-                        coin_pair,
-                        trade.price,
-                        trade.qty,
-                    );
-                }
+// 批量获取币种余额:
+fn get_balance_by_coins(account: &Account, coins: &Vec<&str>) {
+    // todo x: fix vec.iter(), not vec itself
+    for coin in coins.iter() {
+        match account.get_balance(coin.to_string()) {
+            Ok(answer) => {
+                info!("🍄 {} balance: {:?}", coin, answer);
             }
-
-            // 统计:
-            buy_avg_price = buy_total_cost / buy_total_qty;
-            sell_avg_price = sell_total_cost / sell_total_qty;
-
-            current_total_qty = buy_total_qty - sell_total_qty;
-            current_avg_price = (buy_total_cost - sell_total_cost) / current_total_qty;
-
-            // 买单:
-            println!(
-                "\tbuy_total_qty: {:10?}, buy_total_cost: {:20?}, buy_avg_price: {:20?}",
-                buy_total_qty, buy_total_cost, buy_avg_price
-            );
-            println!(
-                "\tsell_total_qty: {:10?}, sell_total_cost: {:20?}, sell_avg_price: {:20?}",
-                sell_total_qty, sell_total_cost, sell_avg_price
-            );
-            println!(
-                "\tcurrent_total_qty: {:10?}, current_avg_price: {:20?}",
-                current_total_qty, current_avg_price
-            );
+            Err(e) => error!("Error: {:?}", e),
         }
-        Err(e) => println!("Error: {:?}", e),
     }
 }
 
-fn trade_avg_by_coin(account: Account, coin: &str) {
+fn calc_avg_cost_by_coins(account: &Account, coins: &Vec<&str>) {
+    for coin in coins.iter() {
+        let cli = account.clone();
+        calc_avg_cost_by_coin(cli, coin);
+    }
+}
+
+// 单个币种, 多个交易对计算:
+fn calc_avg_cost_by_coin(account: Account, coin: &str) {
     // 使用 BUSD/USDT 购买过 DOT: // 多个交易对复合计算平均成本
     let coin_pairs = vec![
         (coin.to_owned() + "BUSD").to_string(), // 交易对
@@ -278,7 +212,7 @@ fn trade_avg_by_coin(account: Account, coin: &str) {
         // my_trades:
         match account.trade_history(&coin_pair) {
             Ok(answer) => {
-                println!("\n\ncoin pair: {:?} trade history:", coin_pair);
+                debug!("coin pair: {:?} trade history:", coin_pair);
                 // 计算:
                 for trade in answer {
                     let ts = Utc.timestamp((trade.time as i64) / 1000, 0); // fix
@@ -289,8 +223,8 @@ fn trade_avg_by_coin(account: Account, coin: &str) {
                         // 买单: 总成本
                         buy_total_cost += trade.qty * trade.price;
 
-                        println!(
-                            " {:?}, buyer={:?},  id={:?}, {:?}, price: {:?}, qty: {:?}",
+                        debug!(
+                            "🍄 {:?}, buyer={:?},  id={:?}, {:?}, price: {:?}, qty: {:?}",
                             ts.to_string(),
                             trade.is_buyer,
                             trade.id,
@@ -304,8 +238,8 @@ fn trade_avg_by_coin(account: Account, coin: &str) {
                         // 卖单: 总成本
                         sell_total_cost += trade.qty * trade.price;
 
-                        println!(
-                            "\t{:?}, buyer={:?}, id={:?}, {:?}, price: {:?}, qty: {:?}",
+                        debug!(
+                            "💰 {:?}, buyer={:?}, id={:?}, {:?}, price: {:?}, qty: {:?}",
                             ts.to_string(),
                             trade.is_buyer,
                             trade.id,
@@ -323,21 +257,23 @@ fn trade_avg_by_coin(account: Account, coin: &str) {
                 current_total_qty = buy_total_qty - sell_total_qty;
                 current_avg_price = (buy_total_cost - sell_total_cost) / current_total_qty;
             }
-            Err(e) => println!("Error: {:?}", e),
+            Err(e) => error!("Error: {:?}", e),
         }
     }
 
+    info!("💰 {:?} analyze:", coin);
+
     // 买单:
-    println!(
-        "\tbuy_total_qty: {:10?}, buy_total_cost: {:20?}, buy_avg_price: {:20?}",
+    warn!(
+        "💎 buy: total_qty: {:10.20?}, \t💎 total_cost: {:20?}, \t💎 avg_price: {:20?}",
         buy_total_qty, buy_total_cost, buy_avg_price
     );
-    println!(
-        "\tsell_total_qty: {:10?}, sell_total_cost: {:20?}, sell_avg_price: {:20?}",
+    warn!(
+        "💎 sell: total_qty: {:10.20?}, \t💎 total_cost: {:20?}, \t💎 avg_price: {:20?}",
         sell_total_qty, sell_total_cost, sell_avg_price
     );
-    println!(
-        "\tcurrent_total_qty: {:10?}, current_avg_price: {:20?}",
+    warn!(
+        "💎 current: total_qty: {:10.20?}, \t💎 avg_price: {:20?}\n",
         current_total_qty, current_avg_price
     );
 }

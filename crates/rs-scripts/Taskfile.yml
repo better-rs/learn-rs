@@ -19,7 +19,8 @@ tasks:
   run:binance:
     cmds:
       - echo "run:binance api tool"
-      - cargo run --bin rs-binance -- auth ${BINANCE_API_KEY} ${BINANCE_SECRET_KEY}
+      # RUST_LOG=trace ; RUST_LOG=debug; # 查看不同级别的日志(看 debug 日志, 改如下参数)
+      - RUST_LOG=info cargo run --bin rs-binance -- auth ${BINANCE_API_KEY} ${BINANCE_SECRET_KEY}
 
   run:binance:market:
     cmds:

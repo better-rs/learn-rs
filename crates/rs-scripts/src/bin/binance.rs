@@ -1,4 +1,6 @@
 use clap::Parser;
+use log::info;
+use pretty_env_logger;
 
 use crate::commands::binance::{BinanceCli, BinanceCommands};
 use crate::modules::binance::{account_data, market_data};
@@ -7,6 +9,8 @@ mod commands;
 mod modules;
 
 fn main() {
+    pretty_env_logger::init();
+
     let args = BinanceCli::parse();
 
     match &args.command {
@@ -25,4 +29,6 @@ fn main() {
             market_data();
         }
     }
+
+    info!("cli finished");
 }
