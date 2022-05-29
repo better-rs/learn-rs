@@ -22,6 +22,11 @@
 
 ### 1. 币安 - 持币平均成本计算器
 
+> 源码位置:
+
+- [crates/rs-scripts/src/bin/binance.rs](crates/rs-scripts/src/bin/binance.rs)
+- 启动脚本: [crates/rs-scripts/Taskfile.yml](crates/rs-scripts/Taskfile.yml)
+
 > 功能说明:
 
 1. 目前支持: 币安交易所.
@@ -37,6 +42,9 @@
 
 ```ruby
 
+#
+# 项目根目录内执行: (Taskfile.yml 支持嵌套)
+#
 # 自动计算币安币种的持有成本, 比如 ETH/BTC/DOT 
 task scripts:run:binance
 
