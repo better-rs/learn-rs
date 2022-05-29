@@ -39,6 +39,7 @@
 > 效果:
 
 ![](docs/images/trade-avg.png)
+![](docs/images/trade-avg2.png)
 
 > 源码位置:
 
