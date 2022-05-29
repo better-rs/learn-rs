@@ -22,6 +22,10 @@
 
 ### 1. 币安 - 持币平均成本计算器
 
+> 效果:
+
+![](docs/images/trade-avg.png)
+
 > 源码位置:
 
 - [crates/rs-scripts/src/bin/binance.rs](crates/rs-scripts/src/bin/binance.rs)
