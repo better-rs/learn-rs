@@ -18,79 +18,33 @@
         - [x] Binance 交易所个人交易数据查询/K 线数据查询(支持 api key 方式下单/撤单)
         - [x] Binance 交易所币种持有成本计算器
 
+## Rust 写的小工具使用说明:
+
+### 1. 币安 - 持币平均成本计算器
+
+> 功能说明:
+
+1. 目前支持: 币安交易所.
+2. 支持单个币种 + 多个交易对 合并计算.
+    - 比如使用过 BUSD, UDST 购买 ETH, 需要合并计算 ETH 持有成本. (是支持的)
+3. 会自动计算: 买单平均成本, 卖单平均成本, 持币总数, 持币总成本.
+
+> 使用方式:
+
+1. git clone 本项目
+2. 安装 rust, go-task(替代 Makefile 的命令行工具)
+3. copy .env.local 到 .env, 然后在 .env 添加 币安 api key(先在币安 web 版, 个人用户设置内申请).
+
 ```ruby
 
 # 自动计算币安币种的持有成本, 比如 ETH/BTC/DOT 
 task scripts:run:binance
 
-
-
 ```
 
-## Project Structure:
+## docs:
 
-- 使用 monorepo, 参考 rust 官方 cargo 目录结构, 组织代码.
-- 详细内容见每个子目录的 readme.md
-
-```ruby
-
--> % tree ./crates -L 2
-./crates
-├── basic
-│   ├── Cargo.toml
-│   └── src
-├── rs-scripts            // 使用 rust 写的工具脚本
-│   ├── Cargo.toml
-│   └── src
-├── rust-by-example       // rust 官方学习教程 // 练习代码
-│   ├── Cargo.toml
-│   └── src
-├── rust-programming-cookbook // 《Rust 语言编程实战》 // 练习代码
-│   ├── Cargo.toml
-│   └── src
-└── rust-programming-in-action // 《Rust编程：入门、实战与进阶》 // 练习代码
-    ├── Cargo.toml
-    └── src
-
-10 directories, 5 files
+- [本项目说明: 开发环境搭建](./docs/dev.md)
+- [Rust 学习笔记](./docs/README.md)
 
 
-```
-
-## Setup development environment:
-
-- 配置 rust 开发环境
-- 安装 Clion
-
-### Clion:
-
-- https://www.jetbrains.com/help/clion/rust-support.html#tests
-- https://plugins.jetbrains.com/plugin/8182-rust/docs/rust-testing.html
-- 基于 unit test 方式编写代码.
-- Clion IDE 支持直接运行 test 代码, 方便快速测试语法点
-
-## Reference:
-
-- https://play.rust-lang.org/
-    - 官方练习+分享代码
-- https://github.com/rust-unofficial/awesome-rust
-- [通过例子学 Rust](https://rustwiki.org/zh-CN/rust-by-example/index.html)
-- https://github.com/rust-lang/rust-by-example
-- https://github.com/rust-lang/rustlings
-- https://github.com/PacktPublishing
-    - 有很多 rust book 源码
-
-> Rust 目录规范:
-
-- https://github.com/rust-lang/cargo
-    - 参考 cargo 的目录结构(monorepo)
-- https://github.com/rust-lang/crates.io
-    - 参考一个 web 应用项目的目录结构
-
-> backlog:
-
-- https://github.com/PacktPublishing/Mastering-RUST-Second-Edition
-- https://github.com/PacktPublishing/Rust-Web-Programming
-- https://github.com/PacktPublishing/Hands-On-Microservices-with-Rust
-- https://github.com/PacktPublishing/Creative-Projects-for-Rust-Programmers
-- https://github.com/PacktPublishing/Speed-up-your-Python-with-Rust
