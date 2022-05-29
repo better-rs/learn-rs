@@ -1,3 +1,4 @@
+use binance::account::Account;
 use binance::api::*;
 use binance::market::*;
 use binance::model::KlineSummary;
@@ -88,6 +89,7 @@ pub fn account_data(api_key: Option<String>, secret_key: Option<String>) {
     // let secret_key = Some("YOUR_SECRET_KEY".into());
 
     let account: Account = Binance::new(api_key, secret_key);
+    let cli2 = account.clone();
 
     let coin_pair = "DOTBUSD";
     let coin = "DOT";
@@ -161,22 +163,181 @@ pub fn account_data(api_key: Option<String>, secret_key: Option<String>) {
         Err(e) => println!("Error: {:?}", e),
     }
 
+    trade_avg_by_coin(account, "DOT");
+
+    // trade_avg(account, coin_pair);
+    // trade_avg(cli2, "DOTUSDT");
+}
+
+fn trade_avg(account: Account, coin_pair: &str) {
     // my_trades:
     match account.trade_history(coin_pair) {
         Ok(answer) => {
             println!("coin pair: {:?} trade history:", coin_pair);
+
+            // 买单:
+            let mut buy_total_qty: f64 = 0.0;
+            let mut buy_total_cost: f64 = 0.0;
+            let mut buy_avg_price: f64 = 0.0;
+
+            // 卖单:
+            let mut sell_total_qty: f64 = 0.0;
+            let mut sell_total_cost: f64 = 0.0;
+            let mut sell_avg_price: f64 = 0.0;
+
+            // 当前平均持有成本:
+            let mut current_avg_price: f64 = 0.0;
+            let mut current_total_qty: f64 = 0.0;
+
+            // 计算:
             for trade in answer {
                 let ts = Utc.timestamp((trade.time as i64) / 1000, 0); // fix
-                println!(
-                    "{:?},  id={:?}, {:?}, price: {:?}, qty: {:?}",
-                    ts.to_string(),
-                    trade.id,
-                    coin_pair,
-                    trade.price,
-                    trade.qty,
-                );
+
+                // buy:
+                if trade.is_buyer {
+                    // 买单: 总数量
+                    buy_total_qty += trade.qty;
+                    // 买单: 总成本
+                    buy_total_cost += trade.qty * trade.price;
+
+                    println!(
+                        " {:?}, buyer={:?},  id={:?}, {:?}, price: {:?}, qty: {:?}",
+                        ts.to_string(),
+                        trade.is_buyer,
+                        trade.id,
+                        coin_pair,
+                        trade.price,
+                        trade.qty,
+                    );
+                } else {
+                    // 卖单: 总数量
+                    sell_total_qty += trade.qty;
+                    // 卖单: 总成本
+                    sell_total_cost += trade.qty * trade.price;
+
+                    println!(
+                        "\t{:?}, buyer={:?}, id={:?}, {:?}, price: {:?}, qty: {:?}",
+                        ts.to_string(),
+                        trade.is_buyer,
+                        trade.id,
+                        coin_pair,
+                        trade.price,
+                        trade.qty,
+                    );
+                }
             }
+
+            // 统计:
+            buy_avg_price = buy_total_cost / buy_total_qty;
+            sell_avg_price = sell_total_cost / sell_total_qty;
+
+            current_total_qty = buy_total_qty - sell_total_qty;
+            current_avg_price = (buy_total_cost - sell_total_cost) / current_total_qty;
+
+            // 买单:
+            println!(
+                "\tbuy_total_qty: {:10?}, buy_total_cost: {:20?}, buy_avg_price: {:20?}",
+                buy_total_qty, buy_total_cost, buy_avg_price
+            );
+            println!(
+                "\tsell_total_qty: {:10?}, sell_total_cost: {:20?}, sell_avg_price: {:20?}",
+                sell_total_qty, sell_total_cost, sell_avg_price
+            );
+            println!(
+                "\tcurrent_total_qty: {:10?}, current_avg_price: {:20?}",
+                current_total_qty, current_avg_price
+            );
         }
         Err(e) => println!("Error: {:?}", e),
     }
+}
+
+fn trade_avg_by_coin(account: Account, coin: &str) {
+    // 使用 BUSD/USDT 购买过 DOT: // 多个交易对复合计算平均成本
+    let coin_pairs = vec![
+        (coin.to_owned() + "BUSD").to_string(), // 交易对
+        (coin.to_owned() + "USDT").to_string(), // 交易对
+    ];
+
+    // 买单:
+    let mut buy_total_qty: f64 = 0.0;
+    let mut buy_total_cost: f64 = 0.0;
+    let mut buy_avg_price: f64 = 0.0;
+
+    // 卖单:
+    let mut sell_total_qty: f64 = 0.0;
+    let mut sell_total_cost: f64 = 0.0;
+    let mut sell_avg_price: f64 = 0.0;
+
+    // 当前平均持有成本:
+    let mut current_avg_price: f64 = 0.0;
+    let mut current_total_qty: f64 = 0.0;
+
+    // 多个交易对合并计算:
+    for coin_pair in coin_pairs {
+        // my_trades:
+        match account.trade_history(&coin_pair) {
+            Ok(answer) => {
+                println!("\n\ncoin pair: {:?} trade history:", coin_pair);
+                // 计算:
+                for trade in answer {
+                    let ts = Utc.timestamp((trade.time as i64) / 1000, 0); // fix
+                                                                           // buy:
+                    if trade.is_buyer {
+                        // 买单: 总数量
+                        buy_total_qty += trade.qty;
+                        // 买单: 总成本
+                        buy_total_cost += trade.qty * trade.price;
+
+                        println!(
+                            " {:?}, buyer={:?},  id={:?}, {:?}, price: {:?}, qty: {:?}",
+                            ts.to_string(),
+                            trade.is_buyer,
+                            trade.id,
+                            coin_pair,
+                            trade.price,
+                            trade.qty,
+                        );
+                    } else {
+                        // 卖单: 总数量
+                        sell_total_qty += trade.qty;
+                        // 卖单: 总成本
+                        sell_total_cost += trade.qty * trade.price;
+
+                        println!(
+                            "\t{:?}, buyer={:?}, id={:?}, {:?}, price: {:?}, qty: {:?}",
+                            ts.to_string(),
+                            trade.is_buyer,
+                            trade.id,
+                            coin_pair,
+                            trade.price,
+                            trade.qty,
+                        );
+                    }
+                }
+
+                // 统计:
+                buy_avg_price = buy_total_cost / buy_total_qty;
+                sell_avg_price = sell_total_cost / sell_total_qty;
+
+                current_total_qty = buy_total_qty - sell_total_qty;
+                current_avg_price = (buy_total_cost - sell_total_cost) / current_total_qty;
+            }
+            Err(e) => println!("Error: {:?}", e),
+        }
+    }
+
+    // 买单:
+    println!(
+        "\tbuy_total_qty: {:10?}, buy_total_cost: {:20?}, buy_avg_price: {:20?}",
+        buy_total_qty, buy_total_cost, buy_avg_price
+    );
+    println!(
+        "\tsell_total_qty: {:10?}, sell_total_cost: {:20?}, sell_avg_price: {:20?}",
+        sell_total_qty, sell_total_cost, sell_avg_price
+    );
+    println!(
+        "\tcurrent_total_qty: {:10?}, current_avg_price: {:20?}",
+        current_total_qty, current_avg_price
+    );
 }
