@@ -94,23 +94,10 @@ pub fn account_data(api_key: Option<String>, secret_key: Option<String>) {
     let account: Account = Binance::new(api_key, secret_key);
 
     // 多个币种计算:
-    let coins = vec!["BTC", "ETH", "BNB", "DOT"];
+    let coins = vec!["BTC", "ETH", "BNB", "SOL", "FIL", "DOT"];
 
-    match account.get_account() {
-        Ok(answer) => {
-            for balance in answer.balances {
-                let free: f64 = balance.free.parse().unwrap();
-                let locked: f64 = balance.locked.parse().unwrap();
-                if free + locked > 0.0 {
-                    println!(
-                        "{:8} balance: \tfree: {:20}, \tlocked: {:20}",
-                        balance.asset, free, locked
-                    );
-                }
-            }
-        }
-        Err(e) => println!("Error: {:?}", e),
-    }
+    // 打印账号余额:
+    get_all_balance(&account);
 
     // match account.get_open_orders(coin_pair) {
     //     Ok(answer) => println!("open orders: {:?}\n\n", answer),
@@ -165,13 +152,31 @@ pub fn account_data(api_key: Option<String>, secret_key: Option<String>) {
     get_balance_by_coins(&account, &coins);
 }
 
+// 打印用户余额:
+fn get_all_balance(account: &Account) {
+    match account.get_account() {
+        Ok(answer) => {
+            for balance in answer.balances {
+                let free: f64 = balance.free.parse().unwrap();
+                let locked: f64 = balance.locked.parse().unwrap();
+
+                // 显式资金>0的币种余额:
+                if free + locked > 0.0 {
+                    info!("🍄 {:?}: {:?}", balance.asset, balance);
+                }
+            }
+        }
+        Err(e) => error!("Error: {:?}", e),
+    }
+}
+
 // 批量获取币种余额:
 fn get_balance_by_coins(account: &Account, coins: &Vec<&str>) {
     // todo x: fix vec.iter(), not vec itself
     for coin in coins.iter() {
         match account.get_balance(coin.to_string()) {
             Ok(answer) => {
-                info!("🍄 {} balance: {:?}", coin, answer);
+                info!("🍄 {}: {:?}", coin, answer);
             }
             Err(e) => error!("Error: {:?}", e),
         }
@@ -206,6 +211,8 @@ fn calc_avg_cost_by_coin(account: Account, coin: &str) {
     // 当前平均持有成本:
     let mut current_avg_price: f64 = 0.0;
     let mut current_total_qty: f64 = 0.0;
+
+    info!("💰 {:?} analyze:", coin);
 
     // 多个交易对合并计算:
     for coin_pair in coin_pairs {
@@ -259,9 +266,16 @@ fn calc_avg_cost_by_coin(account: Account, coin: &str) {
             }
             Err(e) => error!("Error: {:?}", e),
         }
-    }
 
-    info!("💰 {:?} analyze:", coin);
+        info!(
+            "🐛 {:?}, buy: total_qty: {:20?}, \t🐛 total_cost: {:20?}, \t🐛 avg_price: {:20?}",
+            coin_pair, buy_total_qty, buy_total_cost, buy_avg_price
+        );
+        info!(
+            "🐛 {:?}, sell: total_qty: {:20?}, \t🐛 total_cost: {:20?}, \t🐛 avg_price: {:20?}",
+            coin_pair, sell_total_qty, sell_total_cost, sell_avg_price
+        );
+    }
 
     // 买单:
     warn!(
