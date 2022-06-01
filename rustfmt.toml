@@ -1,15 +1,35 @@
+#
+# ref:
+#   - https://github.com/rust-lang/rust/blob/master/rustfmt.toml
+#   - https://github.com/tikv/tikv/blob/master/rustfmt.toml
+#
+
+
+# Run rustfmt with this config (it should be picked up automatically).
+version = "Two"
+
+
+# 跳过指定目录
+ignore = [
+    "docs",
+]
+
 # Basic
 hard_tabs = true
 max_width = 100
 use_small_heuristics = "Max"
+
 # Imports
 imports_granularity = "Crate"
 reorder_imports = true
+
 # Consistency
 newline_style = "Unix"
+
 # Format comments
 comment_width = 100
 wrap_comments = true
+
 # Misc
 chain_width = 80
 spaces_around_ranges = false
@@ -21,3 +41,5 @@ match_block_trailing_comma = true
 trailing_comma = "Vertical"
 trailing_semicolon = false
 use_field_init_shorthand = true
+
+
