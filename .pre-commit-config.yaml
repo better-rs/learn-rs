@@ -38,12 +38,12 @@ repos:
   #
   # local: 自定义配置
   #
-  - repo: local
-    hooks:
-      - id: fmt
-        name: fmt
-        description: Format files with cargo fmt.
-        entry: cargo +nightly fmt
-        language: system
-        types: [ rust ]
-        args: [ "--" ]
+#  - repo: local
+#    hooks:
+#      - id: fmt
+#        name: fmt
+#        description: Format files with cargo fmt.
+#        entry: cargo +nightly fmt
+#        language: system
+#        types: [ rust ]
+#        args: [ "--" ]
