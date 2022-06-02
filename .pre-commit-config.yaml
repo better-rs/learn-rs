@@ -41,7 +41,7 @@ repos:
   - repo: local
     hooks:
       - id: fmt
-        name: cargo fmt
+        name: Cargo Fmt
         description: Format files with cargo fmt.
         entry: cargo +nightly fmt -- --check --verbose
         language: system
