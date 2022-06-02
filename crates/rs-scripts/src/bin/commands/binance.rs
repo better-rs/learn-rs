@@ -4,26 +4,26 @@ use clap::{Parser, Subcommand};
 #[derive(Parser)]
 #[clap(name = "binance", about = "A binance CLI", version = "0.1.0", long_about = "A binance CLI")]
 pub struct BinanceCli {
-	#[clap(subcommand)]
-	pub command: BinanceCommands,
+    #[clap(subcommand)]
+    pub command: BinanceCommands,
 }
 
 #[derive(Subcommand)]
 pub enum BinanceCommands {
-	/// auth: get user account data
-	#[clap(arg_required_else_help = true)]
-	Auth {
-		/// api key
-		api_key: String,
+    /// auth: get user account data
+    #[clap(arg_required_else_help = true)]
+    Auth {
+        /// api key
+        api_key: String,
 
-		/// api secret
-		api_secret: String,
-	},
+        /// api secret
+        api_secret: String,
+    },
 
-	/// market: get market data
-	#[clap(arg_required_else_help = true)]
-	Market {
-		/// allow empty
-		empty: String,
-	},
+    /// market: get market data
+    #[clap(arg_required_else_help = true)]
+    Market {
+        /// allow empty
+        empty: String,
+    },
 }

@@ -28,12 +28,12 @@ repos:
     hooks:
       - id: validate_manifest
 
-  - repo: https://github.com/doublify/pre-commit-rust
-    rev: v1.0 #master
-    hooks:
-      #- id: fmt
-      - id: cargo-check
-      #- id: clippy
+#  - repo: https://github.com/doublify/pre-commit-rust
+#    rev: v1.0 #master
+#    hooks:
+#      #- id: fmt
+#      #- id: cargo-check
+#      - id: clippy
 
   #
   # local: 自定义配置
@@ -43,7 +43,6 @@ repos:
       - id: fmt
         name: fmt
         description: Format files with cargo fmt.
-        entry: cargo +nightly fmt
+        entry: cargo +nightly fmt -- --check --verbose
         language: system
         types: [ rust ]
-        args: [ "--" ]
