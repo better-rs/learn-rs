@@ -1,7 +1,9 @@
 use clap::Parser;
 
-use crate::commands::eth::{EthCli, EthCommands};
-use crate::modules::eth;
+use crate::{
+	commands::eth::{EthCli, EthCommands},
+	modules::eth,
+};
 
 mod commands;
 mod modules;
@@ -9,35 +11,30 @@ mod modules;
 #[allow(unused_doc_comments)]
 #[tokio::main]
 async fn main() -> web3::Result<()> {
-    /*
-    cli 传参示例:
-        cargo run --bin rs-eth-scanner -- scan "http://abc.url" "0xxxxx" "deposit" "100"
-    */
+	/*
+	cli 传参示例:
+		cargo run --bin rs-eth-scanner -- scan "http://abc.url" "0xxxxx" "deposit" "100"
+	*/
 
-    let args = EthCli::parse();
+	let args = EthCli::parse();
 
-    match &args.command {
-        /// scan eth address:
-        EthCommands::Scan {
-            rpc_url,
-            address,
-            tx_type,
-            count,
-        } => {
-            println!("scan eth address: {}", address);
+	match &args.command {
+		/// scan eth address:
+		EthCommands::Scan { rpc_url, address, tx_type, count } => {
+			println!("scan eth address: {}", address);
 
-            eth::eth_scan_address(
-                rpc_url.as_str(),
-                address.as_str(),
-                tx_type.as_str(),
-                count.as_str(),
-            )
-            .await?;
-        }
-        EthCommands::Add { path } => {
-            println!("Adding {:?}", path);
-        }
-    }
+			eth::eth_scan_address(
+				rpc_url.as_str(),
+				address.as_str(),
+				tx_type.as_str(),
+				count.as_str(),
+			)
+			.await?;
+		},
+		EthCommands::Add { path } => {
+			println!("Adding {:?}", path);
+		},
+	}
 
-    return Ok(());
+	return Ok(())
 }

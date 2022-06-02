@@ -28,19 +28,19 @@ pub mod x; // TODO X: 添加的一些扩展辅助函数 // 对应 ch05/ex03.rs
 /*
 
 参考:
-    https://rustwiki.org/zh-CN/rust-by-example/index.html
+	https://rustwiki.org/zh-CN/rust-by-example/index.html
 
 说明:
-    1. 根据例子学习Rust语言
-    2. 借助 IDE 可以快速执行 test 方法的技巧, 快速学习.
+	1. 根据例子学习Rust语言
+	2. 借助 IDE 可以快速执行 test 方法的技巧, 快速学习.
 
  */
 
 #[cfg(test)]
 mod tests {
-    #[test]
-    fn it_works() {
-        let result = 2 + 2;
-        assert_eq!(result, 4);
-    }
+	#[test]
+	fn it_works() {
+		let result = 2 + 2;
+		assert_eq!(result, 4);
+	}
 }
