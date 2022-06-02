@@ -1,3 +1,5 @@
+#![feature(mutex_unlock)] // todo x: fix for unstable feature with +nightly
+
 use std::{
     sync::{Arc, Condvar, Mutex},
     thread,
