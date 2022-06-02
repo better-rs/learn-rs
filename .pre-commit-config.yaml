@@ -43,6 +43,6 @@ repos:
       - id: fmt
         name: Cargo Fmt
         description: Format files with cargo fmt.
-        entry: cargo +nightly fmt -- --check --verbose
+        entry: cargo +nightly fmt --
         language: system
         types: [ rust ]
