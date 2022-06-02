@@ -53,6 +53,7 @@ tasks:
   dev:
     cmds:
       - rustup toolchain install nightly
+      - rustup toolchain list
 
   install:pre:
     cmds:
