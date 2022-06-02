@@ -22,3 +22,5 @@
 - https://github.com/aylei/leetcode-rust
 - https://github.com/Kilerd/leetcode-rust
 
+> Algorithms:
+- https://github.com/TheAlgorithms/Rust

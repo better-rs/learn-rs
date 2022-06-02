@@ -45,6 +45,11 @@ tasks:
     cmds:
       - cp .env.local .env
 
+  install:pre:
+    cmds:
+      - brew install go-task/tap/go-task
+      - brew install pre-commit
+
   install:
     cmds:
       - cargo update
