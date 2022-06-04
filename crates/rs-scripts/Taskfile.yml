@@ -40,8 +40,11 @@ tasks:
     cmds:
       - echo "release"
       - cargo build --release
+      - cd ../..; open target/release/
 
   install:
     cmds:
-      - echo "install"
-      - cargo install --force --list
+      - echo "install the local build binary to ~/.cargo/bin."
+      - cargo install --path . --force --verbose
+      - cargo install --list
+      - cd ../..; open target/release/

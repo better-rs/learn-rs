@@ -89,6 +89,11 @@ tasks:
       - task: scripts:release
       - open ./target/release
 
+  install:this:
+    cmds:
+      - cargo install --bins --debug --verbose
+      - cargo install --list
+
   run:
     cmds:
       - cargo run

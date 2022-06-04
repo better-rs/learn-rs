@@ -16,6 +16,7 @@ members = [
 #
 # ref:
 #   - https://doc.rust-lang.org/cargo/reference/profiles.html#overrides
+#   - https://github.com/tikv/tikv/blob/master/Cargo.toml#L307
 #
 ################################################################################
 
@@ -28,4 +29,7 @@ opt-level = "z"     # Optimize for size.
 lto = true          # Enable Link Time Optimization
 codegen-units = 1   # Reduce number of codegen units to increase optimizations.
 panic = "abort"     # Abort on panic
+strip = true        # Automatically strip symbols from the binary.
+
+[profile.release.package.rs-scripts]
 strip = true        # Automatically strip symbols from the binary.
