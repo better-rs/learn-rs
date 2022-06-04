@@ -34,6 +34,55 @@
 
 - [rs-scripts](./crates/rs-scripts)
 
+> 快速安装小工具集:
+
+
+```ruby
+cd this-project-root/
+
+# install:
+task scripts:install
+
+```
+
+- 安装成功:
+
+```ruby
+
+rs-scripts v0.1.0 (/better-rs/learn-rs/crates/rs-scripts):
+    discord-bot
+    rs-binance
+    rs-eth-scanner
+    rs-scripts
+    rs-tui
+
+```
+
+- 使用示例:
+
+
+```ruby
+-> % rs-binance
+binance 0.1.0
+A binance CLI
+
+USAGE:
+    rs-binance <SUBCOMMAND>
+
+OPTIONS:
+    -h, --help       Print help information
+    -V, --version    Print version information
+
+SUBCOMMANDS:
+    auth      auth: get user account data
+    help      Print this message or the help of the given subcommand(s)
+    market    market: get market data
+
+```
+
+![](./docs/images/cli-usage.png)
+
+
 ### 1. 币安 - 持币平均成本计算器
 
 > 效果:
@@ -64,7 +113,7 @@
 #
 # 项目根目录内执行: (Taskfile.yml 支持嵌套)
 #
-# 自动计算币安币种的持有成本, 比如 ETH/BTC/DOT 
+# 自动计算币安币种的持有成本, 比如 ETH/BTC/DOT
 task scripts:run:binance
 
 ```
@@ -73,5 +122,3 @@ task scripts:run:binance
 
 - [本项目说明: 开发环境搭建](./docs/dev.md)
 - [Rust 学习笔记](./docs/README.md)
-
-
