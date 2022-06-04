@@ -9,3 +9,23 @@ members = [
     "crates/rust-programming-cookbook",
     #    "packages/axum/axum-axum-v0.4.5",
 ]
+
+
+################################################################################
+# release options:
+#
+# ref:
+#   - https://doc.rust-lang.org/cargo/reference/profiles.html#overrides
+#
+################################################################################
+
+[profile.dev]
+# Must always use panic = "abort" to avoid needing to define the unstable eh_personality lang item.
+panic = "abort"
+
+[profile.release]
+opt-level = "z"     # Optimize for size.
+lto = true          # Enable Link Time Optimization
+codegen-units = 1   # Reduce number of codegen units to increase optimizations.
+panic = "abort"     # Abort on panic
+strip = true        # Automatically strip symbols from the binary.

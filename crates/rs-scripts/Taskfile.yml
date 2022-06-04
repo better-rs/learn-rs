@@ -40,3 +40,8 @@ tasks:
     cmds:
       - echo "release"
       - cargo build --release
+
+  install:
+    cmds:
+      - echo "install"
+      - cargo install --force --list
