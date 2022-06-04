@@ -35,3 +35,8 @@ tasks:
     cmds:
       - echo "run discord bot"
       - cargo run --bin discord-bot -- -h
+
+  release:
+    cmds:
+      - echo "release"
+      - cargo build --release

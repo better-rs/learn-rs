@@ -22,11 +22,9 @@ path = "src/bin/main.rs"
 name = "rs-eth-scanner"
 path = "src/bin/eth.rs"
 
-
 [[bin]]
 name = "discord-bot"
 path = "src/bin/discord_bot.rs"
-
 
 [[bin]]
 name = "rs-binance"
@@ -37,7 +35,23 @@ name = "rs-tui"
 path = "src/bin/tui.rs"
 
 
+################################################################################
+# release options:
+################################################################################
 
+[profile.dev]
+# Must always use panic = "abort" to avoid needing to define the unstable eh_personality lang item.
+panic = "abort"
+
+[profile.release]
+opt-level = "z"     # Optimize for size.
+lto = true          # Enable Link Time Optimization
+codegen-units = 1   # Reduce number of codegen units to increase optimizations.
+panic = "abort"     # Abort on panic
+strip = true        # Automatically strip symbols from the binary.
+
+################################################################################
+# dependencies:
 ################################################################################
 
 [dependencies]
