@@ -5,6 +5,7 @@ members = [
     "crates/rs-leetcode",
     "crates/rs-scripts",
     "crates/rs-ffi",
+    "crates/rs-ffi-core",
     "crates/rust-by-example",
     "crates/rust-programming-in-action",
     "crates/rust-programming-cookbook",
