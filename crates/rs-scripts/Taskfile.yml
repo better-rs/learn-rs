@@ -27,6 +27,12 @@ tasks:
       - echo "run:binance api tool"
       - cargo run --bin rs-binance -- market empty
 
+  run:keytool:
+    cmds:
+      - echo "run:keytool"
+#      - cargo run --bin rs-keytool -- query -h
+      - cargo run --bin rs-keytool -- -h
+
   run:tui:
     cmds:
       - cargo run --bin rs-tui -- market empty

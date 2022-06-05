@@ -31,6 +31,10 @@ name = "rs-binance"
 path = "src/bin/binance.rs"
 
 [[bin]]
+name = "rs-keytool"
+path = "src/bin/keytool.rs"
+
+[[bin]]
 name = "rs-tui"
 path = "src/bin/tui.rs"
 
