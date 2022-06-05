@@ -1,6 +1,7 @@
 # learn-rs:
 
-- rust 练习代码
+- 快速学习 rust.
+- 基于 rust workspace 的 monorepo 方式.
 
 ## Related:
 
@@ -8,34 +9,36 @@
     - 注解 rust 知名项目源码
     - ⭐⭐⭐⭐⭐
 
-## 项目目录:
+## 目录:
 
 > Rust 学习:
 
-- [x] [rust-by-example](./crates/rust-by-example)
-    - 官方练习代码
-- [x] [rs-leetcode](./crates/rs-leetcode)
-    - 使用 Rust 刷题, leetcode 练习代码
-- [x] [basic](./crates/basic)
-    - Rust 基础语法练习
+| 子项目                                         | 说明                   | 备注         |
+|:--------------------------------------------|:---------------------|:-----------|
+| [rust-by-example](./crates/rust-by-example) | Rust 官方练习代码          | ⭐⭐⭐        |
+| [rs-leetcode](./crates/rs-leetcode)         | 使用 Rust 刷题(leetcode) | TODO       |
+| [basic](./crates/basic)                     | Rust 语法练习            | ⭐ |
+| [rs-ffi](./crates/rs-ffi)                   | Rust + FFI           | ⭐⭐⭐ |
+| xxxxxxxxxxxxxx                              | xxxxxxxxxxxxxxxxxx   | xxxxxxxxxx |
 
 > 基于 Rust 写的脚本工具和业务系统:
+
+| 子项目          | 说明                              | 备注         |
+|:---------------|:--------------------------------|:-----------|
+| [rs-scripts](./crates/rs-scripts) | rust cli 脚本工具: Binance 持币成本计算器 | ⭐⭐⭐⭐⭐      |
+| [rs-cms](./crates/rs-cms) | rust 小型 CMS 系统, 小型电商原型          | ⭐⭐⭐ |
+| xxxxxxxxxxxxxx | xxxxxxxxxxxxxxxxxx              | xxxxxxxxxx |
+| xxxxxxxxxxxxxx | xxxxxxxxxxxxxxxxxx              | xxxxxxxxxx |
+
+## 基于 Rust 写的小工具:
 
 - [x] [rs-scripts](./crates/rs-scripts)
     - 写的一些 rust 脚本工具
         - [x] ETH 链上交易查询
         - [x] Binance 交易所个人交易数据查询/K 线数据查询(支持 api key 方式下单/撤单)
         - [x] Binance 交易所币种持有成本计算器
-- [x] [rs-cms](./crates/rs-cms)
-    - 基于 rust 写的小型 CMS 系统, 目前进度 10%
-    - 一个小型电商平台原型
-
-## 基于 Rust 写的小工具:
-
-- [rs-scripts](./crates/rs-scripts)
 
 > 快速安装小工具集:
-
 
 ```ruby
 cd this-project-root/
@@ -60,7 +63,6 @@ rs-scripts v0.1.0 (/better-rs/learn-rs/crates/rs-scripts):
 
 - 使用示例:
 
-
 ```ruby
 -> % rs-binance
 binance 0.1.0
@@ -81,7 +83,6 @@ SUBCOMMANDS:
 ```
 
 ![](./docs/images/cli-usage.png)
-
 
 ### 1. 币安 - 持币平均成本计算器
 
