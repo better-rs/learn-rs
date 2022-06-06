@@ -1,4 +1,8 @@
-pub mod http;
+mod echo;
+mod http;
+
+use echo::*;
+use http::*;
 
 #[cfg(test)]
 mod tests {

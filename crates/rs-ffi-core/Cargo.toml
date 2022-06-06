@@ -3,7 +3,19 @@ name = "rs-ffi-core"
 version = "0.1.0"
 edition = "2021"
 
+# ffi build hook:
+build = "src/build.rs"
+
+
+[lib]
+name = "rs_ffi_core"
+crate-type = ["cdylib"]
+
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+
+[build-dependencies]
+cbindgen = "0.20.0"
 
 
 [dependencies]

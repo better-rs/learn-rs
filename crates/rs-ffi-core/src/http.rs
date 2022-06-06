@@ -1,13 +1,13 @@
 use reqwest;
 use std::collections::HashMap;
 
-fn rs_http_get_text(url: &str) -> Result<String, reqwest::Error> {
+pub fn rs_http_get_text(url: &str) -> Result<String, reqwest::Error> {
     let client = reqwest::blocking::Client::new();
     let resp = client.get(url).header("User-Agent", "Firefox/47.0").send()?;
     Ok(resp.text()?)
 }
 
-fn rs_http_get_json(url: &str) -> Result<HashMap<String, String>, reqwest::Error> {
+pub fn rs_http_get_json(url: &str) -> Result<HashMap<String, String>, reqwest::Error> {
     let client = reqwest::blocking::Client::new();
     let resp = client.get(url).header("User-Agent", "Firefox/47.0").send()?;
     Ok(resp.json()?)

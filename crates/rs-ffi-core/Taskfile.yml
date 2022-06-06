@@ -4,6 +4,21 @@ tasks:
   init:
     - echo "init"
 
+  dev:
+    - echo "dev install"
+    - cargo install --force cargo-edit
+    - cargo install --force cbindgen
+    - cargo add --build cbindgen
+
+  generate:
+    - echo "generate c bindings"
+    - cbindgen --config cbindgen.toml --crate rs-ffi-core --output ./target/rs_ffi_core_header.h
+
+  build:
+    - echo "build"
+    - cargo build --release
+
+
   test:
     - echo "test"
     - cargo test
