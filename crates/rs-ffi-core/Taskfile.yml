@@ -1,0 +1,22 @@
+version: "3"
+
+tasks:
+  init:
+    - echo "init"
+
+  test:
+    - echo "test"
+    - cargo test
+
+  release:
+    cmds:
+      - echo "release"
+      - cargo build --release
+      - cd ../..; open target/release/
+
+  install:
+    cmds:
+      - echo "install the local build binary to ~/.cargo/bin."
+      - cargo install --path . --force --verbose
+      - cargo install --list
+      - cd ../..; open target/release/

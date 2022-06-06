@@ -12,6 +12,10 @@ includes:
     taskfile: ./crates/rs-cms/Taskfile.yml
     dir: ./crates/rs-cms/
 
+  ffi:core:
+    taskfile: ./crates/rs-ffi-core/Taskfile.yml
+    dir: ./crates/rs-ffi-core/
+
 
 #
 # global vars: https://taskfile.dev/#/usage?id=variables
