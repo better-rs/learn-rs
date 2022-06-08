@@ -1,15 +1,6 @@
 use binance_async::{
-    account::*,
-    api::*,
-    config::Config,
-    errors::Error as BinanceLibError,
-    general::*,
-    market::*,
-    rest_model::{
-        AccountSnapshotQuery, AccountSnapshotType, DepositHistoryQuery, OrderSide, OrderType,
-        SymbolPrice, TimeInForce, WithdrawalHistoryQuery,
-    },
-    wallet::*,
+    account::*, api::*, config::Config, errors::Error as BinanceLibError, general::*, market::*,
+    rest_model::*, wallet::*,
 };
 
 use binance_async::wallet::*;
@@ -418,5 +409,30 @@ pub async fn wallet_data(api_key: Option<String>, secret_key: Option<String>) {
             info!("💰 account status: {:?}", answer);
         },
         Err(e) => error!("Error: {:?}", e),
+    }
+
+    let address_req = DepositAddressQuery { coin: "USDT".into(), network: None };
+
+    let deposit_addrs = &vec![
+        DepositAddressQuery { coin: "USDT".into(), network: None },
+        DepositAddressQuery { coin: "BUSD".into(), network: None },
+        DepositAddressQuery { coin: "BTC".into(), network: None },
+        DepositAddressQuery { coin: "ETH".into(), network: None },
+        DepositAddressQuery { coin: "BNB".into(), network: None },
+        DepositAddressQuery { coin: "DOT".into(), network: None },
+    ];
+
+    // 币安的充值地址:
+    let coins = &vec!["USDT", "BUSD", "BTC", "ETH", "BNB", "DOT"];
+
+    for coin in coins.iter() {
+        let req = DepositAddressQuery { coin: coin.to_string(), network: None };
+
+        match wallet.deposit_address(req).await {
+            Ok(answer) => {
+                info!("💰 deposit address: {:?}", answer);
+            },
+            Err(e) => error!("Error: {:?}", e),
+        }
     }
 }
