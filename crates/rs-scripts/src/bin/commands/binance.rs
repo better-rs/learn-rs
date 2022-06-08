@@ -13,8 +13,8 @@ pub enum BinanceCommands {
     /// get server status
     #[clap(arg_required_else_help = true)]
     General {
-        /// allow empty
-        empty: String,
+        // allow empty args
+        empty: Option<String>,
     },
 
     /// auth: get user account data

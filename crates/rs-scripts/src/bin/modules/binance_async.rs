@@ -39,10 +39,9 @@ pub async fn general() {
         Ok(answer) => {
             // info!("Exchange information: {:?}", answer);
             info!(
-                "Exchange info: server_time={:?},  timezone={:?},",
+                "Exchange info: server_time={:?}, timezone={:?},",
                 answer.server_time, answer.timezone,
             );
-            info!("Exchange info: {:?}", answer.symbols);
         },
         Err(e) => error!("Error: {:?}", e),
     }

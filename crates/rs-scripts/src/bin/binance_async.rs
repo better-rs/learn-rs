@@ -19,7 +19,7 @@ async fn main() {
 
     match &args.command {
         // market data:
-        BinanceCommands::General { empty: _ } => {
+        BinanceCommands::General { empty } => {
             binance_async::general().await;
         },
         // user account data:
