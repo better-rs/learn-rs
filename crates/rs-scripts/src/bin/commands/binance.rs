@@ -10,6 +10,13 @@ pub struct BinanceCli {
 
 #[derive(Subcommand)]
 pub enum BinanceCommands {
+    /// get server status
+    #[clap(arg_required_else_help = true)]
+    General {
+        /// allow empty
+        empty: String,
+    },
+
     /// auth: get user account data
     #[clap(arg_required_else_help = true)]
     Auth {

@@ -31,6 +31,11 @@ name = "rs-binance"
 path = "src/bin/binance.rs"
 
 [[bin]]
+name = "rs-binance-async"
+path = "src/bin/binance_async.rs"
+
+
+[[bin]]
 name = "rs-keytool"
 path = "src/bin/keytool.rs"
 
@@ -64,7 +69,11 @@ web3 = "0.18.0"
 tokio = "1.17.0"
 #serenity = "0.11.1" # discord api
 serenity = { version = "0.11.1", default-features = true, features = ["client", "gateway", "rustls_backend", "model"] }
-binance = "0.18.4"   # binance api
+
+binance = "0.18.4"         # binance api
+#binance-rs-async = "1.1.7" # binance async api
+binance-async = { version = "1.1.7", package = "binance-rs-async" } # fix conflict with binance-rs
+
 tui = "0.18.0"       # terminal ui
 crossterm = "0.23.2" # terminal ui required
 chrono = "0.4.19"    # time format
