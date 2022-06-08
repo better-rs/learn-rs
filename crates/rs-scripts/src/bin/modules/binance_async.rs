@@ -5,8 +5,14 @@ use binance_async::{
     errors::Error as BinanceLibError,
     general::*,
     market::*,
-    rest_model::{OrderSide, OrderType, SymbolPrice, TimeInForce},
+    rest_model::{
+        DepositHistoryQuery, OrderSide, OrderType, SymbolPrice, TimeInForce, WithdrawalHistoryQuery,
+    },
+    wallet::*,
 };
+
+use binance_async::wallet::*;
+
 use chrono::{TimeZone, Utc};
 use log::{debug, error, info, warn};
 #[allow(unused_imports)]
@@ -322,4 +328,58 @@ async fn calc_avg_cost_by_coin(account: Account, coin: &str) {
         "💎 current: total_qty: {:10.20?}, \t💎 avg_price: {:20?}\n",
         current_total_qty, current_avg_price
     );
+}
+
+// auth:
+pub async fn wallet_data(api_key: Option<String>, secret_key: Option<String>) {
+    let wallet: Wallet = Binance::new(api_key, secret_key);
+
+    let now_at = Utc::now().timestamp_millis();
+    let ts_90days_ago: i64 = Utc::now().timestamp_millis() - (60 * 60 * 24 * 90);
+    info!("💰 start time: {:?}", now_at);
+    info!("💰 ts_90days_ago: {:?}", ts_90days_ago);
+
+    let deposit_req = DepositHistoryQuery {
+        coin: Some("USDT".to_string()),
+        status: None,
+        start_time: Some(ts_90days_ago as u64),
+        end_time: Some(now_at as u64),
+        limit: None,
+        offset: None,
+    };
+
+    info!("💰 wallet deposit: req={:?}", deposit_req);
+    match wallet.deposit_history(deposit_req).await {
+        Ok(answer) => {
+            info!("💰 deposit history: {:?}", answer);
+
+            for deposit in answer {
+                info!("💰 user deposit records: {:?}", deposit);
+            }
+        },
+        Err(e) => error!("Error: {:?}", e),
+    }
+
+    let withdraw_req = WithdrawalHistoryQuery {
+        coin: Some("USDT".to_string()),
+        withdraw_order_id: None,
+        status: None,
+        start_time: Some(ts_90days_ago as u64),
+        end_time: Some(now_at as u64),
+        limit: None,
+        offset: None,
+    };
+
+    info!("💰 withdrawal history: req={:?}", withdraw_req);
+
+    match wallet.withdraw_history(withdraw_req).await {
+        Ok(answer) => {
+            info!("💰 withdraw history: {:?}", answer);
+
+            for withdraw in answer {
+                info!("💰 user withdraw records: {:?}", withdraw);
+            }
+        },
+        Err(e) => error!("Error: {:?}", e),
+    }
 }

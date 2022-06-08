@@ -18,9 +18,9 @@ fn main() {
         },
 
         // subcommands:
-        KeyToolCommand::Query(x) => {
+        KeyToolCommand::Query(cmd) => {
             info!("GenerateAccount command");
-            match x {
+            match cmd {
                 QueryCommand::Balance { chain_type, chain_id, address } => {
                     info!("Balance command: {}, {}, {}", chain_type, chain_id, address);
                 },

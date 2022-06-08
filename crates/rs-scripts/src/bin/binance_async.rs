@@ -3,7 +3,7 @@ use log::{info, warn};
 use pretty_env_logger;
 
 use crate::{
-    commands::binance::{BinanceCli, BinanceCommands},
+    commands::binance::{BinanceCli, BinanceCommands, WalletCommand},
     modules::binance_async,
 };
 
@@ -26,6 +26,22 @@ async fn main() {
         BinanceCommands::Auth { api_key, api_secret } => {
             println!("binance api key: {}\n\n", api_key);
             binance_async::account_data(Some(api_key.into()), Some(api_secret.into())).await;
+        },
+
+        // wallet:
+        BinanceCommands::Wallet(cmd) => match cmd {
+            WalletCommand::Deposit { api_key, api_secret, coin, status, start_time, .. } => {
+                info!("deposit records: {}", api_key);
+                binance_async::wallet_data(Some(api_key.into()), Some(api_secret.into())).await;
+            },
+
+            WalletCommand::Withdraw { api_key, api_secret, coin, status, start_time, .. } => {
+                info!("withdraw records:");
+            },
+
+            _ => {
+                warn!("unknown wallet command");
+            },
         },
 
         // market data:
