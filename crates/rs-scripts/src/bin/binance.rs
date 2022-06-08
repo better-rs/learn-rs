@@ -1,5 +1,5 @@
 use clap::Parser;
-use log::info;
+use log::{info, warn};
 use pretty_env_logger;
 
 use crate::{
@@ -26,6 +26,10 @@ fn main() {
         // market data:
         BinanceCommands::Market { empty: _ } => {
             market_data();
+        },
+
+        _ => {
+            warn!("not matched");
         },
     }
 

@@ -1,5 +1,5 @@
 use clap::Parser;
-use log::info;
+use log::{info, warn};
 use pretty_env_logger;
 
 use crate::{
@@ -25,10 +25,17 @@ async fn main() {
         // user account data:
         BinanceCommands::Auth { api_key, api_secret } => {
             println!("binance api key: {}\n\n", api_key);
+            binance_async::account_data(Some(api_key.into()), Some(api_secret.into())).await;
         },
 
         // market data:
-        BinanceCommands::Market { empty: _ } => {},
+        BinanceCommands::Market { empty: _ } => {
+            binance_async::market_data().await;
+        },
+
+        _ => {
+            warn!("not matched");
+        },
     }
 
     info!("cli finished");
