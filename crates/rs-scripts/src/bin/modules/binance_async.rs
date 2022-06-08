@@ -6,7 +6,8 @@ use binance_async::{
     general::*,
     market::*,
     rest_model::{
-        DepositHistoryQuery, OrderSide, OrderType, SymbolPrice, TimeInForce, WithdrawalHistoryQuery,
+        AccountSnapshotQuery, AccountSnapshotType, DepositHistoryQuery, OrderSide, OrderType,
+        SymbolPrice, TimeInForce, WithdrawalHistoryQuery,
     },
     wallet::*,
 };
@@ -379,6 +380,42 @@ pub async fn wallet_data(api_key: Option<String>, secret_key: Option<String>) {
             for withdraw in answer {
                 info!("💰 user withdraw records: {:?}", withdraw);
             }
+        },
+        Err(e) => error!("Error: {:?}", e),
+    }
+
+    let snapshot_req: AccountSnapshotQuery = AccountSnapshotQuery {
+        start_time: None,
+        end_time: None,
+        limit: None,
+        account_type: AccountSnapshotType::Spot,
+    };
+
+    match wallet.daily_account_snapshot(snapshot_req).await {
+        Ok(answer) => {
+            info!("💰 daily account snapshot: {:?}", answer);
+        },
+
+        Err(e) => error!("Error: {:?}", e),
+    }
+
+    match wallet.all_coin_info().await {
+        Ok(answer) => {
+            info!("💰 all coin info: {:?}", answer);
+        },
+        Err(e) => error!("Error: {:?}", e),
+    }
+
+    match wallet.funding_wallet(Some("USDT".into()), None).await {
+        Ok(answer) => {
+            info!("💰 funding rate: {:?}", answer);
+        },
+        Err(e) => error!("Error: {:?}", e),
+    }
+
+    match wallet.account_status().await {
+        Ok(answer) => {
+            info!("💰 account status: {:?}", answer);
         },
         Err(e) => error!("Error: {:?}", e),
     }
