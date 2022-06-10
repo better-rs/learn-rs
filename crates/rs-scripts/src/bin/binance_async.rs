@@ -32,7 +32,7 @@ async fn main() {
         BinanceCommands::Wallet(cmd) => match cmd {
             WalletCommand::Deposit { api_key, api_secret, coin, status, start_time, .. } => {
                 info!("deposit records: {}", api_key);
-                binance_async::wallet_data(Some(api_key.into()), Some(api_secret.into())).await;
+                binance_async::wallet_data(api_key, api_secret).await;
             },
 
             WalletCommand::Withdraw { api_key, api_secret, coin, status, start_time, .. } => {

@@ -322,58 +322,142 @@ async fn calc_avg_cost_by_coin(account: Account, coin: &str) {
     );
 }
 
+pub struct WalletApi {
+    client: Wallet,
+}
+
+impl WalletApi {
+    pub fn new(api_key: Option<String>, secret_key: Option<String>) -> Self {
+        Self { client: Binance::new(api_key, secret_key) }
+    }
+
+    pub async fn deposit_history(&self, coin: &str) {
+        let now_at = Utc::now().timestamp_millis();
+        let ts_90days_ago: i64 = Utc::now().timestamp_millis() - (60 * 60 * 24 * 90);
+
+        let deposit_req = DepositHistoryQuery {
+            coin: Some(coin.to_string()),
+            status: None,
+            start_time: Some(ts_90days_ago as u64),
+            end_time: Some(now_at as u64),
+            limit: None,
+            offset: None,
+        };
+
+        match self.client.deposit_history(deposit_req).await {
+            Ok(answer) => {
+                info!("💰 deposit history: {:?}", answer);
+
+                for deposit in answer {
+                    info!("💰 user deposit records: {:?}", deposit);
+                }
+            },
+            Err(e) => error!("Error: {:?}", e),
+        }
+    }
+
+    pub async fn withdraw_history(&self, coin: &str) {
+        let now_at = Utc::now().timestamp_millis();
+        let ts_90days_ago: i64 = Utc::now().timestamp_millis() - (60 * 60 * 24 * 90);
+
+        let withdraw_req = WithdrawalHistoryQuery {
+            coin: Some(coin.to_string()),
+            withdraw_order_id: None,
+            status: None,
+            start_time: Some(ts_90days_ago as u64),
+            end_time: Some(now_at as u64),
+            limit: None,
+            offset: None,
+        };
+
+        match self.client.withdraw_history(withdraw_req).await {
+            Ok(answer) => {
+                info!("💰 withdraw history: {:?}", answer);
+
+                for withdraw in answer {
+                    info!("💰 user withdraw records: {:?}", withdraw);
+                }
+            },
+            Err(e) => error!("Error: {:?}", e),
+        }
+    }
+
+    pub async fn deposit_addresses(&self, coins: &Vec<&str>) {
+        for coin in coins.iter() {
+            let req = DepositAddressQuery { coin: coin.to_string(), network: None };
+
+            match self.client.deposit_address(req).await {
+                Ok(answer) => {
+                    info!("💰 deposit address: {:?}", answer);
+                },
+                Err(e) => error!("Error: {:?}", e),
+            }
+        }
+    }
+
+    // todo x:
+    pub async fn snapshot(&self) {
+        let snapshot_req: AccountSnapshotQuery = AccountSnapshotQuery {
+            start_time: None,
+            end_time: None,
+            limit: None,
+            account_type: AccountSnapshotType::Spot, // todo x: fix bugs here
+        };
+
+        match self.client.daily_account_snapshot(snapshot_req).await {
+            Ok(answer) =>
+                for item in answer.snapshot_vos.iter() {
+                    info!("💰 snapshot: {:?}", item.update_time);
+                    match AccountSnapshotType::from_str(item.snapshot_type.as_str()) {
+                        AccountSnapshotType::Spot =>
+                            for balance in item.data.balances.iter() {
+                                if balance.free + balance.locked >= 0.0 {
+                                    info!("\t💰 coin: {:?}", balance);
+                                }
+                            },
+                        AccountSnapshotType::Margin => {
+                            info!("💰 margin snapshot: {:?}", item);
+                        },
+                        AccountSnapshotType::Futures => {
+                            info!("💰 futures snapshot: {:?}", item);
+                        },
+                    }
+                },
+
+            Err(e) => error!("Error: {:?}", e),
+        }
+    }
+}
+
 // auth:
-pub async fn wallet_data(api_key: Option<String>, secret_key: Option<String>) {
-    let wallet: Wallet = Binance::new(api_key, secret_key);
+pub async fn wallet_data(api_key: &str, secret_key: &str) {
+    let wallet: Wallet = Binance::new(Some(api_key.into()), Some(secret_key.into()));
+
+    let cli = WalletApi::new(Some(api_key.into()), Some(secret_key.into()));
+
+    cli.deposit_history("USDT").await;
+    cli.withdraw_history("USDT").await;
 
     let now_at = Utc::now().timestamp_millis();
     let ts_90days_ago: i64 = Utc::now().timestamp_millis() - (60 * 60 * 24 * 90);
     info!("💰 start time: {:?}", now_at);
     info!("💰 ts_90days_ago: {:?}", ts_90days_ago);
 
-    let deposit_req = DepositHistoryQuery {
-        coin: Some("USDT".to_string()),
-        status: None,
-        start_time: Some(ts_90days_ago as u64),
-        end_time: Some(now_at as u64),
-        limit: None,
-        offset: None,
-    };
+    // 币安的充值地址:
+    // let coins = &vec!["USDT", "BUSD", "BTC", "ETH", "BNB", "DOT"];
+    // cli.deposit_addresses(coins).await;
 
-    info!("💰 wallet deposit: req={:?}", deposit_req);
-    match wallet.deposit_history(deposit_req).await {
-        Ok(answer) => {
-            info!("💰 deposit history: {:?}", answer);
+    cli.snapshot().await;
+}
 
-            for deposit in answer {
-                info!("💰 user deposit records: {:?}", deposit);
-            }
-        },
-        Err(e) => error!("Error: {:?}", e),
-    }
+// auth:
+pub async fn wallet_api(api_key: Option<String>, secret_key: Option<String>) {
+    let wallet: Wallet = Binance::new(api_key, secret_key);
 
-    let withdraw_req = WithdrawalHistoryQuery {
-        coin: Some("USDT".to_string()),
-        withdraw_order_id: None,
-        status: None,
-        start_time: Some(ts_90days_ago as u64),
-        end_time: Some(now_at as u64),
-        limit: None,
-        offset: None,
-    };
-
-    info!("💰 withdrawal history: req={:?}", withdraw_req);
-
-    match wallet.withdraw_history(withdraw_req).await {
-        Ok(answer) => {
-            info!("💰 withdraw history: {:?}", answer);
-
-            for withdraw in answer {
-                info!("💰 user withdraw records: {:?}", withdraw);
-            }
-        },
-        Err(e) => error!("Error: {:?}", e),
-    }
+    let now_at = Utc::now().timestamp_millis();
+    let ts_90days_ago: i64 = Utc::now().timestamp_millis() - (60 * 60 * 24 * 90);
+    info!("💰 start time: {:?}", now_at);
+    info!("💰 ts_90days_ago: {:?}", ts_90days_ago);
 
     let snapshot_req: AccountSnapshotQuery = AccountSnapshotQuery {
         start_time: None,
