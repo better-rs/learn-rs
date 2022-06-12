@@ -5,7 +5,7 @@ use binance_async::{
 
 use binance_async::wallet::*;
 
-use chrono::{TimeZone, Utc};
+use chrono::{Duration, TimeZone, Utc};
 use log::{debug, error, info, warn};
 #[allow(unused_imports)]
 use pretty_env_logger;
@@ -331,6 +331,26 @@ impl WalletApi {
         Self { client: Binance::new(api_key, secret_key) }
     }
 
+    pub async fn deposit_histories(&self, coins: &Vec<&str>) {
+        for coin in coins.iter() {
+            let req = DepositHistoryQuery {
+                coin: Option::from(coin.to_string()),
+                status: Option::from(1),
+                ..Default::default()
+            };
+
+            match self.client.deposit_history(req).await {
+                Ok(answer) => {
+                    info!("💰 {:?} deposit history:", coin);
+                    for deposit in answer {
+                        info!("💰 {:?}", deposit);
+                    }
+                },
+                Err(e) => error!("Error: {:?}", e),
+            }
+        }
+    }
+
     pub async fn deposit_history(&self, coin: &str) {
         let now_at = Utc::now().timestamp_millis();
         let ts_90days_ago: i64 = Utc::now().timestamp_millis() - (60 * 60 * 24 * 90);
@@ -338,8 +358,9 @@ impl WalletApi {
         let deposit_req = DepositHistoryQuery {
             coin: Some(coin.to_string()),
             status: None,
-            start_time: Some(ts_90days_ago as u64),
-            end_time: Some(now_at as u64),
+            // start_time: Some(ts_90days_ago as u64),
+            start_time: None,
+            end_time: None, //Some(now_at as u64),
             limit: None,
             offset: None,
         };
@@ -356,9 +377,79 @@ impl WalletApi {
         }
     }
 
+    // 批量查询:
+    pub async fn withdraw_histories(&self, coins: &Vec<&str>) {
+        for coin in coins.iter() {
+            let req = WithdrawalHistoryQuery {
+                coin: Option::from(coin.to_string()),
+                status: Option::from(1),
+                ..Default::default()
+            };
+
+            match self.client.withdraw_history(req).await {
+                Ok(answer) => {
+                    info!("💰 {:?} withdraw history:", coin);
+                    for withdraw in answer {
+                        info!("💰 {:?}", withdraw);
+                    }
+                },
+                Err(e) => error!("Error: {:?}", e),
+            }
+        }
+    }
+
+    pub async fn withdraw_history_by_auto_range(&self, coin: &str) {
+        let now_at = Utc::now().timestamp_millis();
+
+        let duration_90days = Duration::days(90).num_milliseconds();
+        let duration_2years = Duration::days(365 * 2).num_milliseconds();
+
+        // stop at:
+        let ts_2years_ago: i64 = now_at - duration_2years;
+
+        let mut start_at = now_at - duration_90days;
+        let mut end_at = now_at;
+
+        info!(
+            "💰 start_at: {:?}, end_at: {:?}, 90days: {}, 2years: {}, now: {}, ts_2years_ago: {}",
+            start_at, end_at, duration_90days, duration_2years, now_at, ts_2years_ago
+        );
+
+        // stop at 2years ago:
+        while start_at > ts_2years_ago {
+            let withdraw_req = WithdrawalHistoryQuery {
+                coin: Some(coin.to_string()),
+                withdraw_order_id: None,
+                status: None,
+                start_time: Some(start_at as u64),
+                end_time: Some(end_at as u64),
+                limit: None,
+                offset: None,
+            };
+
+            match self.client.withdraw_history(withdraw_req).await {
+                Ok(answer) => {
+                    let start = Utc.timestamp_millis(start_at).to_rfc3339();
+                    let end = Utc.timestamp_millis(end_at).to_rfc3339();
+
+                    info!("💰 withdraw history: [{:?}, {:?}] = {:?}", start, end, answer);
+                    for withdraw in answer {
+                        info!("💰 user withdraw records: {:?}", withdraw);
+                    }
+                },
+                Err(e) => error!("Error: {:?}", e),
+            }
+
+            // iter:
+            start_at -= duration_90days;
+            end_at -= duration_90days;
+        }
+    }
+
     pub async fn withdraw_history(&self, coin: &str) {
         let now_at = Utc::now().timestamp_millis();
-        let ts_90days_ago: i64 = Utc::now().timestamp_millis() - (60 * 60 * 24 * 90);
+        let duration_90days = Duration::days(90).num_milliseconds();
+        let ts_90days_ago: i64 = Utc::now().timestamp_millis() - duration_90days;
 
         let withdraw_req = WithdrawalHistoryQuery {
             coin: Some(coin.to_string()),
@@ -436,7 +527,8 @@ pub async fn wallet_data(api_key: &str, secret_key: &str) {
     let cli = WalletApi::new(Some(api_key.into()), Some(secret_key.into()));
 
     cli.deposit_history("USDT").await;
-    cli.withdraw_history("USDT").await;
+    // cli.withdraw_history_by_auto_range("USDT").await;
+    cli.withdraw_history_by_auto_range("BUSD").await;
 
     let now_at = Utc::now().timestamp_millis();
     let ts_90days_ago: i64 = Utc::now().timestamp_millis() - (60 * 60 * 24 * 90);
@@ -444,10 +536,13 @@ pub async fn wallet_data(api_key: &str, secret_key: &str) {
     info!("💰 ts_90days_ago: {:?}", ts_90days_ago);
 
     // 币安的充值地址:
-    // let coins = &vec!["USDT", "BUSD", "BTC", "ETH", "BNB", "DOT"];
+    let coins = &vec!["USDT", "BUSD", "BTC", "ETH", "BNB", "DOT"];
     // cli.deposit_addresses(coins).await;
+    // cli.deposit_histories(coins).await;
+    // cli.withdraw_histories(coins).await;
 
-    cli.snapshot().await;
+    // 币安的账户快照:
+    // cli.snapshot().await;
 }
 
 // auth:
@@ -518,5 +613,38 @@ pub async fn wallet_api(api_key: Option<String>, secret_key: Option<String>) {
             },
             Err(e) => error!("Error: {:?}", e),
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use chrono::Duration;
+
+    #[test]
+    fn test_ts() {
+        let now_at = Utc::now().timestamp_millis();
+        let now = Utc.timestamp_millis(now_at).to_rfc3339();
+
+        let duration_90days = Duration::days(90).num_milliseconds();
+
+        let ts_90days_ago: i64 = Utc::now().timestamp_millis() - duration_90days;
+        let day_90_ago = Utc.timestamp_millis(ts_90days_ago).to_rfc3339();
+
+        eprintln!("💰 start time: {:?}", now_at); // 1655065755968 // 1655066033984
+        eprintln!("💰 ts_90days_ago: {:?}", ts_90days_ago);
+        eprintln!("💰 day range: [{:?}, {:?}]", now, day_90_ago);
+
+        let day_at = Utc::now().timestamp_millis() - (60 * 60 * 24);
+        let date_day = Utc::now().date();
+        let day_2year_ago = Utc::now().timestamp_millis() - (60 * 60 * 24 * 365 * 2);
+
+        let at_from_ts = Utc.timestamp_millis(1655065755968).to_rfc3339();
+
+        eprintln!("💰 day_at: {:?}", day_at); // 1655065755968
+        eprintln!("💰 date_day: {:?}", date_day); // 2020-04-01 // 2020-04-01T00:00:00+00:00
+        eprintln!("💰 day_2year_ago: {:?}", day_2year_ago); // 1655065755968
+
+        eprintln!("💰 at_from_ts: {:?}", at_from_ts); // 2020-04-01
     }
 }
