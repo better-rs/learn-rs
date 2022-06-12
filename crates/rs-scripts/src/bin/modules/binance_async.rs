@@ -331,73 +331,67 @@ impl WalletApi {
         Self { client: Binance::new(api_key, secret_key) }
     }
 
-    pub async fn deposit_histories(&self, coins: &Vec<&str>) {
-        for coin in coins.iter() {
-            let req = DepositHistoryQuery {
-                coin: Option::from(coin.to_string()),
-                status: Option::from(1),
-                ..Default::default()
-            };
-
-            match self.client.deposit_history(req).await {
-                Ok(answer) => {
-                    info!("💰 {:?} deposit history:", coin);
-                    for deposit in answer {
-                        info!("💰 {:?}", deposit);
-                    }
-                },
-                Err(e) => error!("Error: {:?}", e),
-            }
-        }
-    }
-
-    pub async fn deposit_history(&self, coin: &str) {
+    // 查询充值历史:
+    pub async fn deposit_history_quick(
+        &self,
+        coin: Option<&str>,
+        years: Option<i64>,
+        months: Option<i64>,
+        begin_at: Option<i64>,
+    ) {
         let now_at = Utc::now().timestamp_millis();
-        let ts_90days_ago: i64 = Utc::now().timestamp_millis() - (60 * 60 * 24 * 90);
 
-        let deposit_req = DepositHistoryQuery {
-            coin: Some(coin.to_string()),
-            status: None,
-            // start_time: Some(ts_90days_ago as u64),
-            start_time: None,
-            end_time: None, //Some(now_at as u64),
-            limit: None,
-            offset: None,
-        };
+        // min range = 2years
+        let query_range =
+            Duration::days(365 * years.unwrap_or(2)) + Duration::days(12 * months.unwrap_or(0));
 
-        match self.client.deposit_history(deposit_req).await {
-            Ok(answer) => {
-                info!("💰 deposit history: {:?}", answer);
+        let stop_at = now_at - query_range.num_milliseconds();
 
-                for deposit in answer {
-                    info!("💰 user deposit records: {:?}", deposit);
-                }
-            },
-            Err(e) => error!("Error: {:?}", e),
-        }
-    }
+        // one query step:
+        let query_90days = Duration::days(90).num_milliseconds();
 
-    // 批量查询:
-    pub async fn withdraw_histories(&self, coins: &Vec<&str>) {
-        for coin in coins.iter() {
-            let req = WithdrawalHistoryQuery {
-                coin: Option::from(coin.to_string()),
-                status: Option::from(1),
-                ..Default::default()
+        // one query range:
+        let mut start_at = begin_at.unwrap_or(now_at) - query_90days;
+        let mut end_at = begin_at.unwrap_or(now_at);
+
+        info!(
+            "💰 one query range: [{:?}, {:?} ], stop_at: {},",
+            Utc.timestamp_millis(start_at).to_rfc3339(),
+            Utc.timestamp_millis(end_at).to_rfc3339(),
+            Utc.timestamp_millis(stop_at).to_rfc3339(),
+        );
+
+        while start_at > stop_at {
+            let deposit_req = DepositHistoryQuery {
+                coin: coin.map(|c| c.to_string()),
+                status: None,
+                start_time: Some(start_at as u64),
+                end_time: Some(end_at as u64),
+                limit: None,
+                offset: None,
             };
 
-            match self.client.withdraw_history(req).await {
+            match self.client.deposit_history(deposit_req).await {
                 Ok(answer) => {
-                    info!("💰 {:?} withdraw history:", coin);
-                    for withdraw in answer {
-                        info!("💰 {:?}", withdraw);
+                    let start = Utc.timestamp_millis(start_at).to_rfc3339();
+                    let end = Utc.timestamp_millis(end_at).to_rfc3339();
+
+                    info!("💰 deposit history [{}, {}]:", start, end);
+
+                    for deposit in answer {
+                        info!("💎 user deposit records: {:?}", deposit);
                     }
                 },
                 Err(e) => error!("Error: {:?}", e),
             }
+
+            // next query range:
+            start_at -= query_90days;
+            end_at -= query_90days;
         }
     }
 
+    // 不传 coin 就是所有币种:
     pub async fn withdraw_history_quick(
         &self,
         coin: Option<&str>,
@@ -409,7 +403,7 @@ impl WalletApi {
 
         // min range = 2years
         let query_range =
-            Duration::days(365 * years.unwrap_or(2)) + Duration::days(months.unwrap_or(0));
+            Duration::days(365 * years.unwrap_or(2)) + Duration::days(12 * months.unwrap_or(0));
 
         let stop_at = now_at - query_range.num_milliseconds();
 
@@ -462,33 +456,7 @@ impl WalletApi {
         }
     }
 
-    pub async fn withdraw_history(&self, coin: &str) {
-        let now_at = Utc::now().timestamp_millis();
-        let duration_90days = Duration::days(90).num_milliseconds();
-        let ts_90days_ago: i64 = Utc::now().timestamp_millis() - duration_90days;
-
-        let withdraw_req = WithdrawalHistoryQuery {
-            coin: Some(coin.to_string()),
-            withdraw_order_id: None,
-            status: None,
-            start_time: Some(ts_90days_ago as u64),
-            end_time: Some(now_at as u64),
-            limit: None,
-            offset: None,
-        };
-
-        match self.client.withdraw_history(withdraw_req).await {
-            Ok(answer) => {
-                info!("💰 withdraw history: {:?}", answer);
-
-                for withdraw in answer {
-                    info!("💰 user withdraw records: {:?}", withdraw);
-                }
-            },
-            Err(e) => error!("Error: {:?}", e),
-        }
-    }
-
+    // 查询充值地址:
     pub async fn deposit_addresses(&self, coins: &Vec<&str>) {
         for coin in coins.iter() {
             let req = DepositAddressQuery { coin: coin.to_string(), network: None };
@@ -542,9 +510,9 @@ pub async fn wallet_data(api_key: &str, secret_key: &str) {
 
     let cli = WalletApi::new(Some(api_key.into()), Some(secret_key.into()));
 
-    cli.deposit_history("USDT").await;
-    // cli.withdraw_history_by_auto_range("USDT").await;
-    cli.withdraw_history_quick(None, Some(5), None, None).await;
+    // 支持查所有币种:
+    // cli.withdraw_history_quick(None, Some(5), None, None).await;
+    cli.deposit_history_quick(None, Some(5), None, None).await;
 
     let now_at = Utc::now().timestamp_millis();
     let ts_90days_ago: i64 = Utc::now().timestamp_millis() - (60 * 60 * 24 * 90);
@@ -554,8 +522,6 @@ pub async fn wallet_data(api_key: &str, secret_key: &str) {
     // 币安的充值地址:
     let coins = &vec!["USDT", "BUSD", "BTC", "ETH", "BNB", "DOT"];
     // cli.deposit_addresses(coins).await;
-    // cli.deposit_histories(coins).await;
-    // cli.withdraw_histories(coins).await;
 
     // 币安的账户快照:
     // cli.snapshot().await;
