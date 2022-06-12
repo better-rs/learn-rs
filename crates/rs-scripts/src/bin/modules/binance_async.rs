@@ -398,9 +398,9 @@ impl WalletApi {
         }
     }
 
-    pub async fn withdraw_history_by_auto_range(
+    pub async fn withdraw_history_quick(
         &self,
-        coin: &str,
+        coin: Option<&str>,
         years: Option<i64>,
         months: Option<i64>,   // = 1-12,
         begin_at: Option<i64>, // timestamp
@@ -420,12 +420,17 @@ impl WalletApi {
         let mut start_at = begin_at.unwrap_or(now_at) - query_90days;
         let mut end_at = begin_at.unwrap_or(now_at);
 
-        info!("💰 query range: [{:?}, {:?} ], stop_at: {},", start_at, end_at, stop_at);
+        info!(
+            "💰 one query range: [{:?}, {:?} ], stop_at: {},",
+            Utc.timestamp_millis(start_at).to_rfc3339(),
+            Utc.timestamp_millis(end_at).to_rfc3339(),
+            Utc.timestamp_millis(stop_at).to_rfc3339(),
+        );
 
         // stop at 2years ago:
         while start_at > stop_at {
             let withdraw_req = WithdrawalHistoryQuery {
-                coin: Some(coin.to_string()),
+                coin: coin.map(|c| c.to_string()),
                 withdraw_order_id: None,
                 status: None,
                 start_time: Some(start_at as u64),
@@ -439,9 +444,13 @@ impl WalletApi {
                     let start = Utc.timestamp_millis(start_at).to_rfc3339();
                     let end = Utc.timestamp_millis(end_at).to_rfc3339();
 
-                    info!("💰 withdraw history: [{:?}, {:?}] = {:?}", start, end, answer);
-                    for withdraw in answer {
-                        info!("💰 user withdraw records: {:?}", withdraw);
+                    if answer.is_empty() {
+                        debug!("💰 no withdraw history in range: [{:?}, {:?} ]", start, end);
+                    } else {
+                        info!("💰 withdraw history in range: [{:?}, {:?} ]", start, end);
+                        for withdraw in answer {
+                            info!("💎 withdraw record: {:?}", withdraw);
+                        }
                     }
                 },
                 Err(e) => error!("Error: {:?}", e),
@@ -535,7 +544,7 @@ pub async fn wallet_data(api_key: &str, secret_key: &str) {
 
     cli.deposit_history("USDT").await;
     // cli.withdraw_history_by_auto_range("USDT").await;
-    cli.withdraw_history_by_auto_range("BUSD", Some(3), None, None).await;
+    cli.withdraw_history_quick(None, Some(5), None, None).await;
 
     let now_at = Utc::now().timestamp_millis();
     let ts_90days_ago: i64 = Utc::now().timestamp_millis() - (60 * 60 * 24 * 90);
