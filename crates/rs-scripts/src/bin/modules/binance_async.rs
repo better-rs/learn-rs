@@ -398,25 +398,32 @@ impl WalletApi {
         }
     }
 
-    pub async fn withdraw_history_by_auto_range(&self, coin: &str) {
+    pub async fn withdraw_history_by_auto_range(
+        &self,
+        coin: &str,
+        years: Option<i64>,
+        months: Option<i64>,   // = 1-12,
+        begin_at: Option<i64>, // timestamp
+    ) {
         let now_at = Utc::now().timestamp_millis();
 
-        let duration_90days = Duration::days(90).num_milliseconds();
-        let duration_2years = Duration::days(365 * 2).num_milliseconds();
+        // min range = 2years
+        let query_range =
+            Duration::days(365 * years.unwrap_or(2)) + Duration::days(months.unwrap_or(0));
 
-        // stop at:
-        let ts_2years_ago: i64 = now_at - duration_2years;
+        let stop_at = now_at - query_range.num_milliseconds();
 
-        let mut start_at = now_at - duration_90days;
-        let mut end_at = now_at;
+        // one query step:
+        let query_90days = Duration::days(90).num_milliseconds();
 
-        info!(
-            "💰 start_at: {:?}, end_at: {:?}, 90days: {}, 2years: {}, now: {}, ts_2years_ago: {}",
-            start_at, end_at, duration_90days, duration_2years, now_at, ts_2years_ago
-        );
+        // one query range:
+        let mut start_at = begin_at.unwrap_or(now_at) - query_90days;
+        let mut end_at = begin_at.unwrap_or(now_at);
+
+        info!("💰 query range: [{:?}, {:?} ], stop_at: {},", start_at, end_at, stop_at);
 
         // stop at 2years ago:
-        while start_at > ts_2years_ago {
+        while start_at > stop_at {
             let withdraw_req = WithdrawalHistoryQuery {
                 coin: Some(coin.to_string()),
                 withdraw_order_id: None,
@@ -441,8 +448,8 @@ impl WalletApi {
             }
 
             // iter:
-            start_at -= duration_90days;
-            end_at -= duration_90days;
+            start_at -= query_90days;
+            end_at -= query_90days;
         }
     }
 
@@ -528,7 +535,7 @@ pub async fn wallet_data(api_key: &str, secret_key: &str) {
 
     cli.deposit_history("USDT").await;
     // cli.withdraw_history_by_auto_range("USDT").await;
-    cli.withdraw_history_by_auto_range("BUSD").await;
+    cli.withdraw_history_by_auto_range("BUSD", Some(3), None, None).await;
 
     let now_at = Utc::now().timestamp_millis();
     let ts_90days_ago: i64 = Utc::now().timestamp_millis() - (60 * 60 * 24 * 90);
