@@ -74,7 +74,8 @@ binance = "0.18.4"         # binance api
 #binance-rs-async = "1.1.7" # binance async api
 #binance-async = { version = "1.1.7", package = "binance-rs-async" } # fix conflict with binance-rs
 #binance-async = {  package = "binance-rs-async" ,features=["all_apis"], git = 'https://github.com/Igosuki/binance-rs-async', branch = "master"} # fix conflict with binance-rs
-binance-async = { package = "binance-rs-async", features=["all_apis"], path = '../../tmp/binance-rs-async' }
+binance-async = { package = "binance-rs-async", features = ["all_apis"], git = 'https://github.com/better-rs/binance-rs-async', branch = "dev/wallet-api" } # fix conflict with binance-rs
+#binance-async = { package = "binance-rs-async", features=["all_apis"], path = '../../tmp/binance-rs-async' }
 
 
 tui = "0.18.0"       # terminal ui

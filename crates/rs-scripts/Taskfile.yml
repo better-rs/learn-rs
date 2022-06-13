@@ -69,3 +69,8 @@ tasks:
       - cargo install --path . --force --verbose
       - cargo install --list
       - cd ../..; open target/release/
+
+  clean:
+    cmds:
+      - echo "clean"
+      - cargo clean
