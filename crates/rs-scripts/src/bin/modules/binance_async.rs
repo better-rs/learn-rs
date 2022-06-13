@@ -331,6 +331,33 @@ impl WalletApi {
         Self { client: Binance::new(api_key, secret_key) }
     }
 
+    pub async fn deposit_history(&self, coin: Option<&str>) {
+        let req = DepositHistoryQuery {
+            coin: coin.map(|c| c.to_string()),
+            status: None,
+            start_time: None,
+            end_time: None,
+            limit: None,
+            offset: None,
+        };
+
+        match self.client.deposit_history_quick(req, None, None, None, None).await {
+            Ok(answer) =>
+                for r in answer {
+                    info!(
+                        "💰 deposit history: [{:?}, {:?}], length={}",
+                        r.start_at,
+                        r.end_at,
+                        r.records.len()
+                    );
+                    for item in r.records {
+                        info!("💎 deposit: {:?}", item);
+                    }
+                },
+            Err(e) => error!("Error: {:?}", e),
+        }
+    }
+
     // 查询充值历史:
     pub async fn deposit_history_quick(
         &self,
@@ -371,7 +398,7 @@ impl WalletApi {
                 offset: None,
             };
 
-            match self.client.deposit_history(deposit_req).await {
+            match self.client.deposit_history(&deposit_req).await {
                 Ok(answer) => {
                     let start = Utc.timestamp_millis(start_at).to_rfc3339();
                     let end = Utc.timestamp_millis(end_at).to_rfc3339();
@@ -512,7 +539,9 @@ pub async fn wallet_data(api_key: &str, secret_key: &str) {
 
     // 支持查所有币种:
     // cli.withdraw_history_quick(None, Some(5), None, None).await;
-    cli.deposit_history_quick(None, Some(5), None, None).await;
+    // cli.deposit_history_quick(None, Some(5), None, None).await;
+
+    cli.deposit_history(None).await;
 
     let now_at = Utc::now().timestamp_millis();
     let ts_90days_ago: i64 = Utc::now().timestamp_millis() - (60 * 60 * 24 * 90);
