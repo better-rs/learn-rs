@@ -273,6 +273,8 @@ pub async fn do_wallet_cmd(api_key: &str, secret_key: &str) {
 
     // 币安的账户快照:
     // cli.snapshot().await;
+
+    warn!("do wallet cmd done.")
 }
 
 // auth:

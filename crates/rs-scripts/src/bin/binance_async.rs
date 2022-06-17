@@ -4,7 +4,7 @@ use pretty_env_logger;
 
 use crate::{
     commands::binance::{BinanceCli, BinanceCommands, WalletCommand},
-    modules::binance::{account, binance_async, wallet},
+    modules::binance::{account, binance_async, market::do_market_cmd, wallet},
 };
 
 mod commands;
@@ -49,7 +49,8 @@ async fn main() {
 
         // market data:
         BinanceCommands::Market { empty: _ } => {
-            binance_async::market_data().await;
+            // binance_async::market_data().await;
+            do_market_cmd().await;
         },
 
         _ => {
