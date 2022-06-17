@@ -11,6 +11,9 @@ use log::{debug, error, info, warn};
 use pretty_env_logger;
 
 // wallet:
+// api docs:
+//      - https://binance-docs.github.io/apidocs/spot/cn/#system
+//
 pub struct WalletService {
     client: Wallet,
 }
@@ -247,6 +250,16 @@ impl WalletService {
             Err(e) => error!("Error: {:?}", e),
         }
     }
+
+    // api key 权限检查:
+    pub async fn api_key_permissions(&self) {
+        match self.client.api_key_permissions().await {
+            Ok(answer) => {
+                info!("💰 api_key_permissions: {:?}", answer);
+            },
+            Err(e) => error!("Error: {:?}", e),
+        }
+    }
 }
 
 // auth:
@@ -260,12 +273,10 @@ pub async fn do_wallet_cmd(api_key: &str, secret_key: &str) {
     // cli.deposit_history_quick(None, Some(5), None, None).await;
 
     // cli.deposit_history(None).await;
-    cli.withdraw_history(None).await;
+    // cli.withdraw_history(None).await;
 
     let now_at = Utc::now().timestamp_millis();
     let ts_90days_ago: i64 = Utc::now().timestamp_millis() - (60 * 60 * 24 * 90);
-    info!("💰 start time: {:?}", now_at);
-    info!("💰 ts_90days_ago: {:?}", ts_90days_ago);
 
     // 币安的充值地址:
     let coins = &vec!["USDT", "BUSD", "BTC", "ETH", "BNB", "DOT"];
@@ -273,6 +284,8 @@ pub async fn do_wallet_cmd(api_key: &str, secret_key: &str) {
 
     // 币安的账户快照:
     // cli.snapshot().await;
+
+    cli.api_key_permissions().await;
 
     warn!("do wallet cmd done.")
 }
