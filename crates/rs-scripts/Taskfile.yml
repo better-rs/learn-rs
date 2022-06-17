@@ -23,8 +23,11 @@ tasks:
 
   run:binance:async:
     cmds:
-      - RUST_LOG=info cargo run --bin rs-binance-async -- general empty
       - RUST_LOG=info cargo run --bin rs-binance-async -- market empty
+
+  run:binance:async:general:
+    cmds:
+      - RUST_LOG=info cargo run --bin rs-binance-async -- general empty
 
   run:binance:async:auth:
     cmds:

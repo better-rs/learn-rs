@@ -51,24 +51,6 @@ pub async fn general() {
 pub async fn market_data() {
     let market: Market = Binance::new(None, None);
 
-    // Latest price for ONE symbol
-    match market.get_price("KNCETH").await {
-        Ok(answer) => info!("{:?}", answer),
-        Err(e) => error!("Error: {:?}", e),
-    }
-
-    // Current average price for ONE symbol
-    match market.get_average_price("KNCETH").await {
-        Ok(answer) => info!("{:?}", answer),
-        Err(e) => error!("Error: {:?}", e),
-    }
-
-    // Best price/qty on the order book for ALL symbols
-    match market.get_all_book_tickers().await {
-        Ok(answer) => info!("{:?}", answer),
-        Err(e) => error!("Error: {:?}", e),
-    }
-
     // Best price/qty on the order book for ONE symbol
     match market.get_book_ticker("BNBETH").await {
         Ok(answer) => info!("Bid Price: {}, Ask Price: {}", answer.bid_price, answer.ask_price),

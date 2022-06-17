@@ -42,7 +42,7 @@ impl MarketService {
         }
     }
 
-    // 单个交易对价格查询:
+    // 单个交易对价格查询: // Latest price for ONE symbol
     pub async fn get_price(&self, symbol: &str) {
         match self.client.get_price(symbol).await {
             Ok(answer) => {
@@ -51,14 +51,56 @@ impl MarketService {
             Err(e) => error!("Error: {:?}", e),
         }
     }
+
+    pub async fn xxx(&self, xx: &str) {
+        match self.client.get_all_prices().await {
+            Ok(answer) => info!("xxx: {:?}", answer),
+            Err(e) => error!("Error: {:?}", e),
+        }
+    }
+
+    // 平均价格: 5min/avg
+    pub async fn get_average_price(&self, symbol: &str) {
+        // Current average price for ONE symbol
+        match self.client.get_average_price(symbol).await {
+            Ok(answer) => info!("get_average_price: symbol: {}, {:?}", symbol, answer),
+            Err(e) => error!("Error: {:?}", e),
+        }
+    }
+
+    pub async fn get_all_book_tickers(&self) {
+        // Best price/qty on the order book for ALL symbols
+        match self.client.get_all_book_tickers().await {
+            Ok(answer) => info!("get_all_book_tickers: {:?}", answer),
+            Err(e) => error!("Error: {:?}", e),
+        }
+    }
+
+    pub async fn get_book_ticker(&self, symbol: &str) {
+        // Best price/qty on the order book for ONE symbol
+        match self.client.get_book_ticker(symbol).await {
+            Ok(answer) => info!(
+                "get_book_ticker: symbol: {}, Bid Price: {}, Ask Price: {}",
+                symbol, answer.bid_price, answer.ask_price
+            ),
+            Err(e) => error!("Error: {:?}", e),
+        }
+    }
 }
 
 pub async fn do_market_cmd() {
     let cli = MarketService::new();
 
+    let coin_pair = "BNBUSDT";
+
     // cli.get_depth("BNBETH").await;
+
     // cli.get_all_prices().await;
-    cli.get_price("BNBUSDT").await;
+    cli.get_price(coin_pair).await;
+    cli.get_average_price(coin_pair).await;
+
+    // cli.get_all_book_tickers().await;
+    cli.get_book_ticker(coin_pair).await;
 
     warn!("do market cmd done.")
 }
