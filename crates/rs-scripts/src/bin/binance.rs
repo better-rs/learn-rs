@@ -4,7 +4,7 @@ use pretty_env_logger;
 
 use crate::{
     commands::binance::{BinanceCli, BinanceCommands},
-    modules::binance::{account_data, market_data},
+    modules::binance::binance::{account_data, market_data},
 };
 
 mod commands;
