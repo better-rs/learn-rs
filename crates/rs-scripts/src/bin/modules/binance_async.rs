@@ -418,6 +418,35 @@ impl WalletApi {
         }
     }
 
+    // new withdraw history api:
+    pub async fn withdraw_history(&self, coin: Option<&str>) {
+        let req = WithdrawalHistoryQuery {
+            coin: coin.map(|c| c.to_string()),
+            withdraw_order_id: None,
+            status: None,
+            start_time: None,
+            end_time: None,
+            limit: None,
+            offset: None,
+        };
+
+        match self.client.withdraw_history_quick(req, None, None, None, None).await {
+            Ok(answer) =>
+                for r in answer {
+                    info!(
+                        "💰 withdraw history: [{:?}, {:?}], length={}",
+                        r.start_at,
+                        r.end_at,
+                        r.records.len()
+                    );
+                    for item in r.records {
+                        info!("💎 withdraw: {:?}", item);
+                    }
+                },
+            Err(e) => error!("Error: {:?}", e),
+        }
+    }
+
     // 不传 coin 就是所有币种:
     pub async fn withdraw_history_quick(
         &self,
@@ -460,7 +489,7 @@ impl WalletApi {
                 offset: None,
             };
 
-            match self.client.withdraw_history(withdraw_req).await {
+            match self.client.withdraw_history(&withdraw_req).await {
                 Ok(answer) => {
                     let start = Utc.timestamp_millis(start_at).to_rfc3339();
                     let end = Utc.timestamp_millis(end_at).to_rfc3339();
@@ -541,7 +570,8 @@ pub async fn wallet_data(api_key: &str, secret_key: &str) {
     // cli.withdraw_history_quick(None, Some(5), None, None).await;
     // cli.deposit_history_quick(None, Some(5), None, None).await;
 
-    cli.deposit_history(None).await;
+    // cli.deposit_history(None).await;
+    cli.withdraw_history(None).await;
 
     let now_at = Utc::now().timestamp_millis();
     let ts_90days_ago: i64 = Utc::now().timestamp_millis() - (60 * 60 * 24 * 90);
