@@ -133,11 +133,13 @@ tasks:
       - task: commit
       - task: commit
       - task: push
+    ignore_error: true
 
   commit:
     cmds:
       - git add .
       - git commit -m "update"
+    ignore_error: true
 
   push:
     cmds:
