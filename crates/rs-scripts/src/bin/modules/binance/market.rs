@@ -26,9 +26,28 @@ impl MarketService {
         }
     }
 
+    // 币价查询:
     pub async fn get_all_prices(&self) {
         match self.client.get_all_prices().await {
-            Ok(answer) => info!("get_all_prices: {:?}", answer),
+            Ok(answer) => {
+                info!("💰 get_all_prices:");
+                match answer {
+                    Prices::AllPrices(prices) =>
+                        for item in prices.iter() {
+                            info!("\t💎 price: {:?}", item);
+                        },
+                }
+            },
+            Err(e) => error!("Error: {:?}", e),
+        }
+    }
+
+    // 单个交易对价格查询:
+    pub async fn get_price(&self, symbol: &str) {
+        match self.client.get_price(symbol).await {
+            Ok(answer) => {
+                info!("get_price: {:?}", answer);
+            },
             Err(e) => error!("Error: {:?}", e),
         }
     }
@@ -37,8 +56,9 @@ impl MarketService {
 pub async fn do_market_cmd() {
     let cli = MarketService::new();
 
-    cli.get_depth("BNBETH").await;
-    cli.get_all_prices().await;
+    // cli.get_depth("BNBETH").await;
+    // cli.get_all_prices().await;
+    cli.get_price("BNBUSDT").await;
 
     warn!("do market cmd done.")
 }

@@ -51,18 +51,6 @@ pub async fn general() {
 pub async fn market_data() {
     let market: Market = Binance::new(None, None);
 
-    // Order book
-    match market.get_depth("BNBETH").await {
-        Ok(answer) => info!("{:?}", answer),
-        Err(e) => error!("Error: {:?}", e),
-    }
-
-    // Latest price for ALL symbols
-    match market.get_all_prices().await {
-        Ok(answer) => info!("{:?}", answer),
-        Err(e) => error!("Error: {:?}", e),
-    }
-
     // Latest price for ONE symbol
     match market.get_price("KNCETH").await {
         Ok(answer) => info!("{:?}", answer),
