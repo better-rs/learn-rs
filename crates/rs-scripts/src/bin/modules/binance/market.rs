@@ -114,13 +114,6 @@ impl MarketService {
             Err(e) => println!("Error: {:?}", e),
         }
     }
-
-    pub async fn xxx(&self, xx: &str) {
-        match self.client.get_all_prices().await {
-            Ok(answer) => info!("xxx: {:?}", answer),
-            Err(e) => error!("Error: {:?}", e),
-        }
-    }
 }
 
 pub async fn do_market_cmd() {
