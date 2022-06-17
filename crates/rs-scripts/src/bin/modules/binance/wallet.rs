@@ -250,7 +250,7 @@ impl WalletService {
 }
 
 // auth:
-pub async fn wallet_data(api_key: &str, secret_key: &str) {
+pub async fn do_wallet_cmd(api_key: &str, secret_key: &str) {
     let wallet: Wallet = Binance::new(Some(api_key.into()), Some(secret_key.into()));
 
     let cli = WalletService::new(Some(api_key.into()), Some(secret_key.into()));

@@ -31,11 +31,13 @@ async fn main() {
 
         // wallet:
         BinanceCommands::Wallet(cmd) => match cmd {
+            // 充值:
             WalletCommand::Deposit { api_key, api_secret, coin, status, start_time, .. } => {
                 info!("deposit records: {}", api_key);
-                wallet::wallet_data(api_key, api_secret).await;
+                wallet::do_wallet_cmd(api_key, api_secret).await;
             },
 
+            // 提现:
             WalletCommand::Withdraw { api_key, api_secret, coin, status, start_time, .. } => {
                 info!("withdraw records:");
             },
