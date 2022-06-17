@@ -47,46 +47,6 @@ pub async fn general() {
     }
 }
 
-// no auth:
-pub async fn market_data() {
-    let market: Market = Binance::new(None, None);
-
-    // Best price/qty on the order book for ONE symbol
-    match market.get_book_ticker("BNBETH").await {
-        Ok(answer) => info!("Bid Price: {}, Ask Price: {}", answer.bid_price, answer.ask_price),
-        Err(e) => error!("Error: {:?}", e),
-    }
-
-    // 24hr ticker price change statistics
-    match market.get_24h_price_stats("BNBETH").await {
-        Ok(answer) => info!(
-            "Open Price: {}, Higher Price: {}, Lower Price: {:?}",
-            answer.open_price, answer.high_price, answer.low_price
-        ),
-        Err(e) => error!("Error: {:?}", e),
-    }
-
-    // last 10 5min klines (candlesticks) for a symbol:
-    match market.get_klines("BNBETH", "5m", 10, None, None).await {
-        Ok(answer) => info!("{:?}", answer),
-        Err(e) => error!("Error: {:?}", e),
-    }
-
-    // 10 latest (aggregated) trades
-    match market.get_agg_trades("BNBETH", None, None, None, Some(10)).await {
-        Ok(trades) => {
-            let trade = &trades[0]; // You need to iterate over them
-            println!(
-                "{} BNB Qty: {}, Price: {}",
-                if trade.maker { "SELL" } else { "BUY" },
-                trade.qty,
-                trade.price
-            )
-        },
-        Err(e) => println!("Error: {:?}", e),
-    }
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;
