@@ -4,7 +4,7 @@ use pretty_env_logger;
 
 use crate::{
     commands::binance::{BinanceCli, BinanceCommands, WalletCommand},
-    modules::binance::{binance_async, wallet},
+    modules::binance::{account, binance_async, wallet},
 };
 
 mod commands;
@@ -25,7 +25,8 @@ async fn main() {
         // user account data:
         BinanceCommands::Auth { api_key, api_secret } => {
             println!("binance api key: {}\n\n", api_key);
-            binance_async::account_data(Some(api_key.into()), Some(api_secret.into())).await;
+            // binance_async::account_data(Some(api_key.into()), Some(api_secret.into())).await;
+            account::do_account_cmd(api_key, api_secret).await;
         },
 
         // wallet:

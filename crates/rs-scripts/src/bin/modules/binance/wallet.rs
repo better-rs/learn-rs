@@ -10,11 +10,12 @@ use log::{debug, error, info, warn};
 #[allow(unused_imports)]
 use pretty_env_logger;
 
-pub struct WalletApi {
+// wallet:
+pub struct WalletService {
     client: Wallet,
 }
 
-impl WalletApi {
+impl WalletService {
     pub fn new(api_key: Option<String>, secret_key: Option<String>) -> Self {
         Self { client: Binance::new(api_key, secret_key) }
     }
@@ -252,7 +253,7 @@ impl WalletApi {
 pub async fn wallet_data(api_key: &str, secret_key: &str) {
     let wallet: Wallet = Binance::new(Some(api_key.into()), Some(secret_key.into()));
 
-    let cli = WalletApi::new(Some(api_key.into()), Some(secret_key.into()));
+    let cli = WalletService::new(Some(api_key.into()), Some(secret_key.into()));
 
     // 支持查所有币种:
     // cli.withdraw_history_quick(None, Some(5), None, None).await;
