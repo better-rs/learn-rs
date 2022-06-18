@@ -18,9 +18,11 @@ fn ex08_assoc_items() {
         fn contains(&self, number_1: &i32, number_2: &i32) -> bool {
             (&self.0 == number_1) && (&self.1 == number_2)
         }
+
         fn first(&self) -> i32 {
             self.0
         }
+
         fn last(&self) -> i32 {
             self.1
         }

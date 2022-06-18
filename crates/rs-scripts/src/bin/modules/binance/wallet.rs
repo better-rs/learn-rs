@@ -33,8 +33,8 @@ impl WalletService {
             offset: None,
         };
 
-        match self.client.deposit_history_quick(req, None, None, None, None).await {
-            Ok(answer) =>
+        match self.client.deposit_history_quick(req, None, None).await {
+            Ok(answer) => {
                 for r in answer {
                     info!(
                         "💰 deposit history: [{:?}, {:?}], length={}",
@@ -45,7 +45,8 @@ impl WalletService {
                     for item in r.records {
                         info!("💎 deposit: {:?}", item);
                     }
-                },
+                }
+            },
             Err(e) => error!("Error: {:?}", e),
         }
     }
@@ -122,8 +123,8 @@ impl WalletService {
             offset: None,
         };
 
-        match self.client.withdraw_history_quick(req, None, None, None, None).await {
-            Ok(answer) =>
+        match self.client.withdraw_history_quick(req, None, None).await {
+            Ok(answer) => {
                 for r in answer {
                     info!(
                         "💰 withdraw history: [{:?}, {:?}], length={}",
@@ -134,7 +135,8 @@ impl WalletService {
                     for item in r.records {
                         info!("💎 withdraw: {:?}", item);
                     }
-                },
+                }
+            },
             Err(e) => error!("Error: {:?}", e),
         }
     }
@@ -228,16 +230,17 @@ impl WalletService {
         };
 
         match self.client.daily_account_snapshot(snapshot_req).await {
-            Ok(answer) =>
+            Ok(answer) => {
                 for item in answer.snapshot_vos.iter() {
                     info!("💰 snapshot: {:?}", item.update_time);
                     match AccountSnapshotType::from_str(item.snapshot_type.as_str()) {
-                        AccountSnapshotType::Spot =>
+                        AccountSnapshotType::Spot => {
                             for balance in item.data.balances.iter() {
                                 if balance.free + balance.locked >= 0.0 {
                                     info!("\t💰 coin: {:?}", balance);
                                 }
-                            },
+                            }
+                        },
                         AccountSnapshotType::Margin => {
                             info!("💰 margin snapshot: {:?}", item);
                         },
@@ -245,7 +248,8 @@ impl WalletService {
                             info!("💰 futures snapshot: {:?}", item);
                         },
                     }
-                },
+                }
+            },
 
             Err(e) => error!("Error: {:?}", e),
         }
@@ -272,8 +276,8 @@ pub async fn do_wallet_cmd(api_key: &str, secret_key: &str) {
     // cli.withdraw_history_quick(None, Some(5), None, None).await;
     // cli.deposit_history_quick(None, Some(5), None, None).await;
 
-    // cli.deposit_history(None).await;
-    // cli.withdraw_history(None).await;
+    cli.deposit_history(None).await;
+    cli.withdraw_history(None).await;
 
     let now_at = Utc::now().timestamp_millis();
     let ts_90days_ago: i64 = Utc::now().timestamp_millis() - (60 * 60 * 24 * 90);

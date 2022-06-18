@@ -32,10 +32,11 @@ impl MarketService {
             Ok(answer) => {
                 info!("💰 get_all_prices:");
                 match answer {
-                    Prices::AllPrices(prices) =>
+                    Prices::AllPrices(prices) => {
                         for item in prices.iter() {
                             info!("\t💎 price: {:?}", item);
-                        },
+                        }
+                    },
                 }
             },
             Err(e) => error!("Error: {:?}", e),

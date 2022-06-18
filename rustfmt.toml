@@ -1,5 +1,6 @@
 #
 # ref:
+#   - https://gist.github.com/haruleekim/55e015778a325c01866350d5b0b2cbba
 #   - https://github.com/rust-lang/rust/blob/master/rustfmt.toml
 #   - https://github.com/tikv/tikv/blob/master/rustfmt.toml
 #
@@ -7,6 +8,10 @@
 
 # Run rustfmt with this config (it should be picked up automatically).
 version = "Two"
+
+edition = "2018"
+color = "Auto"
+unstable_features = true
 
 
 # 跳过指定目录
@@ -21,7 +26,23 @@ use_small_heuristics = "Max"
 
 # Imports
 imports_granularity = "Crate"
+
+# Sort
 reorder_imports = true
+reorder_modules = true
+reorder_impl_items = true
+
+merge_derives = true
+
+
+# Format
+format_code_in_doc_comments = true
+format_macro_matchers = true
+format_macro_bodies = true
+format_strings = true
+
+# Force
+force_multiline_blocks = false
 
 # Consistency
 newline_style = "Unix"
@@ -33,10 +54,9 @@ wrap_comments = true
 # Misc
 chain_width = 80
 spaces_around_ranges = false
-binop_separator = "Back"
-reorder_impl_items = false
+
 match_arm_leading_pipes = "Preserve"
-match_arm_blocks = false
+match_arm_blocks = true
 match_block_trailing_comma = true
 trailing_comma = "Vertical"
 trailing_semicolon = false
