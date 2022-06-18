@@ -56,7 +56,7 @@ chain_width = 80
 spaces_around_ranges = false
 
 match_arm_leading_pipes = "Preserve"
-match_arm_blocks = true
+match_arm_blocks = true  # fix
 match_block_trailing_comma = true
 trailing_comma = "Vertical"
 trailing_semicolon = false
