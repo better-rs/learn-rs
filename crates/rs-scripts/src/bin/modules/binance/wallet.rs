@@ -206,20 +206,6 @@ impl WalletService {
         }
     }
 
-    // 查询充值地址:
-    pub async fn deposit_addresses(&self, coins: &Vec<&str>) {
-        for coin in coins.iter() {
-            let req = DepositAddressQuery { coin: coin.to_string(), network: None };
-
-            match self.client.deposit_address(req).await {
-                Ok(answer) => {
-                    info!("💰 deposit address: {:?}", answer);
-                },
-                Err(e) => error!("Error: {:?}", e),
-            }
-        }
-    }
-
     // todo x:
     pub async fn snapshot(&self) {
         let snapshot_req: AccountSnapshotQuery = AccountSnapshotQuery {
@@ -264,103 +250,106 @@ impl WalletService {
             Err(e) => error!("Error: {:?}", e),
         }
     }
+
+    pub async fn system_status(&self) {
+        match self.client.system_status().await {
+            Ok(answer) => {
+                info!("💰 system_status: {:?}", answer);
+            },
+            Err(e) => error!("Error: {:?}", e),
+        }
+    }
+
+    pub async fn all_coin_info(&self) {
+        match self.client.all_coin_info().await {
+            Ok(answer) => {
+                info!("💰 all_coin_info: {:?}", answer);
+            },
+            Err(e) => error!("Error: {:?}", e),
+        }
+    }
+
+    // todo x: need check // Unauthorized
+    pub async fn disable_fast_withdraw_switch(&self) {
+        match self.client.disable_fast_withdraw_switch().await {
+            Ok(answer) => {
+                info!("💰 disable_fast_withdraw_switch: {:?}", answer);
+            },
+            Err(e) => error!("Error: {:?}", e),
+        }
+    }
+
+    // todo x: need check // Unauthorized
+    pub async fn enable_fast_withdraw_switch(&self) {
+        match self.client.enable_fast_withdraw_switch().await {
+            Ok(answer) => {
+                info!("💰 enable_fast_withdraw_switch: {:?}", answer);
+            },
+            Err(e) => error!("Error: {:?}", e),
+        }
+    }
+
+    // todo x: Unauthorized
+    pub async fn withdraw(&self) {
+        let req = CoinWithdrawalQuery::default();
+
+        match self.client.withdraw(req).await {
+            Ok(answer) => {
+                info!("💰 withdraw: {:?}", answer);
+            },
+            Err(e) => error!("Error: {:?}", e),
+        }
+    }
+
+    // 查询充值地址:
+    pub async fn deposit_addresses(&self, coins: &Vec<&str>) {
+        for coin in coins.iter() {
+            let req = DepositAddressQuery { coin: coin.to_string(), network: None };
+
+            match self.client.deposit_address(req).await {
+                Ok(answer) => {
+                    info!("💰 deposit address: {:?}", answer);
+                },
+                Err(e) => error!("Error: {:?}", e),
+            }
+        }
+    }
+
+    pub async fn account_status(&self) {
+        match self.client.account_status().await {
+            Ok(answer) => {
+                info!("💰 account_status: {:?}", answer);
+            },
+            Err(e) => error!("Error: {:?}", e),
+        }
+    }
 }
 
 // auth:
 pub async fn do_wallet_cmd(api_key: &str, secret_key: &str) {
-    let wallet: Wallet = Binance::new(Some(api_key.into()), Some(secret_key.into()));
-
     let cli = WalletService::new(Some(api_key.into()), Some(secret_key.into()));
 
     // 支持查所有币种:
     // cli.withdraw_history_quick(None, Some(5), None, None).await;
     // cli.deposit_history_quick(None, Some(5), None, None).await;
 
-    cli.deposit_history(None).await;
-    cli.withdraw_history(None).await;
-
-    let now_at = Utc::now().timestamp_millis();
-    let ts_90days_ago: i64 = Utc::now().timestamp_millis() - (60 * 60 * 24 * 90);
+    // cli.deposit_history(None).await;
+    // cli.withdraw_history(None).await;
 
     // 币安的充值地址:
     let coins = &vec!["USDT", "BUSD", "BTC", "ETH", "BNB", "DOT"];
-    // cli.deposit_addresses(coins).await;
 
     // 币安的账户快照:
     // cli.snapshot().await;
+    // cli.api_key_permissions().await;
+    // cli.system_status().await;
+    // cli.all_coin_info().await;
+    // cli.disable_fast_withdraw_switch().await; // todo x: need check
+    // cli.enable_fast_withdraw_switch().await; // todo x: need check
+    // cli.withdraw().await; // todo x: need check
+    // cli.deposit_addresses(coins).await;
 
-    cli.api_key_permissions().await;
+    cli.account_status().await;
 
     warn!("do wallet cmd done.")
-}
-
-// auth:
-pub async fn wallet_api(api_key: Option<String>, secret_key: Option<String>) {
-    let wallet: Wallet = Binance::new(api_key, secret_key);
-
-    let now_at = Utc::now().timestamp_millis();
-    let ts_90days_ago: i64 = Utc::now().timestamp_millis() - (60 * 60 * 24 * 90);
-    info!("💰 start time: {:?}", now_at);
-    info!("💰 ts_90days_ago: {:?}", ts_90days_ago);
-
-    let snapshot_req: AccountSnapshotQuery = AccountSnapshotQuery {
-        start_time: None,
-        end_time: None,
-        limit: None,
-        account_type: AccountSnapshotType::Spot,
-    };
-
-    match wallet.daily_account_snapshot(snapshot_req).await {
-        Ok(answer) => {
-            info!("💰 daily account snapshot: {:?}", answer);
-        },
-
-        Err(e) => error!("Error: {:?}", e),
-    }
-
-    match wallet.all_coin_info().await {
-        Ok(answer) => {
-            info!("💰 all coin info: {:?}", answer);
-        },
-        Err(e) => error!("Error: {:?}", e),
-    }
-
-    match wallet.funding_wallet(Some("USDT".into()), None).await {
-        Ok(answer) => {
-            info!("💰 funding rate: {:?}", answer);
-        },
-        Err(e) => error!("Error: {:?}", e),
-    }
-
-    match wallet.account_status().await {
-        Ok(answer) => {
-            info!("💰 account status: {:?}", answer);
-        },
-        Err(e) => error!("Error: {:?}", e),
-    }
-
-    let address_req = DepositAddressQuery { coin: "USDT".into(), network: None };
-
-    let deposit_addrs = &vec![
-        DepositAddressQuery { coin: "USDT".into(), network: None },
-        DepositAddressQuery { coin: "BUSD".into(), network: None },
-        DepositAddressQuery { coin: "BTC".into(), network: None },
-        DepositAddressQuery { coin: "ETH".into(), network: None },
-        DepositAddressQuery { coin: "BNB".into(), network: None },
-        DepositAddressQuery { coin: "DOT".into(), network: None },
-    ];
-
-    // 币安的充值地址:
-    let coins = &vec!["USDT", "BUSD", "BTC", "ETH", "BNB", "DOT"];
-
-    for coin in coins.iter() {
-        let req = DepositAddressQuery { coin: coin.to_string(), network: None };
-
-        match wallet.deposit_address(req).await {
-            Ok(answer) => {
-                info!("💰 deposit address: {:?}", answer);
-            },
-            Err(e) => error!("Error: {:?}", e),
-        }
-    }
 }

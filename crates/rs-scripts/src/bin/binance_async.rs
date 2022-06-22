@@ -1,3 +1,5 @@
+#![allow(dead_code, unused_imports)] // global ignore useless warnings
+
 use clap::Parser;
 use log::{info, warn};
 use pretty_env_logger;
