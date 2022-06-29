@@ -7,6 +7,7 @@ edition = "2021"
 
 [dependencies]
 axum = "0.5" # web framework
+axum-macros = "0.2"
 tokio = { version = "1.17", features = ["full"] }
 
 # tracing:
@@ -29,8 +30,8 @@ dotenvy = "0.15" # env vars
 #log = "0.4"               # log
 #pretty_env_logger = "0.4" # colorful log
 
-# sqlx-postgres
-sea-orm = { version = "^0.8", features = ["sqlx-mysql", "runtime-tokio-native-tls", "macros", "debug-print", "mock"] }
+# sqlx-postgres # fix not add mock
+sea-orm = { version = "^0.8", features = ["sqlx-mysql", "runtime-tokio-native-tls", "macros", "debug-print"] }
 anyhow = "1.0"
 
 

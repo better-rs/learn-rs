@@ -12,4 +12,9 @@ path = "src/lib.rs"
 rs-cms-entity = { path = "../rs-cms-entity" }
 
 [dependencies.sea-orm-migration]
-version = "^0.8.0"
+version = "^0.8"
+features = [
+    # Enable following runtime and db backend features if you want to run migration via CLI
+    "runtime-tokio-native-tls",
+    "sqlx-mysql",
+]

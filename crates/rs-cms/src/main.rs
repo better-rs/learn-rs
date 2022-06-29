@@ -15,16 +15,17 @@
 
 use axum::{
     error_handling::HandleErrorLayer,
-    extract::{Extension, Path, Query},
+    extract::{Extension, Form, Path, Query},
     handler::Handler,
     http::StatusCode,
-    response::IntoResponse,
-    routing::{get, patch},
-    Json, Router,
+    response::{Html, IntoResponse},
+    routing::{get, patch, post},
+    Json, Router, Server,
 };
+
 use dotenvy::dotenv;
 // use log::{debug, info, warn};
-use crate::service::hello;
+use crate::service::{hello, user};
 // use pretty_env_logger;
 use serde::{Deserialize, Serialize};
 use std::{
@@ -86,6 +87,8 @@ async fn main() {
     let app = Router::new()
         .fallback(route::handler_404.into_service())
         .route("/", get(hello::hello))
+        .route("/user/", get(user::get_user))
+        .route("/user/add", get(user::add_user))
         .route("/index", get(hello::todos_index).post(hello::todos_create))
         .route("/todos", get(hello::todos_index).post(hello::todos_create))
         .route("/todos/:id", patch(hello::todos_update).delete(hello::todos_delete))
@@ -104,8 +107,8 @@ async fn main() {
                 }))
                 .timeout(Duration::from_secs(10))
                 .layer(TraceLayer::new_for_http())
-                .layer(Extension(db))
-                .into_inner(),
+                .layer(Extension(conn)), /* .layer(Extension(Arc::new(state::AppState { conn
+                                          * }))), // .into_inner(), */
         );
 
     // add a fallback service for handling routes to unknown paths

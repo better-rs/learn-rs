@@ -1,0 +1,33 @@
+POST http://127.0.0.1:5000/user/add
+Content-Type: application/json
+
+{}
+
+###
+GET http://127.0.0.1:5000/user/add
+Content-Type: application/x-www-form-urlencoded
+
+username=jim&email=jim@gmail.com&password=test1
+
+###
+POST http://localhost:80/api/item
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="field-name"
+
+field-value
+--WebAppBoundary--
+
+###
+
+
+
+###
+
+POST http://localhost:5000
+{
+    username:"test"
+    email:"test@example.com",
+password:"test password"
+}
