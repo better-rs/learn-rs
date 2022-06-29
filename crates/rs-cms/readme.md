@@ -35,20 +35,23 @@ DATABASE_URL=postgres://username:password@localhost/diesel_demo
 
 - run:
 
-```rust shell   
+```rust shell
 
 # install:
-task install 
+task install
 
 # set db env:
-task init:env 
+task init:env
 
 # create db:
 task db:setup
-task db:init 
+task db:init
 
 # run:
 task run
+
+# run with auto watch:
+task watch
 
 ```
 
@@ -75,4 +78,3 @@ task run
     - https://www.cnblogs.com/rongfengliang/p/12256614.html
     - https://www.ancii.com/ab3q5edb5/
     - https://github.com/diesel-rs/diesel/blob/master/examples/mysql/getting_started_step_1/src/schema.rs
-    

@@ -24,6 +24,7 @@ use axum::{
 };
 use dotenvy::dotenv;
 // use log::{debug, info, warn};
+use crate::service::hello;
 use pretty_env_logger;
 use serde::{Deserialize, Serialize};
 use std::{
@@ -36,6 +37,7 @@ use std::{
 use tower::{BoxError, ServiceBuilder};
 use tower_http::trace::TraceLayer;
 use uuid::Uuid;
+mod service;
 mod utils;
 use crate::utils::{route, shutdown};
 use tracing::{debug, error, info, warn, Level};
@@ -63,15 +65,15 @@ async fn main() {
 
     // fix conflict with tracing_subscriber
     // pretty_env_logger::init_custom_env("CMS_LOG");
-
-    let db = Db::default();
+    let db = hello::Db::default();
 
     // Compose the routes
     let app = Router::new()
         .fallback(route::handler_404.into_service())
-        .route("/", get(todos_index).post(todos_create))
-        .route("/todos", get(todos_index).post(todos_create))
-        .route("/todos/:id", patch(todos_update).delete(todos_delete))
+        .route("/", get(hello::hello))
+        .route("/index", get(hello::todos_index).post(hello::todos_create))
+        .route("/todos", get(hello::todos_index).post(hello::todos_create))
+        .route("/todos/:id", patch(hello::todos_update).delete(hello::todos_delete))
         // Add middleware to all routes
         .layer(
             ServiceBuilder::new()
@@ -105,88 +107,4 @@ async fn main() {
         .with_graceful_shutdown(shutdown::shutdown_signal()) // graceful shutdown
         .await
         .unwrap();
-}
-
-// The query parameters for todos index
-#[derive(Debug, Deserialize, Default)]
-pub struct Pagination {
-    pub offset: Option<usize>,
-    pub limit: Option<usize>,
-}
-
-async fn todos_index(
-    pagination: Option<Query<Pagination>>,
-    Extension(db): Extension<Db>,
-) -> impl IntoResponse {
-    let todos = db.read().unwrap();
-
-    let Query(pagination) = pagination.unwrap_or_default();
-
-    let todos = todos
-        .values()
-        .skip(pagination.offset.unwrap_or(0))
-        .take(pagination.limit.unwrap_or(usize::MAX))
-        .cloned()
-        .collect::<Vec<_>>();
-
-    Json(todos)
-}
-
-#[derive(Debug, Deserialize)]
-struct CreateTodo {
-    text: String,
-}
-
-async fn todos_create(
-    Json(input): Json<CreateTodo>,
-    Extension(db): Extension<Db>,
-) -> impl IntoResponse {
-    let todo = Todo { id: Uuid::new_v4(), text: input.text, completed: false };
-
-    db.write().unwrap().insert(todo.id, todo.clone());
-
-    (StatusCode::CREATED, Json(todo))
-}
-
-#[derive(Debug, Deserialize)]
-struct UpdateTodo {
-    text: Option<String>,
-    completed: Option<bool>,
-}
-
-async fn todos_update(
-    Path(id): Path<Uuid>,
-    Json(input): Json<UpdateTodo>,
-    Extension(db): Extension<Db>,
-) -> Result<impl IntoResponse, StatusCode> {
-    let mut todo = db.read().unwrap().get(&id).cloned().ok_or(StatusCode::NOT_FOUND)?;
-
-    if let Some(text) = input.text {
-        todo.text = text;
-    }
-
-    if let Some(completed) = input.completed {
-        todo.completed = completed;
-    }
-
-    db.write().unwrap().insert(todo.id, todo.clone());
-
-    Ok(Json(todo))
-}
-
-async fn todos_delete(Path(id): Path<Uuid>, Extension(db): Extension<Db>) -> impl IntoResponse {
-    if db.write().unwrap().remove(&id).is_some() {
-        StatusCode::NO_CONTENT
-    } else {
-        StatusCode::NOT_FOUND
-    }
-}
-
-type Db = Arc<RwLock<HashMap<Uuid, Todo>>>;
-
-#[derive(Debug, Serialize, Clone)]
-struct Todo {
-    id: Uuid,
-    text: String,
-    completed: bool,
 }
