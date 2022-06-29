@@ -12,7 +12,7 @@ tasks:
   run:
     cmds:
       - echo "run cms"
-      - cargo run
+      - RUST_BACKTRACE=1 cargo run
 
   # auto compile and run:
   watch:
@@ -65,5 +65,3 @@ tasks:
   db:show:
     cmds:
       - diesel print-schema
-
-

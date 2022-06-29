@@ -22,30 +22,47 @@ use axum::{
     routing::{get, patch},
     Json, Router,
 };
+use dotenvy::dotenv;
+// use log::{debug, info, warn};
+use pretty_env_logger;
 use serde::{Deserialize, Serialize};
 use std::{
     collections::HashMap,
+    env,
     net::SocketAddr,
     sync::{Arc, RwLock},
     time::Duration,
 };
 use tower::{BoxError, ServiceBuilder};
 use tower_http::trace::TraceLayer;
-use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
 use uuid::Uuid;
-
 mod utils;
 use crate::utils::{route, shutdown};
+use tracing::{debug, error, info, warn, Level};
+use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
 
 #[tokio::main]
 async fn main() {
     tracing_subscriber::registry()
         .with(tracing_subscriber::EnvFilter::new(
             std::env::var("RUST_LOG")
-                .unwrap_or_else(|_| "example_todos=debug,tower_http=debug".into()),
+                .unwrap_or_else(|_| "rs_cms=debug,tower_http=debug,sea_orm=debug".into()),
         ))
         .with(tracing_subscriber::fmt::layer())
         .init();
+
+    dotenv().ok();
+    for (key, value) in env::vars() {
+        println!("{key}: {value}");
+    }
+
+    debug!("debug print");
+    info!("info print");
+    warn!("warn print");
+    error!("error print");
+
+    // fix conflict with tracing_subscriber
+    // pretty_env_logger::init_custom_env("CMS_LOG");
 
     let db = Db::default();
 
@@ -79,7 +96,7 @@ async fn main() {
 
     // app.fallback(handler_404());
 
-    let addr = SocketAddr::from(([127, 0, 0, 1], 3000));
+    let addr = SocketAddr::from(([127, 0, 0, 1], 4000));
     println!("Listening on http://{}", addr);
 
     tracing::debug!("listening on {}", addr);
