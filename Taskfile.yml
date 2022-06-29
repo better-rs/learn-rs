@@ -66,12 +66,32 @@ tasks:
       - pre-commit --version
       - task --version
 
+  install:tool:
+    cmds:
+      - cargo install sea-orm-cli
+      - sea-orm-cli -h
+
   install:
     cmds:
       - cargo update
 
   ################################################################################
 
+  model:init:
+    cmds:
+      - sea-orm-cli generate entity -u ${DATABASE_URL} -o {{.APP_NAME}}/src
+      - cd {{.APP_NAME}}; cargo init --lib;
+      - cd {{.APP_NAME}}; cp -f src/mod.rs src/lib.rs; rm src/mod.rs;
+    vars:
+      APP_NAME: "crates/rs-cms-entity"
+    ignore_error: true
+
+  migration:init:
+    cmds:
+      - sea-orm-cli migrate init -d {{.APP_NAME}}
+    #      - sea-orm-cli migrate generate create -d {{.APP_NAME}}  # generate empty migration file
+    vars:
+      APP_NAME: "crates/rs-cms-migration"
 
   new:
     cmds:
