@@ -123,7 +123,7 @@ pub async fn todos_delete(Path(id): Path<Uuid>, Extension(db): Extension<Db>) ->
     }
 }
 
-pub(crate) type Db = Arc<RwLock<HashMap<Uuid, Todo>>>;
+pub type Db = Arc<RwLock<HashMap<Uuid, Todo>>>;
 
 #[derive(Debug, Serialize, Clone)]
 pub struct Todo {

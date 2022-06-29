@@ -16,7 +16,12 @@ tasks:
 
   # auto compile and run:
   watch:
-    - cargo watch -x run
+    cmds:
+      - cargo watch -x run
+
+  clean:
+    cmds:
+      - cargo clean
 
   open:
     cmds:

@@ -1,11 +1,11 @@
 [package]
-name = "migration"
+name = "rs-cms-migration"
 version = "0.1.0"
 edition = "2021"
 publish = false
 
 [lib]
-name = "migration"
+name = "rs_cms_migration"
 path = "src/lib.rs"
 
 [dependencies]

@@ -25,12 +25,13 @@ use axum::{
 use dotenvy::dotenv;
 // use log::{debug, info, warn};
 use crate::service::hello;
-use pretty_env_logger;
+// use pretty_env_logger;
 use serde::{Deserialize, Serialize};
 use std::{
     collections::HashMap,
     env,
     net::SocketAddr,
+    str::FromStr,
     sync::{Arc, RwLock},
     time::Duration,
 };
@@ -40,6 +41,8 @@ use uuid::Uuid;
 mod service;
 mod utils;
 use crate::utils::{route, shutdown};
+// use rs_cms_migration::{Migrator, MigratorTrait};
+use sea_orm::{prelude::*, Database, QueryOrder, Set};
 use tracing::{debug, error, info, warn, Level};
 use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
 
@@ -54,9 +57,21 @@ async fn main() {
         .init();
 
     dotenv().ok();
-    for (key, value) in env::vars() {
-        println!("{key}: {value}");
-    }
+    // for (key, value) in env::vars() {
+    //     println!("{key}: {value}");
+    // }
+
+    let db_url = env::var("DATABASE_URL").expect("DATABASE_URL is not set in .env file");
+    let host = env::var("HOST").unwrap_or("127.0.0.1".into());
+    let port = env::var("PORT").unwrap_or("4000".into());
+    let server_url = format!("{}:{}", host, port);
+    debug!("db url: {}", db_url);
+
+    // todo x: db conn:
+    let conn = Database::connect(db_url).await.expect("Database connection failed");
+
+    // todo x: migration
+    // Migrator::up(&conn, None).await.unwrap();
 
     debug!("debug print");
     info!("info print");
@@ -98,10 +113,9 @@ async fn main() {
 
     // app.fallback(handler_404());
 
-    let addr = SocketAddr::from(([127, 0, 0, 1], 4000));
-    println!("Listening on http://{}", addr);
+    let addr = SocketAddr::from_str(&server_url).unwrap();
 
-    tracing::debug!("listening on {}", addr);
+    debug!("listening on http://{}", addr);
     axum::Server::bind(&addr)
         .serve(app.into_make_service())
         .with_graceful_shutdown(shutdown::shutdown_signal()) // graceful shutdown

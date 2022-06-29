@@ -153,7 +153,7 @@ tasks:
     cmds:
       - task: commit
       - task: commit
-      - task: push
+      - git status
     ignore_error: true
 
   commit:
