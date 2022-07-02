@@ -1,4 +1,6 @@
 -- 商品订单表:
+USE cms;
+
 CREATE TABLE `order_template`
 (
     `id`               int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增主键(pk)',
