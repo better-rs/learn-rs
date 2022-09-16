@@ -1,10 +1,29 @@
-POST http://127.0.0.1:5000/user/add
-Content-Type: application/json
-
-{}
+# curl -i http://httpbin.org/ip
+GET http://httpbin.org/ip
 
 ###
-GET http://127.0.0.1:5000/user/add
+
+POST http://127.0.0.1:5001/user/add
+Content-Type: application/json
+
+{
+    "username": "test",
+    "password": "test"
+}
+
+### Send POST request with json body
+
+POST https://httpbin.org/post
+Content-Type: application/json
+
+{
+    "id": 999,
+    "value": "content"
+}
+
+
+###
+GET http://127.0.0.1:5001/user/add
 Content-Type: application/x-www-form-urlencoded
 
 username=jim&email=jim@gmail.com&password=test1

@@ -96,7 +96,6 @@ tasks:
 
   new:
     cmds:
-      - cd ${WORKSPACE}; cargo new --lib rust-by-example
       - cd ${WORKSPACE}; cargo new --lib ${NEW_PROJECT_NAME}
 
   new:bin:

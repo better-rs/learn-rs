@@ -9,6 +9,7 @@ use axum_macros::debug_handler;
 
 use sea_orm::{prelude::*, Database, QueryOrder, Set};
 use serde::{Deserialize, Serialize};
+use tracing::debug;
 
 use rs_cms_entity::user;
 use user::Entity as User;
@@ -61,6 +62,8 @@ pub async fn add_user(
     .expect("could not insert post");
 
     let resp = UserAddResp { message: "user add ok ".to_string(), status: 200 };
+
+    debug!("resp={:?}", resp);
 
     Json(resp)
 }
