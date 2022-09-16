@@ -18,7 +18,7 @@ impl Greeter for MyGreeter {
         &self,
         request: Request<HelloRequest>,
     ) -> Result<Response<HelloReply>, Status> {
-        println!("Got a request from {:?}", request.remote_addr());
+        println!("🚀 tonic rpc,  Got a request from {:?}", request.remote_addr());
 
         let reply =
             hello_world::HelloReply { message: format!("Hello {}!", request.into_inner().name) };
@@ -31,7 +31,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let addr = "[::1]:50051".parse().unwrap();
     let greeter = MyGreeter::default();
 
-    println!("GreeterServer listening on {}", addr);
+    println!("🚀 GreeterServer listening on {}", addr);
 
     Server::builder().add_service(GreeterServer::new(greeter)).serve(addr).await?;
 

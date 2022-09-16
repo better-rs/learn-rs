@@ -19,7 +19,8 @@ tasks:
 
   build:
     - echo "build"
-    - cargo build --release
+#    - cargo build --release
+    - cargo build
 
   test:
     - echo "test"
