@@ -1,0 +1,24 @@
+{
+    // monorepo:
+    "rust-analyzer.linkedProjects": [
+        "crates/rs-volo/Cargo.toml",
+        "crates/rs-tonic/Cargo.toml",
+        "Cargo.toml",
+    ],
+    "sqltools.connections": [
+        {
+            "mysqlOptions": {
+                "authProtocol": "default"
+            },
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 13306,
+            "driver": "MySQL",
+            "name": "cms",
+            "group": "local",
+            "database": "cms",
+            "username": "root",
+            "password": "root"
+        }
+    ]
+}
