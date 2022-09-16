@@ -1,0 +1,22 @@
+syntax = "proto3";
+package volo.example;
+
+message Item {
+    int64 id = 1;
+    string title = 2;
+    string content = 3;
+
+    map<string, string> extra = 10;
+}
+
+message GetItemRequest {
+    int64 id = 1;
+}
+
+message GetItemResponse {
+    Item item = 1;
+}
+
+service ItemService {
+    rpc GetItem(GetItemRequest) returns (GetItemResponse);
+}

@@ -20,6 +20,10 @@ includes:
     taskfile: ./crates/rs-tonic/Taskfile.yml
     dir: ./crates/rs-tonic/
 
+  volo:
+    taskfile: ./crates/rs-volo/Taskfile.yml
+    dir: ./crates/rs-volo/
+
 
 
 #

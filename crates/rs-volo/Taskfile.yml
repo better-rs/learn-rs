@@ -1,0 +1,52 @@
+version: "3"
+
+
+#
+# global vars: https://taskfile.dev/#/usage?id=variables
+#
+vars:
+  VAR1: "some-var"
+
+# global env:
+env:
+  ENV1: testing
+#  OUT_DIR: "/Users/dev/Documents/iSpace/better-go/matrix/app/try/volo-example"
+
+
+# env file:
+#dotenv:
+#  - .env
+
+################################################################################################
+
+tasks:
+
+  run:
+    cmds:
+      - task: run:server
+
+  run:server:
+    cmds:
+      - cargo run --bin server
+
+  run:client:
+    cmds:
+      - cargo run --bin client
+
+  init:
+    cmds:
+      - volo init --includes=idl volo-example idl/volo_example.proto
+
+  update:
+    cmds:
+      - cargo update
+
+  build:
+    cmds:
+      - echo $OUT_DIR
+      - cargo build
+      - cd volo-gen; cargo build
+
+  clean:
+    cmds:
+      - cargo clean
