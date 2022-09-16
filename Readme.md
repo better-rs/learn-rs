@@ -1,11 +1,22 @@
 # learn-rs:
 
-- 快速学习 rust.
-- 基于 rust workspace 的 monorepo 方式.
+<p align="">
+    <a href="https://discord.com/invite/MnDA9pfWAW" target="_blank">
+      <img src="https://img.shields.io/badge/Discord-GossipCoder-%237289DA.svg?logo=iscord&logoColor=white" alt="Discord">
+    </a> 
+    <a href="https://discord.com/invite/MnDA9pfWAW" target="_blank">
+      <img src="https://img.shields.io/discord/877031318272217179" alt="Discord">
+    </a> 
+    <img src="https://visitor-badge.laobi.icu/badge?page_id=better-rs" alt="10000" />
+</p>
+
+
+- ✅ 快速学习 rust.
+- ✅ 基于 rust workspace 的 monorepo 方式.
 
 ## Related:
 
-- https://github.com/better-rs/annotated-rs
+- ✅ https://github.com/better-rs/annotated-rs
     - 注解 rust 知名项目源码
     - ⭐⭐⭐⭐⭐
 
@@ -32,7 +43,7 @@
 
 ## 基于 Rust 写的小工具:
 
-- [x] [rs-scripts](./crates/rs-scripts)
+- ✅ [rs-scripts](./crates/rs-scripts)
     - 写的一些 rust 脚本工具
         - [x] ETH 链上交易查询
         - [x] Binance 交易所个人交易数据查询/K 线数据查询(支持 api key 方式下单/撤单)
@@ -93,8 +104,8 @@ SUBCOMMANDS:
 
 > 源码位置:
 
-- [crates/rs-scripts/src/bin/binance.rs](crates/rs-scripts/src/bin/binance.rs)
-- 启动脚本: [crates/rs-scripts/Taskfile.yml](crates/rs-scripts/Taskfile.yml)
+- ✅ [crates/rs-scripts/src/bin/binance.rs](crates/rs-scripts/src/bin/binance.rs)
+- ✅ 启动脚本: [crates/rs-scripts/Taskfile.yml](crates/rs-scripts/Taskfile.yml)
 
 > 功能说明:
 
@@ -121,5 +132,5 @@ task scripts:run:binance
 
 ## docs:
 
-- [本项目说明: 开发环境搭建](./docs/dev.md)
-- [Rust 学习笔记](./docs/README.md)
+- ✅ [本项目说明: 开发环境搭建](./docs/dev.md)
+- ✅ [Rust 学习笔记](./docs/README.md)
