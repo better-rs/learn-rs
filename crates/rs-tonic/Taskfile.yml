@@ -13,6 +13,9 @@ tasks:
     - echo "generate protobuf"
 
   run:
+    - task: run:server
+
+  run:server:
     - cargo run --bin helloworld-server
 
   run:client:
@@ -20,7 +23,7 @@ tasks:
 
   build:
     - echo "build"
-#    - cargo build --release
+    #    - cargo build --release
     - cargo build
 
   test:
