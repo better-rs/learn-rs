@@ -3,6 +3,7 @@ version: "3"
 tasks:
   init:
     - echo "init"
+    - mkdir -p src/pb
 
   dev:
     - echo "dev install"

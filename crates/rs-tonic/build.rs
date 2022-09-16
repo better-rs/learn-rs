@@ -1,8 +1,28 @@
 use std::{env, path::PathBuf};
 
 fn main() {
+    //
+    // TODO X: 会把 pb.rs 代码生成到: target/debug/build/rs-tonic-xxxx/out 目录下.
+    //      使用宏 tonic::include_proto!() 动态导入
+    //
     tonic_build::compile_protos("proto/helloworld/helloworld.proto")
         .unwrap_or_else(|e| panic!("Failed to compile protos {:?}", e));
+
+    //
+    // todo x: 生成到本项目内: src/pb/
+    //      - ref: https://github.com/tyrchen/rust-training/blob/master/live_coding/tonic-live/build.rs
+    //
+    tonic_build::configure()
+        .type_attribute(".", "#[derive(Hash, Eq, serde::Serialize, serde::Deserialize)]")
+        .out_dir("src/pb")
+        .compile(&["./proto/helloworld/helloworld.proto"], &["./proto/"])
+        .unwrap();
+
+    //
+    //
+    //
+    println!("cargo:rerun-if-changed=./proto/helloworld.proto");
+    println!("cargo:rerun-if-changed=./build.rs");
 
     build_json_codec_service();
 }
