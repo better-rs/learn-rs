@@ -53,7 +53,8 @@
 > 快速安装小工具集:
 
 ```ruby
-cd this-project-root/
+# cd root directory:
+cd learn-rs/
 
 # install:
 task scripts:install
@@ -128,6 +129,40 @@ SUBCOMMANDS:
 #
 # 自动计算币安币种的持有成本, 比如 ETH/BTC/DOT
 task scripts:run:binance
+
+```
+
+## Requirements:
+
+- ✅ rust: `1.65.0+`
+- ✅ [go-task](https://github.com/go-task/task)
+
+```ruby
+➤ rustc --version
+rustc 1.65.0-nightly (17cbdfd07 2022-09-13)
+
+
+➤ cargo version
+cargo 1.65.0-nightly (646e9a0b9 2022-09-02)
+
+
+➤ rustup show
+Default host: aarch64-apple-darwin
+rustup home:  /Users/dev/.rustup
+
+installed toolchains
+--------------------
+
+stable-aarch64-apple-darwin
+nightly-2022-07-31-aarch64-apple-darwin
+nightly-aarch64-apple-darwin (default)
+1.61.0-aarch64-apple-darwin
+
+active toolchain
+----------------
+
+nightly-aarch64-apple-darwin (default)
+rustc 1.65.0-nightly (17cbdfd07 2022-09-13)
 
 ```
 
