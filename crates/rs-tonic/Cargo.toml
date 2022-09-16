@@ -1,0 +1,27 @@
+[package]
+name = "rs-tonic"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+
+[[bin]] # 用来运行 HelloWorld gRPC 服务器的可执行文件
+name = "helloworld-server"
+path = "src/helloworld/server.rs"
+
+[[bin]] # 用来运行 HelloWorld gRPC 客户端的可执行文件
+name = "helloworld-client"
+path = "src/helloworld/client.rs"
+
+
+
+[dependencies]
+
+tonic = "*"
+prost = "*"
+
+tokio = { version = "1.17", features = ["full"] }
+
+[build-dependencies]
+tonic-build = { version = "*", features = ["prost"] }

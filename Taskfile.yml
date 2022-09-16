@@ -16,6 +16,11 @@ includes:
     taskfile: ./crates/rs-ffi-core/Taskfile.yml
     dir: ./crates/rs-ffi-core/
 
+  tonic:
+    taskfile: ./crates/rs-tonic/Taskfile.yml
+    dir: ./crates/rs-tonic/
+
+
 
 #
 # global vars: https://taskfile.dev/#/usage?id=variables

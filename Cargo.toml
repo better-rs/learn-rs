@@ -8,6 +8,10 @@ members = [
     "crates/rs-scripts",
     "crates/rs-ffi",
     "crates/rs-ffi-core",
+    "crates/rs-tonic",
+    #
+    #
+    #
     "crates/rust-by-example",
     "crates/rust-programming-in-action",
     "crates/rust-programming-cookbook",
