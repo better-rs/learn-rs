@@ -1,12 +1,9 @@
 use clap::Parser;
 
-use crate::{
+use rs_scripts::{
     commands::eth::{EthCli, EthCommands},
     modules::eth,
 };
-
-mod commands;
-mod modules;
 
 #[allow(unused_doc_comments)]
 #[tokio::main]

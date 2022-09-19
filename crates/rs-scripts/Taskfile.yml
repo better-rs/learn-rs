@@ -4,6 +4,10 @@ tasks:
   init:
     - echo "init"
 
+  build:
+    cmds:
+      - cargo build
+
   run:scripts:
     cmds:
       - cargo run --bin rs-scripts -- -n "Henry"

@@ -4,13 +4,10 @@ use clap::Parser;
 use log::{info, warn};
 use pretty_env_logger;
 
-use crate::{
+use rs_scripts::{
     commands::binance::{BinanceCli, BinanceCommands, WalletCommand},
     modules::binance::{account, binance_async, market::do_market_cmd, wallet},
 };
-
-mod commands;
-mod modules;
 
 #[allow(unused_doc_comments)]
 #[tokio::main]

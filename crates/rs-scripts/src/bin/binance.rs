@@ -2,13 +2,10 @@ use clap::Parser;
 use log::{info, warn};
 use pretty_env_logger;
 
-use crate::{
+use rs_scripts::{
     commands::binance::{BinanceCli, BinanceCommands},
     modules::binance::binance::{account_data, market_data},
 };
-
-mod commands;
-mod modules;
 
 fn main() {
     pretty_env_logger::init();
