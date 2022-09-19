@@ -25,21 +25,33 @@ pub fn git_clone(url: &str, path: &Path) -> Repository {
     return repo
 }
 
-// ref: https://stackoverflow.com/questions/58768910/how-to-perform-git-pull-with-the-rust-git2-crate
-pub fn git_pull(path: &Path, branch: Option<&str>) -> Result<(), Error> {
+// ref: https://github.com/rust-lang/git2-rs/blob/master/examples/fetch.rs
+pub fn git_fetch() {}
+
+pub fn git_config(path: &Path) -> Result<(), Error> {
     let repo = Repository::open(path)?;
 
     // todo x: 获取 git repo config 信息
     match repo.config() {
         Ok(cfg) => {
             let mut entries = cfg.entries(None).unwrap();
+
+            // 遍历:
             while let Some(entry) = entries.next() {
                 let entry = entry.unwrap();
+
                 println!("repo config: {} => {}", entry.name().unwrap(), entry.value().unwrap());
             }
         },
         Err(_) => {},
     }
+
+    Ok(())
+}
+
+// ref: https://stackoverflow.com/questions/58768910/how-to-perform-git-pull-with-the-rust-git2-crate
+pub fn git_pull(path: &Path, branch: Option<&str>) -> Result<(), Error> {
+    let repo = Repository::open(path)?;
 
     // 分支:
     repo.find_remote("origin")?.fetch(&[branch.unwrap_or("main")], None, None)?;
@@ -74,6 +86,17 @@ pub fn git_sync(url: &str, path: &Path) {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn test_git_config() {
+        let url = "https://github.com/better-rs/.github.git";
+
+        // git clone 结果路径
+        let to = "tmp/demo";
+
+        println!("git sync test");
+        git_config(to.as_ref()).expect("TODO: panic message");
+    }
 
     #[test]
     fn test_git_sync() {
