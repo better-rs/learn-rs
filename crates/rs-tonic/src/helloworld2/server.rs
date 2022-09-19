@@ -1,8 +1,10 @@
-use rs_tonic::{
+use tonic::{transport::Server, Request, Response, Status};
+
+// todo x: way2, 静态导入 pb 代码
+use rs_tonic::pb::helloworld::{
     greeter_server::{Greeter, GreeterServer},
     HelloReply, HelloRequest,
 };
-use tonic::{transport::Server, Request, Response, Status};
 
 #[derive(Default)]
 pub struct MyGreeter {}

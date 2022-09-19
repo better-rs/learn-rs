@@ -1,14 +1,10 @@
 use tonic::{transport::Server, Request, Response, Status};
 
-use hello_world::{
+// todo x: way1, 依赖宏展开补全
+use rs_tonic::gen::{
     greeter_server::{Greeter, GreeterServer},
     HelloReply, HelloRequest,
 };
-
-pub mod hello_world {
-    // TODO X: Clion 对此宏展开的识别, 依赖 workspace 为根目录, 否则无法展开跳转
-    tonic::include_proto!("helloworld");
-}
 
 #[derive(Default)]
 pub struct MyGreeter {}
@@ -21,8 +17,7 @@ impl Greeter for MyGreeter {
     ) -> Result<Response<HelloReply>, Status> {
         println!("🚀 tonic rpc,  Got a request from {:?}", request.remote_addr());
 
-        let reply =
-            hello_world::HelloReply { message: format!("Hello {}!", request.into_inner().name) };
+        let reply = HelloReply { message: format!("Hello {}!", request.into_inner().name) };
         Ok(Response::new(reply))
     }
 }

@@ -1,4 +1,5 @@
-use rs_tonic::{greeter_client::GreeterClient, HelloRequest};
+// todo x: way2, 静态导入 pb 代码
+use rs_tonic::pb::helloworld::{greeter_client::GreeterClient, HelloRequest};
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
