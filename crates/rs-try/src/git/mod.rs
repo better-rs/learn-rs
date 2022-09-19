@@ -1,4 +1,4 @@
-use git2::{Error, MergeAnalysis, MergePreference, Repository};
+use git2::{Config, Error, MergeAnalysis, MergePreference, Repository};
 use std::{fs, path::Path};
 
 pub fn rm_dir(dir: &Path) {
@@ -28,6 +28,18 @@ pub fn git_clone(url: &str, path: &Path) -> Repository {
 // ref: https://stackoverflow.com/questions/58768910/how-to-perform-git-pull-with-the-rust-git2-crate
 pub fn git_pull(path: &Path, branch: Option<&str>) -> Result<(), Error> {
     let repo = Repository::open(path)?;
+
+    // todo x: 获取 git repo config 信息
+    match repo.config() {
+        Ok(cfg) => {
+            let mut entries = cfg.entries(None).unwrap();
+            while let Some(entry) = entries.next() {
+                let entry = entry.unwrap();
+                println!("repo config: {} => {}", entry.name().unwrap(), entry.value().unwrap());
+            }
+        },
+        Err(_) => {},
+    }
 
     // 分支:
     repo.find_remote("origin")?.fetch(&[branch.unwrap_or("main")], None, None)?;
