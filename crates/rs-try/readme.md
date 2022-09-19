@@ -9,6 +9,8 @@
 
 > rust git 包:
 
+- https://docs.rs/git2/latest/git2/
+
 - ✅ xxx
 
 > rust template 模板包:
