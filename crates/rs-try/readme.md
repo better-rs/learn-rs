@@ -9,10 +9,10 @@
 
 > rust git 包:
 
-- https://docs.rs/git2/latest/git2/
-
-- ✅ xxx
+- ✅ https://docs.rs/git2/latest/git2/
 
 > rust template 模板包:
 
-- ✅ xxx
+- ✅ https://github.com/djc/askama
+- ✅ 参考示例:
+    - https://github.com/tyrchen/geektime-rust/blob/master/47_48_macros/src/raw_builder.rs#L8
