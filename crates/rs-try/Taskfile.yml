@@ -1,0 +1,42 @@
+version: "3"
+
+
+#
+# global vars: https://taskfile.dev/#/usage?id=variables
+#
+vars:
+  VAR1: "some-var"
+
+# global env:
+env:
+  ENV1: testing
+#  OUT_DIR: "/Users/dev/Documents/iSpace/better-go/matrix/app/try/volo-example"
+
+
+# env file:
+#dotenv:
+#  - .env
+
+################################################################################################
+
+tasks:
+
+  run:git:
+    cmds:
+      - cargo run --bin rs-git
+
+  run:tpl:
+    cmds:
+      - cargo run --bin rs-tpl
+
+  update:
+    cmds:
+      - cargo update
+
+  build:
+    cmds:
+      - cargo build
+
+  clean:
+    cmds:
+      - cargo clean

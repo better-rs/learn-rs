@@ -4,6 +4,10 @@ version: "3"
 # sub namespace: https://taskfile.dev/#/usage?id=including-other-taskfiles
 #
 includes:
+  try:
+    taskfile: ./crates/rs-try/Taskfile.yml
+    dir: ./crates/rs-try/
+
   scripts:
     taskfile: ./crates/rs-scripts/Taskfile.yml
     dir: ./crates/rs-scripts/
