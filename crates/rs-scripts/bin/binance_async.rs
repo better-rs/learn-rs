@@ -6,7 +6,7 @@ use pretty_env_logger;
 
 use rs_scripts::{
     commands::binance::{BinanceCli, BinanceCommands, WalletCommand},
-    modules::binance::{account, binance_async, market::do_market_cmd, wallet},
+    core::binance::{account, binance_async, market::do_market_cmd, wallet},
 };
 
 #[allow(unused_doc_comments)]

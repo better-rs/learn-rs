@@ -4,7 +4,7 @@ use pretty_env_logger;
 
 use rs_scripts::{
     commands::binance::{BinanceCli, BinanceCommands},
-    modules::binance::binance::{account_data, market_data},
+    core::binance::binance::{account_data, market_data},
 };
 
 fn main() {

@@ -91,7 +91,7 @@ tasks:
     cmds:
       - sea-orm-cli generate entity -u ${DATABASE_URL} -o {{.APP_NAME}}/src
       - cd {{.APP_NAME}}; cargo init --lib;
-      - cd {{.APP_NAME}}; cp -f src/mod.rs src/lib.rs; rm src/mod.rs;
+      - cd {{.APP_NAME}}; cp -f src/core src/lib.rs; rm src/core;
     vars:
       APP_NAME: "crates/rs-cms-entity"
     ignore_error: true

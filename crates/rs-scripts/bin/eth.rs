@@ -2,7 +2,7 @@ use clap::Parser;
 
 use rs_scripts::{
     commands::eth::{EthCli, EthCommands},
-    modules::eth,
+    core::eth,
 };
 
 #[allow(unused_doc_comments)]
