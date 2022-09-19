@@ -14,6 +14,17 @@ path = "src/helloworld/server.rs"
 name = "helloworld-client"
 path = "src/helloworld/client.rs"
 
+
+[[bin]] # 用来运行 HelloWorld gRPC 服务器的可执行文件
+name = "helloworld-server2"
+path = "src/helloworld2/server.rs"
+
+[[bin]] # 用来运行 HelloWorld gRPC 客户端的可执行文件
+name = "helloworld-client2"
+path = "src/helloworld2/client.rs"
+
+
+
 #
 # TODO X: 注意, 不能作为上层 workspace 的子项目. 要做根项目, 否则 Clion 的索引, 无法识别 include!() 代码
 #

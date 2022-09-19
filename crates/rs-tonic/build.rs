@@ -13,7 +13,7 @@ fn main() {
     //      - ref: https://github.com/tyrchen/rust-training/blob/master/live_coding/tonic-live/build.rs
     //
     tonic_build::configure()
-        .type_attribute(".", "#[derive(Hash, Eq, serde::Serialize, serde::Deserialize)]")
+        // .type_attribute(".", "#[derive(Hash, Eq, serde::Serialize, serde::Deserialize)]")
         .out_dir("src/pb")
         .compile(&["./proto/helloworld/helloworld.proto"], &["./proto/"])
         .unwrap();

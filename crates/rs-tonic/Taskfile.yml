@@ -21,6 +21,12 @@ tasks:
   run:client:
     - cargo run --bin helloworld-client
 
+  run:server2:
+    - cargo run --bin helloworld-server2
+
+  run:client2:
+    - cargo run --bin helloworld-client2
+
   build:
     - echo "build"
     #    - cargo build --release
@@ -35,3 +41,7 @@ tasks:
       - echo "release"
       - cargo build --release
       - cd ../..; open target/release/
+
+  fix:
+    cmds:
+      - cargo metadata --verbose --format-version 1 --all-features
