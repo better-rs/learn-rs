@@ -8,20 +8,20 @@ edition = "2021"
 
 [[bin]] # 用来运行 HelloWorld gRPC 服务器的可执行文件
 name = "helloworld-server"
-path = "src/helloworld/server.rs"
+path = "bin/helloworld/server.rs"
 
 [[bin]] # 用来运行 HelloWorld gRPC 客户端的可执行文件
 name = "helloworld-client"
-path = "src/helloworld/client.rs"
+path = "bin/helloworld/client.rs"
 
 
 [[bin]] # 用来运行 HelloWorld gRPC 服务器的可执行文件
 name = "helloworld-server2"
-path = "src/helloworld2/server.rs"
+path = "bin/helloworld2/server.rs"
 
 [[bin]] # 用来运行 HelloWorld gRPC 客户端的可执行文件
 name = "helloworld-client2"
-path = "src/helloworld2/client.rs"
+path = "bin/helloworld2/client.rs"
 
 
 

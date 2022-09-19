@@ -10,6 +10,12 @@
 
 ## Run:
 
+- ✅ 本repo 给了 pb 代码2种使用示例. 一种是静态生成pb代码导入, 一种是宏导入, 依赖clion补全展开.
+    - ✅ [helloworld](bin/helloworld)
+    - ✅ [helloworld2](bin/helloworld2)
+- ✅ 两种方式都可正常使用, 建议使用`显式生成pb + 导入`的方式, 不依赖 IDE 补全能力.
+    - 因为 vscode + ra 当前还不具备宏导入时的补全能力.
+
 ```ruby
 
 # root directory:
