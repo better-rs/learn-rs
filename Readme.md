@@ -23,15 +23,16 @@
 
 > Rust 学习:
 
-| 子项目                                           | 说明                   | 备注         |
-|:----------------------------------------------|:---------------------|:-----------|
-| [rust-by-example](./crates/rust-by-example)   | Rust 官方练习代码          | ⭐⭐⭐        |
-| [rs-leetcode](./crates/rs-leetcode)           | 使用 Rust 刷题(leetcode) | TODO       |
-| [basic](./crates/basic)                       | Rust 语法练习            | ⭐ |
-| [rs-ffi](./crates/rs-ffi)                     | Rust + FFI           | ⭐⭐⭐ |
-| [rs-tonic](./crates/rs-tonic)                 | Rust + gRPC(Tonic)   | ⭐⭐⭐ |
-| [rs-volo](./crates/rs-volo)                   | Rust + gRPC(Volo)    | ⭐⭐⭐ |
-| xxxxxxxxxxxxxx                                | xxxxxxxxxxxxxxxxxx   | xxxxxxxxxx |
+| 子项目                                          | 说明                   | 备注         |
+|:---------------------------------------------|:---------------------|:-----------|
+| [rust-by-example](./crates/rust-by-example)  | Rust 官方练习代码          | ⭐⭐⭐        |
+| [rs-leetcode](./crates/rs-leetcode)          | 使用 Rust 刷题(leetcode) | TODO       |
+| [basic](./crates/basic)                      | Rust 语法练习            | ⭐ |
+| [rs-try](./crates/rs-try)                    | Rust 第三方lib 验证/调研  | ⭐⭐ |
+| [rs-ffi](./crates/rs-ffi)                    | Rust + FFI           | ⭐⭐⭐ |
+| [rs-tonic](./crates/rs-tonic)                | Rust + gRPC(Tonic)   | ⭐⭐⭐ |
+| [rs-volo](./crates/rs-volo)                  | Rust + gRPC(Volo)    | ⭐⭐⭐ |
+| xxxxxxxxxxxxxx                               | xxxxxxxxxxxxxxxxxx   | xxxxxxxxxx |
 
 > 基于 Rust 写的脚本工具和业务系统:
 
