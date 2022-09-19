@@ -11,7 +11,7 @@ edition = "2021"
 
 [[bin]]
 name = "rs-scripts"
-path = "src/bin/main.rs"
+path = "bin/main.rs"
 
 
 #
@@ -20,28 +20,28 @@ path = "src/bin/main.rs"
 #
 [[bin]]
 name = "rs-eth-scanner"
-path = "src/bin/eth.rs"
+path = "bin/eth.rs"
 
 [[bin]]
 name = "discord-bot"
-path = "src/bin/discord_bot.rs"
+path = "bin/discord_bot.rs"
 
 [[bin]]
 name = "rs-binance"
-path = "src/bin/binance.rs"
+path = "bin/binance.rs"
 
 [[bin]]
 name = "rs-binance-async"
-path = "src/bin/binance_async.rs"
+path = "bin/binance_async.rs"
 
 
 [[bin]]
 name = "rs-keytool"
-path = "src/bin/keytool.rs"
+path = "bin/keytool.rs"
 
 [[bin]]
 name = "rs-tui"
-path = "src/bin/tui.rs"
+path = "bin/tui.rs"
 
 
 ################################################################################
