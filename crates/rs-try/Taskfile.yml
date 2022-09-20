@@ -37,6 +37,15 @@ tasks:
     cmds:
       - cargo run --bin rs-file
 
+  run:progress:
+    cmds:
+      - cargo run --bin rs-progress
+
+  run:gent:
+    cmds:
+      - cargo run --bin rs-gent
+
+
   update:
     cmds:
       - cargo update

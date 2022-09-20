@@ -9,24 +9,36 @@ edition = "2021"
 ################################################################################
 
 
+# git 操作:
 [[bin]]
 name = "rs-git"
 path = "bin/git.rs"
 
-
+# 模板引擎(jinja2):
 [[bin]]
 name = "rs-tpl"
 path = "bin/template.rs"
 
-
+# 目录遍历:
 [[bin]]
 name = "rs-dir"
 path = "bin/dir.rs"
 
-
+# 文件读写:
 [[bin]]
 name = "rs-file"
 path = "bin/file.rs"
+
+# 脚手架工具:
+[[bin]]
+name = "rs-progress"
+path = "bin/progress.rs"
+
+# 脚手架工具:
+[[bin]]
+name = "rs-gent"
+path = "bin/gent.rs"
+
 
 
 ################################################################################
@@ -49,3 +61,6 @@ askama = "0.11"
 
 # os directory walk:
 walkdir = "2"
+
+# cli progress bar:
+indicatif = "0.17"

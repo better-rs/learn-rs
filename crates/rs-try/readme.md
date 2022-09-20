@@ -54,3 +54,12 @@ task try:run:file
 
 - ✅ 用例: [file.rs](bin/file.rs)
 - ✅ https://rust-lang-nursery.github.io/rust-cookbook/file/read-write.html
+
+> rust cli 进度条:
+
+- ✅ 用例: [progress.rs](bin/progress.rs)
+
+> > 依赖包:
+
+- https://github.com/console-rs/indicatif
+- https://github.com/console-rs/indicatif/blob/main/examples/download-speed.rs
