@@ -3,7 +3,7 @@
 use git2::Repository;
 use rs_try::{
     add,
-    git::{git_clone, rm_dir},
+    git::{git_clone, is_path_exist, rm_dir},
 };
 use std::path::Path;
 /*
@@ -28,12 +28,14 @@ fn main() {
 
     let url = "https://github.com/better-rs/rs-template.git";
 
-    let path = "tmp/rs-template";
+    let p_template = "tmp/rs-template";
+    let p_tmp = "tmp/new-mid";
+    let p_new = "tmp/new-demo";
 
     // 拉取模板:
-    sync_template(url, path.as_ref());
+    sync_template(url, p_template.as_ref());
 
-    new_repo();
+    new_repo(p_template, p_new, Some(p_tmp));
 
     render_repo();
 
@@ -44,15 +46,20 @@ fn main() {
 
 fn parse_cli() {}
 
-fn sync_template(url: &str, path: &Path) -> Repository {
+fn sync_template(url: &str, path: &Path) {
+    if is_path_exist(path) {
+        println!("path is already exists, skip...");
+        return
+    }
+
     // clean:
     rm_dir(path);
 
     // git clone:
-    git_clone(url, path)
+    git_clone(url, path);
 }
 
-fn new_repo() {}
+fn new_repo(from: &str, to: &str, mid: Option<&str>) {}
 
 fn render_repo() {}
 

@@ -59,8 +59,9 @@ git2 = "0.15"
 # template engine:
 askama = "0.11"
 
-# os directory walk:
+# os directory:
 walkdir = "2"
+fs_extra = "1.2"
 
 # cli progress bar:
 indicatif = "0.17"
