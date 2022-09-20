@@ -29,6 +29,14 @@ tasks:
     cmds:
       - cargo run --bin rs-tpl
 
+  run:dir:
+    cmds:
+      - cargo run --bin rs-dir
+
+  run:file:
+    cmds:
+      - cargo run --bin rs-file
+
   update:
     cmds:
       - cargo update

@@ -19,6 +19,16 @@ name = "rs-tpl"
 path = "bin/template.rs"
 
 
+[[bin]]
+name = "rs-dir"
+path = "bin/dir.rs"
+
+
+[[bin]]
+name = "rs-file"
+path = "bin/file.rs"
+
+
 ################################################################################
 
 #
@@ -36,3 +46,6 @@ git2 = "0.15"
 
 # template engine:
 askama = "0.11"
+
+# os directory walk:
+walkdir = "2"
