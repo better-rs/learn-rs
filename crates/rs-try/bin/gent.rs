@@ -23,13 +23,15 @@ fn main() {
     let tpl_url = "https://github.com/better-rs/rs-template.git";
     let root_dir = "tmp";
     let tpl_dir = "tmp/rs-template";
-    let tmp_dir = "tmp/new-mid";
+    let mut tpl_sub_dir = "mono-repo/rs"; // 指定根路径
+    let tmp_dir = "tmp/_new";
     let to_dir = "tmp/new-demo";
 
     let b = Builder::new(
         Some(root_dir.to_string()),
         tpl_url.to_string(),
         tpl_dir.to_string(),
+        Some(tpl_sub_dir.to_string()),
         Some(tmp_dir.to_string()),
         to_dir.to_string(),
     );
@@ -52,6 +54,7 @@ struct Builder {
     root_dir: String,
     tpl_url: String,
     tpl_dir: String,
+    tpl_sub_dir: String,
     tmp_dir: String,
     to_dir: String,
 }
@@ -61,6 +64,7 @@ impl Builder {
         root: Option<String>,
         tpl_url: String,
         tpl_dir: String,
+        tpl_sub_dir: Option<String>,
         tmp_dir: Option<String>,
         to_dir: String,
     ) -> Self {
@@ -68,7 +72,8 @@ impl Builder {
             root_dir: root.unwrap_or("tmp".to_string()), // todo x: need change
             tpl_url,
             tpl_dir,
-            tmp_dir: tmp_dir.unwrap_or("tpl-mid".to_string()), // todo x: need change
+            tpl_sub_dir: tpl_sub_dir.unwrap_or("".to_string()),
+            tmp_dir: tmp_dir.unwrap_or("_new".to_string()), // todo x: need change
             to_dir,
         }
     }
@@ -96,6 +101,7 @@ impl Builder {
         let mut options = CopyOptions::new();
         options.buffer_size = 1;
         options.content_only = true; // todo x: 只复制文件夹内容
+        options.overwrite = true; // todo x: 覆盖式
 
         // 中间目录
         match create_all(&self.tmp_dir, true) {
@@ -105,8 +111,12 @@ impl Builder {
             },
         }
 
+        let p = Path::new(&self.tpl_dir).join(&self.tpl_sub_dir);
+
+        println!("template path: {:?}", p.to_str());
+
         // todo x: 先创建临时目录
-        let ret = copy(&self.tpl_dir, &self.tmp_dir, &options);
+        let ret = copy(p, &self.tmp_dir, &options);
         match ret {
             Ok(_) => {
                 println!("copy done!");
