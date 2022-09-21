@@ -1,11 +1,9 @@
-// use rs_try::git::git_clone;
-
+use fs_extra::dir::{copy, create_all, CopyOptions};
 use git2::Repository;
-use rs_try::{
-    add,
-    git::{git_clone, is_path_exist, rm_dir},
-};
+use rs_try::git::{git_clone, is_path_exist, rm_dir};
 use std::path::Path;
+use walkdir::WalkDir;
+
 /*
     TODO X: 脚手架工具
         1. 命令行参数解析
@@ -22,51 +20,115 @@ use std::path::Path;
 fn main() {
     println!("hello gent!");
 
-    add(1, 1);
+    let tpl_url = "https://github.com/better-rs/rs-template.git";
+    let root_dir = "tmp";
+    let tpl_dir = "tmp/rs-template";
+    let tmp_dir = "tmp/new-mid";
+    let to_dir = "tmp/new-demo";
 
-    parse_cli();
-
-    let url = "https://github.com/better-rs/rs-template.git";
-
-    let p_template = "tmp/rs-template";
-    let p_tmp = "tmp/new-mid";
-    let p_new = "tmp/new-demo";
+    let b = Builder::new(
+        Some(root_dir.to_string()),
+        tpl_url.to_string(),
+        tpl_dir.to_string(),
+        Some(tmp_dir.to_string()),
+        to_dir.to_string(),
+    );
 
     // 拉取模板:
-    sync_template(url, p_template.as_ref());
+    b.sync_template();
 
-    new_repo(p_template, p_new, Some(p_tmp));
+    // 新目录创建:
+    b.create_repo();
 
-    render_repo();
+    // 填入参数:
+    b.render_repo();
 
-    move_repo();
+    b.move_repo();
 
-    print_info();
+    b.print_info();
 }
 
-fn parse_cli() {}
+struct Builder {
+    root_dir: String,
+    tpl_url: String,
+    tpl_dir: String,
+    tmp_dir: String,
+    to_dir: String,
+}
 
-fn sync_template(url: &str, path: &Path) {
-    if is_path_exist(path) {
-        println!("path is already exists, skip...");
-        return
+impl Builder {
+    pub fn new(
+        root: Option<String>,
+        tpl_url: String,
+        tpl_dir: String,
+        tmp_dir: Option<String>,
+        to_dir: String,
+    ) -> Self {
+        Self {
+            root_dir: root.unwrap_or("tmp".to_string()), // todo x: need change
+            tpl_url,
+            tpl_dir,
+            tmp_dir: tmp_dir.unwrap_or("tpl-mid".to_string()), // todo x: need change
+            to_dir,
+        }
     }
 
-    // clean:
-    rm_dir(path);
+    pub fn parse_cli(&self) {}
 
-    // git clone:
-    git_clone(url, path);
-}
+    // 更新模板:
+    pub fn sync_template(&self) {
+        let path = &self.tpl_dir.as_ref();
 
-fn new_repo(from: &str, to: &str, mid: Option<&str>) {}
+        if is_path_exist(path) {
+            println!("path is already exists, skip...");
+            return
+        }
 
-fn render_repo() {}
+        // clean:
+        rm_dir(path);
 
-fn move_repo() {}
+        // git clone:
+        git_clone(&self.tpl_url, path);
+    }
 
-fn print_info() {
-    println!("gent cli done!");
+    // 创建目录:
+    pub fn create_repo(&self) {
+        let mut options = CopyOptions::new();
+        options.buffer_size = 1;
+        options.content_only = true; // todo x: 只复制文件夹内容
+
+        // 中间目录
+        match create_all(&self.tmp_dir, true) {
+            Ok(_) => {},
+            Err(err) => {
+                println!("create dir failed, error: {}", err)
+            },
+        }
+
+        // todo x: 先创建临时目录
+        let ret = copy(&self.tpl_dir, &self.tmp_dir, &options);
+        match ret {
+            Ok(_) => {
+                println!("copy done!");
+            },
+            Err(err) => {
+                println!("copy error: {}", err)
+            },
+        }
+    }
+
+    pub fn render_repo(&self) {
+        // 遍历路径: 自动忽略无权限访问的路径
+        for entry in WalkDir::new(&self.tmp_dir).into_iter().filter_map(|e| e.ok()) {
+            println!("dir: {}", entry.path().display());
+        }
+    }
+
+    pub fn move_repo(&self) {}
+
+    pub fn print_info(&self) {
+        println!("gent cli done!");
+    }
 }
 
 #[cfg(test)]
