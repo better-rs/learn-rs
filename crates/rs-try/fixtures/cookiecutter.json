@@ -1,0 +1,37 @@
+{
+    "repo_name": "mono",
+    "workspace_name": "crates",
+    "app_name": "app",
+    "project_short_description": "mono repo project generator.",
+    "framework_type": [
+        "axum",
+        "rocket"
+    ],
+    "db_type": "mysql",
+    "orm_type": [
+        "Diesel",
+        "SeaORM"
+    ],
+    "cache_type": "redis",
+    "mq_type": [
+        "kafka",
+        "rabbitmq",
+        "nsq",
+        "nat"
+    ],
+    "use_grpc": "y",
+    "use_http": "y",
+    "timezone": "UTC",
+    "open_source_license": [
+        "MIT",
+        "BSD",
+        "GPLv3",
+        "Apache Software License 2.0",
+        "Not open source"
+    ],
+    "author_name": "Henry",
+    "email": "hhglory@outlook.com",
+    "release_date": "2022-06-20",
+    "year": "2022",
+    "version": "0.1.0"
+}
