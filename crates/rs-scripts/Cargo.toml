@@ -48,6 +48,10 @@ path = "bin/tui.rs"
 # release options:
 ################################################################################
 
+[profile.release]
+strip = true
+opt-level = "s"
+
 #[profile.dev]
 ## Must always use panic = "abort" to avoid needing to define the unstable eh_personality lang item.
 #panic = "abort"
