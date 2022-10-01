@@ -85,6 +85,8 @@ pub fn account_data(api_key: Option<String>, secret_key: Option<String>) {
 
     let account: Account = Binance::new(api_key, secret_key);
 
+    let market: Market = Binance::new(None, None);
+
     // 多个币种计算:
     let coins =
         vec!["BTC", "ETH", "BNB", "SOL", "FIL", "KSM", "MATIC", "SFP", "GLMR", "PHA", "AR", "DOT"];
@@ -139,7 +141,7 @@ pub fn account_data(api_key: Option<String>, secret_key: Option<String>) {
     // }
 
     // 批量计算多个币种:
-    calc_avg_cost_by_coins(&account, &coins); // todo x: fix 参数类型, 改为 引用类型, 否则会出现 move 错误, rust 的生命周期
+    calc_avg_cost_by_coins(&account, &market, &coins); // todo x: fix 参数类型, 改为 引用类型, 否则会出现 move 错误, rust 的生命周期
 
     // 查询币种余额:
     get_balance_by_coins(&account, &coins);
@@ -176,20 +178,23 @@ fn get_balance_by_coins(account: &Account, coins: &Vec<&str>) {
     }
 }
 
-fn calc_avg_cost_by_coins(account: &Account, coins: &Vec<&str>) {
+fn calc_avg_cost_by_coins(account: &Account, market: &Market, coins: &Vec<&str>) {
     for coin in coins.iter() {
         let cli = account.clone();
-        calc_avg_cost_by_coin(cli, coin);
+        let mk_cli = market.clone();
+        calc_avg_cost_by_coin(cli, mk_cli, coin);
     }
 }
 
 // 单个币种, 多个交易对计算:
-fn calc_avg_cost_by_coin(account: Account, coin: &str) {
+fn calc_avg_cost_by_coin(account: Account, market: Market, coin: &str) {
     // 使用 BUSD/USDT 购买过 DOT: // 多个交易对复合计算平均成本
     let coin_pairs = vec![
         (coin.to_owned() + "BUSD").to_string(), // 交易对
         (coin.to_owned() + "USDT").to_string(), // 交易对
     ];
+
+    let current_market_price = market.get_average_price(coin_pairs[0].as_str());
 
     // 买单:
     let mut buy_total_qty: f64 = 0.0;
@@ -280,7 +285,17 @@ fn calc_avg_cost_by_coin(account: Account, coin: &str) {
         sell_total_qty, sell_total_cost, sell_avg_price
     );
     warn!(
-        "💎 current: total_qty: {:10.20?}, \t💎 avg_price: {:20?}\n",
+        "💎 current: total_qty: {:10.20?}, \t💎 avg_price: {:20?}",
         current_total_qty, current_avg_price
+    );
+    warn!("🦶current market price: {:?}", current_market_price);
+
+    let cm_price = current_market_price.unwrap().price;
+    let income = (cm_price - current_avg_price) * current_total_qty;
+    let rate = current_avg_price / cm_price;
+    let cost_rate = (income / buy_total_cost) * 100.0;
+    warn!(
+        "🦶current avg income: {:?}, up/down rate:{:?}, input total:{:?}, cost/earn rate:{:?} % \n",
+        income, rate, buy_total_cost, cost_rate,
     );
 }

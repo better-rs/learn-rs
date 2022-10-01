@@ -47,7 +47,7 @@ impl MarketService {
     pub async fn get_price(&self, symbol: &str) {
         match self.client.get_price(symbol).await {
             Ok(answer) => {
-                info!("get_price: {:?}", answer);
+                info!("💎get_price: {:?}", answer);
             },
             Err(e) => error!("Error: {:?}", e),
         }
@@ -57,7 +57,7 @@ impl MarketService {
     pub async fn get_average_price(&self, symbol: &str) {
         // Current average price for ONE symbol
         match self.client.get_average_price(symbol).await {
-            Ok(answer) => info!("get_average_price: symbol: {}, {:?}", symbol, answer),
+            Ok(answer) => info!("💎get_average_price: symbol: {}, {:?}", symbol, answer),
             Err(e) => error!("Error: {:?}", e),
         }
     }
@@ -128,13 +128,15 @@ pub async fn do_market_cmd() {
     cli.get_price(coin_pair).await;
     cli.get_average_price(coin_pair).await;
 
+    warn!("✅ book ticker:");
+
     // cli.get_all_book_tickers().await;
-    cli.get_book_ticker(coin_pair).await;
+    // cli.get_book_ticker(coin_pair).await;
     cli.get_24h_price_stats(coin_pair).await;
 
     // cli.get_klines(coin_pair).await;
 
-    cli.get_agg_trades(coin_pair).await;
+    // cli.get_agg_trades(coin_pair).await;
 
     warn!("do market cmd done.")
 }

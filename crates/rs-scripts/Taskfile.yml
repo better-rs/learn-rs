@@ -43,7 +43,7 @@ tasks:
 
   run:binance:market:
     cmds:
-      - cargo run --bin rs-binance -- market empty
+      - RUST_LOG=info cargo run --bin rs-binance-async -- market empty
 
   run:keytool:
     cmds:
