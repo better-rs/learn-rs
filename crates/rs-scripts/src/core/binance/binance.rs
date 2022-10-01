@@ -86,7 +86,8 @@ pub fn account_data(api_key: Option<String>, secret_key: Option<String>) {
     let account: Account = Binance::new(api_key, secret_key);
 
     // 多个币种计算:
-    let coins = vec!["BTC", "ETH", "BNB", "SOL", "FIL", "DOT"];
+    let coins =
+        vec!["BTC", "ETH", "BNB", "SOL", "FIL", "KSM", "MATIC", "SFP", "GLMR", "PHA", "AR", "DOT"];
 
     // 打印账号余额:
     get_all_balance(&account);
