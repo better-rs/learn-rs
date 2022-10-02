@@ -63,3 +63,13 @@ task try:run:file
 
 - https://github.com/console-rs/indicatif
 - https://github.com/console-rs/indicatif/blob/main/examples/download-speed.rs
+
+> rust sqlx 用例:
+
+- ✅ 用例: [sql.rs](bin/sql.rs)
+
+
+> rust async orm: sea-orm 使用示例
+
+- ✅ 用例: [orm.rs](bin/orm.rs)
+- https://github.com/SeaQL/sea-orm/issues/805

@@ -58,7 +58,7 @@ path = "bin/orm.rs"
 [workspace]
 members = [
     "migration", # sea-orm
-    "entity",    # sea-orm
+    "entity", # sea-orm
 ]
 
 
@@ -95,3 +95,7 @@ structopt = "0.3"
 # async orm:
 sea-orm = { version = "0.9", features = ["sqlx-all", "runtime-tokio-rustls", "macros", "debug-print"] }
 serde = "1.0.145"
+
+
+# local crates:
+rs-entity = {  path = "./entity" }

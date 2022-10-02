@@ -88,11 +88,13 @@ tasks:
       - cd {{.APP_NAME}}; mv src/mod.rs src/lib.rs;
       - cd {{.APP_NAME}}; cargo add serde@1 --features derive
       - cd {{.APP_NAME}}; cargo add sea-orm@0.9
-
-    #      - cd {{.APP_NAME}}; cp -f src/core src/lib.rs; rm src/core;
     vars:
       APP_NAME: "entity"
     ignore_error: true
+
+  run:orm:
+    cmds:
+      - cargo run --bin rs-orm
 
 
   ################################################################################################

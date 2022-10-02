@@ -1,5 +1,4 @@
 use sqlx::sqlite::SqlitePool;
-use std::env;
 use structopt::StructOpt;
 
 #[derive(StructOpt)]
