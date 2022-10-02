@@ -67,7 +67,9 @@ tasks:
 
   run:sql:
     cmds:
-      - cargo run --bin rs-sql add "todo description"
+      - cargo run --bin rs-sql add "todo description"  # add
+      - cargo run --bin rs-sql done 1 # change status
+      - cargo run --bin rs-sql                         # list all
 
 
   ################################################################################################
