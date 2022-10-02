@@ -51,6 +51,7 @@ tasks:
   install:
     cmds:
       - cargo install sqlx-cli # ref: https://github.com/launchbadge/sqlx/tree/main/sqlx-cli
+      - cargo install sea-orm-cli # ref: https://www.sea-ql.org/SeaORM/docs/generate-entity/sea-orm-cli/
 
   init:db:
     cmds:
@@ -70,6 +71,28 @@ tasks:
       - cargo run --bin rs-sql add "todo description"  # add
       - cargo run --bin rs-sql done 1 # change status
       - cargo run --bin rs-sql                         # list all
+
+  ################################################################################################
+
+  migrate:orm:init:
+    cmds:
+      - sea-orm-cli migrate init -d {{.APP_NAME}}
+    #      - sea-orm-cli migrate generate create -d {{.APP_NAME}}  # generate empty migration file
+    vars:
+      APP_NAME: "migration"
+
+  migrate:orm:model:
+    cmds:
+      - sea-orm-cli generate entity -u ${DATABASE_URL} -o {{.APP_NAME}}/src
+      - cd {{.APP_NAME}}; cargo init --lib;
+      - cd {{.APP_NAME}}; mv src/mod.rs src/lib.rs;
+      - cd {{.APP_NAME}}; cargo add serde@1 --features derive
+      - cd {{.APP_NAME}}; cargo add sea-orm@0.9
+
+    #      - cd {{.APP_NAME}}; cp -f src/core src/lib.rs; rm src/core;
+    vars:
+      APP_NAME: "entity"
+    ignore_error: true
 
 
   ################################################################################################
