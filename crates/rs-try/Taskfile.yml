@@ -10,8 +10,8 @@ vars:
 # global env:
 env:
   ENV1: testing
-#  OUT_DIR: "/Users/dev/Documents/iSpace/better-go/matrix/app/try/volo-example"
-
+  #  OUT_DIR: "/Users/dev/Documents/iSpace/better-go/matrix/app/try/volo-example"
+  DATABASE_URL: "sqlite:tmp/app.db"
 
 # env file:
 #dotenv:
@@ -45,6 +45,32 @@ tasks:
     cmds:
       - cargo run --bin rs-gent
 
+  ################################################################################################
+
+
+  install:
+    cmds:
+      - cargo install sqlx-cli # ref: https://github.com/launchbadge/sqlx/tree/main/sqlx-cli
+
+  init:db:
+    cmds:
+      - sqlx database drop
+      - sqlx database create
+
+  migrate:add:
+    cmds:
+      - sqlx migrate add app # 生成 db migration 文件, 手动编辑, 再执行 db 表创建+初始化
+
+  migrate:
+    cmds:
+      - sqlx migrate run
+
+  run:sql:
+    cmds:
+      - cargo run --bin rs-sql add "todo description"
+
+
+  ################################################################################################
 
   update:
     cmds:

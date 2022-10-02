@@ -42,6 +42,12 @@ name = "rs-gent"
 path = "bin/gent.rs"
 
 
+# sqlx:
+[[bin]]
+name = "rs-sql"
+path = "bin/sql.rs"
+
+
 
 ################################################################################
 
@@ -70,3 +76,11 @@ indicatif = "0.17"
 
 # json:
 serde_json = "1.0"
+
+# sqlx:
+# tokio + rustls
+sqlx = { version = "0.6", features = ["sqlite", "runtime-tokio-rustls"] }
+tokio = { version = "1", features = ["full"] }
+anyhow = "1.0"
+futures = "0.3"
+structopt = "0.3"
