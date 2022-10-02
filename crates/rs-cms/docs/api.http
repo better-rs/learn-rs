@@ -1,8 +1,63 @@
 # curl -i http://httpbin.org/ip
 GET http://httpbin.org/ip
 
+
+
 ###
 
+# curl --request POST
+#  --url http://127.0.0.1:5001/todos/add
+#  --header 'Content-Type: application/json'
+#  --data '{
+#"text": "test"
+#}'
+POST http://127.0.0.1:5001/todos/add
+Content-Type: application/json
+
+{
+    "text": "test"
+}
+
+###
+
+
+
+
+
+
+
+
+###
+
+# curl --request POST
+#  --url http://127.0.0.1:5001/todos/add
+#  --header 'Content-Type: application/json'
+#  --data '{
+#"text": "test"
+#}'
+POST http://127.0.0.1:5001/todos/add
+Content-Type: application/json
+
+{
+    "text": "test"
+}
+
+###
+
+
+
+
+### Send POST request with json body
+POST http://127.0.0.1:5001/todos/add
+#Content-Type: application/json
+Content-Type: application/x-www-form-urlencoded
+
+{
+    "id": 999,
+    "text": "test1"
+}
+
+### Send POST request with json body
 POST http://127.0.0.1:5001/user/add
 Content-Type: application/json
 
@@ -45,6 +100,7 @@ field-value
 ###
 
 POST http://localhost:5000
+
 {
     username:"test"
     email:"test@example.com",

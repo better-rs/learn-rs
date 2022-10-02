@@ -28,6 +28,22 @@ tasks:
     cmds:
       - cargo watch -x run
 
+
+  api:test:
+    cmds:
+      - |
+        curl --request POST \
+        --url http://127.0.0.1:5001/todos/add \
+        --header 'Content-Type: application/json' \
+        --data '{
+        "text": "test"
+        }'
+      - |
+        curl --url http://127.0.0.1:5001/todos
+
+
+
+
   clean:
     cmds:
       - cargo clean

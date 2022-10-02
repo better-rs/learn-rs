@@ -43,6 +43,7 @@ mod service;
 mod utils;
 use crate::utils::{route, shutdown};
 // use rs_cms_migration::{Migrator, MigratorTrait};
+use crate::hello::Db;
 use sea_orm::{prelude::*, Database, QueryOrder, Set};
 use tracing::{debug, error, info, warn, Level};
 use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
@@ -83,15 +84,35 @@ async fn main() {
     // pretty_env_logger::init_custom_env("CMS_LOG");
     let db = hello::Db::default();
 
+    // todo x: 路由分组合并
+    let r1 = Router::new()
+        .route("/todos", get(hello::todos_index).post(hello::todos_create))
+        .route("/todos/add", post(hello::todos_create))
+        .route("/todos/:id", patch(hello::todos_update).delete(hello::todos_delete))
+        .layer(
+            ServiceBuilder::new()
+                .layer(HandleErrorLayer::new(|error: BoxError| async move {
+                    if error.is::<tower::timeout::error::Elapsed>() {
+                        Ok(StatusCode::REQUEST_TIMEOUT)
+                    } else {
+                        Err((
+                            StatusCode::INTERNAL_SERVER_ERROR,
+                            format!("Unhandled internal error: {}", error),
+                        ))
+                    }
+                }))
+                .timeout(Duration::from_secs(10))
+                .layer(TraceLayer::new_for_http())
+                .layer(Extension(db)), /* .layer(Extension(Arc::new(state::AppState { conn
+                                        * }))), // .into_inner(), */
+        );
+
     // Compose the routes
     let app = Router::new()
         .fallback(route::handler_404.into_service())
         .route("/", get(hello::hello))
         .route("/user/", get(user::get_user))
-        .route("/user/add", get(user::add_user))
-        .route("/index", get(hello::todos_index).post(hello::todos_create))
-        .route("/todos", get(hello::todos_index).post(hello::todos_create))
-        .route("/todos/:id", patch(hello::todos_update).delete(hello::todos_delete))
+        .route("/user/add", post(user::add_user))
         // Add middleware to all routes
         .layer(
             ServiceBuilder::new()
@@ -109,7 +130,8 @@ async fn main() {
                 .layer(TraceLayer::new_for_http())
                 .layer(Extension(conn)), /* .layer(Extension(Arc::new(state::AppState { conn
                                           * }))), // .into_inner(), */
-        );
+        )
+        .merge(r1);
 
     // add a fallback service for handling routes to unknown paths
     // let app = app.fallback(handler_404());

@@ -70,6 +70,8 @@ pub async fn todos_index(
         .cloned()
         .collect::<Vec<_>>();
 
+    info!("😊 Query todos: {:?}", todos);
+
     Json(todos)
 }
 
@@ -83,6 +85,8 @@ pub async fn todos_create(
     Extension(db): Extension<Db>,
 ) -> impl IntoResponse {
     let todo = Todo { id: Uuid::new_v4(), text: input.text, completed: false };
+
+    info!("💖 Creating new Todo: {:?}", todo);
 
     db.write().unwrap().insert(todo.id, todo.clone());
 
