@@ -86,8 +86,8 @@ tui = "0.18.0"       # terminal ui
 crossterm = "0.23.2" # terminal ui required
 chrono = "0.4.19"    # time format
 chrono-tz = "0.6.1"  # time zone
-log = "0.4"               # log
-pretty_env_logger = "0.4" # colorful log
+log = "0.4.17"               # log
+pretty_env_logger = "0" # colorful log
 
 
 [patch.crates-io]
