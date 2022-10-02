@@ -3,6 +3,7 @@ use sea_orm::{ConnectOptions, Database};
 
 use rs_try::orm::{mutation::Mutation, query::Query};
 
+use rs_entity::todos;
 use std::{env, error::Error, time::Duration};
 
 #[tokio::main]
@@ -26,10 +27,27 @@ async fn main() -> anyhow::Result<()> {
 
     info!("db url:{:?}, conn {:?}\n", db_url, db);
 
+    // todo x: 添加
+    Mutation::create_todo(
+        &db,
+        todos::Model { id: 0, description: "sea orm insert ".to_string(), done: false },
+    )
+    .await?;
+
+    Mutation::create_todo(
+        &db,
+        todos::Model { id: 0, description: "sea orm done".to_string(), done: true },
+    )
+    .await?;
+
     // todo x: 查询
     let ret = Query::get_todo(&db, 1).await?;
+    let todos = Query::list_todos(&db).await?;
 
-    info!("todo get: {:?}", ret);
+    info!("💎 todo get: {:?}", ret);
+    for line in todos {
+        info!("💖 todo list item: {:?}", line)
+    }
 
     Ok(())
 }

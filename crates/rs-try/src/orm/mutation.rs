@@ -4,12 +4,14 @@ use sea_orm::{DbConn, DbErr, DeleteResult, Set, *};
 pub struct Mutation;
 
 impl Mutation {
+    // todo x: 插入
     pub async fn create_todo(
         db: &DbConn,
         form_data: todos::Model,
     ) -> Result<todos::ActiveModel, DbErr> {
         todos::ActiveModel {
             description: Set(form_data.description.to_owned()),
+            done: Set(form_data.done.to_owned()),
             ..Default::default()
         }
         .save(db)
