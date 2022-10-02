@@ -80,6 +80,9 @@ indicatif = "0.17"
 # json:
 serde_json = "1.0"
 
+log = "0.4"               # log
+pretty_env_logger = "0.4" # colorful log
+
 ################################################################################
 
 # sqlx:

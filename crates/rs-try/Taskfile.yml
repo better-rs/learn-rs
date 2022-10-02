@@ -94,7 +94,7 @@ tasks:
 
   run:orm:
     cmds:
-      - cargo run --bin rs-orm
+      - RUST_LOG=debug cargo run --bin rs-orm
 
 
   ################################################################################################
