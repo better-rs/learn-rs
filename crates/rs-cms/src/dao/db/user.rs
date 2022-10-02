@@ -1,5 +1,5 @@
-use rs_cms_entity::user;
-use sea_orm::{DatabaseConnection, DbErr};
+use rs_entity::user;
+use sea_orm::*;
 
 struct UserDao {
     conn: DatabaseConnection,
@@ -23,6 +23,7 @@ mod tests {
         entity::{prelude::*, *},
         tests_cfg::*,
         DatabaseBackend, MockDatabase, Transaction,
+        TransactionError::Transaction,
     };
 
     #[async_std::test]

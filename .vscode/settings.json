@@ -1,6 +1,7 @@
 {
     // monorepo:
     "rust-analyzer.linkedProjects": [
+        "crates/rs-cms/Cargo.toml",
         "crates/rs-try/Cargo.toml",
         "crates/rs-volo/Cargo.toml",
         "crates/rs-tonic/Cargo.toml",

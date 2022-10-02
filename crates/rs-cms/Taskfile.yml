@@ -1,5 +1,13 @@
 version: "3"
 
+# global env:
+env:
+  ENV1: testing
+  #  OUT_DIR: "/Users/dev/Documents/iSpace/better-go/matrix/app/try/volo-example"
+  DATABASE_URL: "mysql://root:root@127.0.0.1:13306/cms"
+
+
+
 tasks:
   init:
     - echo "init"
@@ -8,6 +16,7 @@ tasks:
     cmds:
       - cargo install cargo-watch  # auto compile and run:
       - cargo install diesel_cli
+      - cargo install sea-orm-cli # ref: https://www.sea-ql.org/SeaORM/docs/generate-entity/sea-orm-cli/
 
   run:
     cmds:
@@ -33,6 +42,21 @@ tasks:
       - open https://github.com/diesel-rs/diesel
       - open https://diesel.rs/
       - open https://crates.io/crates/tracing
+
+
+  ###############################################################################
+
+  db:migrate:model:
+    cmds:
+      - echo "db url $DATABASE_URL"
+      - sea-orm-cli generate entity -u ${DATABASE_URL} -o {{.APP_NAME}}/src
+      - cd {{.APP_NAME}}; cargo init --lib;
+      - cd {{.APP_NAME}}; mv src/mod.rs src/lib.rs;
+      - cd {{.APP_NAME}}; cargo add serde@1 --features derive
+      - cd {{.APP_NAME}}; cargo add sea-orm@0.9
+    vars:
+      APP_NAME: "rs-entity"
+    ignore_error: true
 
 
   ###############################################################################

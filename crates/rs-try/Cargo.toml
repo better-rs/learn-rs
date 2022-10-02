@@ -97,7 +97,7 @@ structopt = "0.3"
 
 # async orm:
 sea-orm = { version = "0.9", features = ["sqlx-all", "runtime-tokio-rustls", "macros", "debug-print"] }
-serde = "1.0.145"
+serde = "1"
 
 
 # local crates:

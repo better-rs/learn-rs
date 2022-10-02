@@ -7,11 +7,11 @@ use axum::{
 };
 use axum_macros::debug_handler;
 
-use sea_orm::{prelude::*, Database, QueryOrder, Set};
+use sea_orm::*;
 use serde::{Deserialize, Serialize};
 use tracing::debug;
 
-use rs_cms_entity::user;
+use rs_entity::user;
 use user::Entity as User;
 
 pub struct UserService {}
