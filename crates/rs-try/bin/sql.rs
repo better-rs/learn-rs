@@ -34,5 +34,7 @@ async fn main() -> anyhow::Result<()> {
         },
     }
 
+    // clean:
+    pool.close();
     Ok(())
 }

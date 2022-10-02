@@ -29,9 +29,7 @@ path = "bin/dir.rs"
 name = "rs-file"
 path = "bin/file.rs"
 
-
-
-# 脚手架工具:
+# 进度条:
 [[bin]]
 name = "rs-progress"
 path = "bin/progress.rs"
@@ -41,12 +39,10 @@ path = "bin/progress.rs"
 name = "rs-gent"
 path = "bin/gent.rs"
 
-
-# sqlx:
+# sqlx: CRUD, 自带 cli + migration 工具
 [[bin]]
 name = "rs-sql"
 path = "bin/sql.rs"
-
 
 
 ################################################################################
