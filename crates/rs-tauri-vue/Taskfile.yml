@@ -33,7 +33,7 @@ tasks:
   icon:
     cmds:
 #      - pnpm add -D @tauri-apps/cli
-      - pnpm tauri icon ./public/logo.png
+      - pnpm tauri icon ./public/logo2.png
 
   fix:
     cmds:
