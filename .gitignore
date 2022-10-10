@@ -9,7 +9,14 @@ pwasm-libc/Cargo.lock
 bin/node/runtime/wasm/target/
 **/._*
 **/.criterion/
-.vscode
+
+
+**/.vscode/*
+!**/.vscode/extensions.json
+!**/.vscode/launch.json
+!**/.vscode/tasks.json
+
+
 polkadot.*
 .DS_Store
 .idea/

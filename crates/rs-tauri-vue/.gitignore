@@ -14,7 +14,7 @@ dist-ssr
 *.local
 
 # Editor directories and files
-.vscode/settings.json
+#.vscode/settings.json
 .idea
 .DS_Store
 *.suo
@@ -23,7 +23,7 @@ dist-ssr
 *.sln
 *.sw?
 
-.vscode/settings.json
+#.vscode/settings.json
 src-tauri/target
 
 .env
