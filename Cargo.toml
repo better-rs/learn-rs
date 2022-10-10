@@ -7,6 +7,8 @@ members = [
     "crates/rs-ffi",
     "crates/rs-ffi-core",
 #    "crates/rs-tonic",
+    "crates/rs-tauri-vue/src-tauri",
+
     #
     #
     #
