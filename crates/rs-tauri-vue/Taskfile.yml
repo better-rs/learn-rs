@@ -1,0 +1,34 @@
+version: "3"
+
+tasks:
+  init:
+    - echo "init"
+
+  dev:
+    - echo "dev install"
+    - cargo install --force cargo-edit
+    - cargo install --locked cargo-outdated
+
+  install:
+    cmds:
+      - pnpm i
+      - cd src-tauri/; cargo outdated
+      - cd src-tauri/; cargo upgrade
+      - cd src-tauri/; cargo build
+
+  run:
+    cmds:
+      - pnpm dev
+
+  test:
+    - echo "test"
+    - cd src-tauri; cargo test
+
+  release:
+    cmds:
+      - echo "release"
+      - pnpm build
+
+  fix:
+    cmds:
+      - cargo metadata --verbose --format-version 1 --all-features

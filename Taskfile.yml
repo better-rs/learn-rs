@@ -5,29 +5,32 @@ version: "3"
 #
 includes:
   try:
-    taskfile: ./crates/rs-try/Taskfile.yml
+    taskfile: ./crates/rs-try/
     dir: ./crates/rs-try/
 
   scripts:
-    taskfile: ./crates/rs-scripts/Taskfile.yml
+    taskfile: ./crates/rs-scripts/
     dir: ./crates/rs-scripts/
 
   cms:
-    taskfile: ./crates/rs-cms/Taskfile.yml
+    taskfile: ./crates/rs-cms/
     dir: ./crates/rs-cms/
 
   ffi:core:
-    taskfile: ./crates/rs-ffi-core/Taskfile.yml
+    taskfile: ./crates/rs-ffi-core/
     dir: ./crates/rs-ffi-core/
 
   tonic:
-    taskfile: ./crates/rs-tonic/Taskfile.yml
+    taskfile: ./crates/rs-tonic/
     dir: ./crates/rs-tonic/
 
   volo:
-    taskfile: ./crates/rs-volo/Taskfile.yml
+    taskfile: ./crates/rs-volo/
     dir: ./crates/rs-volo/
 
+  tauri:
+    taskfile: ./crates/rs-tauri-vue/
+    dir: ./crates/rs-tauri-vue/
 
 
 #
