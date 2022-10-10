@@ -29,6 +29,12 @@ tasks:
       - echo "release"
       - pnpm build
 
+  # generate app icon
+  icon:
+    cmds:
+#      - pnpm add -D @tauri-apps/cli
+      - pnpm tauri icon ./public/logo.png
+
   fix:
     cmds:
       - cargo metadata --verbose --format-version 1 --all-features
