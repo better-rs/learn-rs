@@ -15,10 +15,34 @@ import Tab from './components/Tab.vue'
         </div>
 
         <Tab></Tab>
-<!--        <Button/>-->
+        <!--        <Button/>-->
 
         <!--        <HelloWorld msg="Hello Tauri + Vue!"/>-->
 
 
+        <n-card title="Route View">
+            <n-tabs type="line" animated>
+
+                <n-tab-pane name="debug" tab="Debug">
+                    <router-link to="/debug">Debug 页面</router-link>
+                </n-tab-pane>
+
+                <n-tab-pane name="home" tab="Home">
+                    <router-link to="/">Go to Home</router-link>
+                </n-tab-pane>
+
+                <n-tab-pane name="about" tab="About">
+                    <router-link to="/about">Go to About</router-link>
+                </n-tab-pane>
+
+            </n-tabs>
+        </n-card>
+
     </div>
+
+
+    <!-- 路由出口 -->
+    <!-- 路由匹配到的组件将渲染在这里 -->
+    <!--    <router-view></router-view>-->
+
 </template>

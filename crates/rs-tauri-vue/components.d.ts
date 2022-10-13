@@ -16,6 +16,8 @@ declare module '@vue/runtime-core' {
     Layout: typeof import('./src/components/Layout.vue')['default']
     NButton: typeof import('naive-ui')['NButton']
     NButtonGroup: typeof import('naive-ui')['NButtonGroup']
+    NCard: typeof import('naive-ui')['NCard']
+    NCards: typeof import('naive-ui')['NCards']
     NDrawer: typeof import('naive-ui')['NDrawer']
     NDrawerContent: typeof import('naive-ui')['NDrawerContent']
     NGrid: typeof import('naive-ui')['NGrid']

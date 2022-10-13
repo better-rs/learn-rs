@@ -1,6 +1,6 @@
 import {createRouter, createWebHistory, RouterView} from 'vue-router'
 import Home from './views/Home.vue'
-
+import Debug from './components/debug/Debug.vue'
 import NotFound from './views/NotFound.vue'
 
 
@@ -31,6 +31,14 @@ export const router = createRouter({
             components: {default: Home, other: component},
             props: {default: to => ({waited: to.meta.waitedFor})},
         },
+
+      {
+        path:'/debug',
+        component: Debug,
+      },
+
+
+
         {
             path: '/always-redirect',
             redirect: () => ({
@@ -61,12 +69,7 @@ export const router = createRouter({
             },
         },
 
-
-
-
         {path: '/:data(.*)', component: NotFound, name: 'NotFound'},
-
-
         {
             path: '/admin',
             children: [
