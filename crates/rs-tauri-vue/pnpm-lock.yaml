@@ -27,6 +27,7 @@ specifiers:
   vite: 3.1.4
   vitest: 0.23.4
   vue: 3.2.40
+  vue-router: '4'
   vue-tsc: 0.40.13
 
 dependencies:
@@ -58,6 +59,7 @@ devDependencies:
   vfonts: 0.0.3
   vite: 3.1.4
   vitest: 0.23.4
+  vue-router: 4.1.5_vue@3.2.40
   vue-tsc: 0.40.13_typescript@4.8.4
 
 packages:
@@ -628,6 +630,10 @@ packages:
     dependencies:
       '@vue/compiler-dom': 3.2.40
       '@vue/shared': 3.2.40
+
+  /@vue/devtools-api/6.4.4:
+    resolution: {integrity: sha512-Ku31WzpOV/8cruFaXaEZKF81WkNnvCSlBY4eOGtz5WMSdJvX1v1WWlSMGZeqUwPtQ27ZZz7B62erEMq8JDjcXw==}
+    dev: true
 
   /@vue/devtools/6.4.2:
     resolution: {integrity: sha512-7RVhZVNsWwiOwhI8+2PaIAT+gHUn0k7mPUdDAnl110hE3x3jzIg8g57q/3pd+P94DzTlZZlKbSKLSztTw4R/qA==}
@@ -3494,6 +3500,15 @@ packages:
       semver: 7.3.7
     transitivePeerDependencies:
       - supports-color
+    dev: true
+
+  /vue-router/4.1.5_vue@3.2.40:
+    resolution: {integrity: sha512-IsvoF5D2GQ/EGTs/Th4NQms9gd2NSqV+yylxIyp/OYp8xOwxmU8Kj/74E9DTSYAyH5LX7idVUngN3JSj1X4xcQ==}
+    peerDependencies:
+      vue: ^3.2.0
+    dependencies:
+      '@vue/devtools-api': 6.4.4
+      vue: 3.2.40
     dev: true
 
   /vue-tsc/0.40.13_typescript@4.8.4:

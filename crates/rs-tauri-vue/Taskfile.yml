@@ -12,7 +12,8 @@ tasks:
 
   dev:fe:
     cmds:
-      - pnpm i unplugin-vue-components -D
+      - pnpm i -D vue-router@4
+      - pnpm i -D unplugin-vue-components
       - pnpm i -D naive-ui
       - pnpm i -D vfonts
       - pnpm i -D @vicons/ionicons5
