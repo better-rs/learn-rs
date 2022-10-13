@@ -83,6 +83,7 @@ ij_rust_spaces_around_assoc_type_binding = false
 # ij_editorconfig_spaces_around_assignment_operators = true
 
 [{*.ats,*.cts,*.mts,*.ts}]
+indent_size = 2
 # ij_continuation_indent_size = 4
 # ij_typescript_align_imports = false
 # ij_typescript_align_multiline_array_initializer_expression = false
