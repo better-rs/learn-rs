@@ -1,48 +1,68 @@
-<script setup lang="ts">
+<script lang="ts">
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
 import HelloWorld from './components/HelloWorld.vue'
 import Layout from './components/Layout.vue'
 import Tab from './components/Tab.vue'
+import {defineComponent} from 'vue'
+import {dateZhCN, zhCN} from 'naive-ui';
+import {NConfigProvider} from 'naive-ui'
+
+export default defineComponent({
+    components: {
+        NConfigProvider
+    },
+    setup() {
+        return {
+            zhCN,
+            dateZhCN
+        }
+    }
+})
 </script>
 
 <template>
-    <div class="flex flex-col p-2">
+    <n-config-provider :locale="zhCN" :date-locale="dateZhCN">
 
-        <div class="flex flex-row items-center justify-center">
-            <img src="/tauri.svg" class="w-10 h-10 logo tauri" alt="Tauri logo"/>
-            <img src="/vue.svg" class="w-10 h-10 logo vue" alt="Vue logo"/>
+        <div class="flex flex-col p-2">
+            <div class="flex flex-row items-center justify-center">
+                <img src="/tauri.svg" class="w-10 h-10 logo tauri" alt="Tauri logo"/>
+                <img src="/vue.svg" class="w-10 h-10 logo vue" alt="Vue logo"/>
+            </div>
+
+            <Tab></Tab>
+
+            <n-card title="Route View">
+                <n-tabs type="line" animated>
+
+                    <n-tab-pane name="debug" tab="Debug">
+                        <router-link to="/debug">Debug 页面</router-link>
+                    </n-tab-pane>
+
+                    <n-tab-pane name="home" tab="Home">
+                        <router-link to="/">Go to Home</router-link>
+                    </n-tab-pane>
+
+                    <n-tab-pane name="about" tab="About">
+                        <router-link to="/about">Go to About</router-link>
+                    </n-tab-pane>
+
+                </n-tabs>
+
+
+                <n-divider/>
+
+                <!-- 路由出口 -->
+                <!-- 路由匹配到的组件将渲染在这里 -->
+                <router-view/>
+            </n-card>
+
+
+            <!--        <Button/>-->
+
+            <!--        <HelloWorld msg="Hello Tauri + Vue!"/>-->
         </div>
 
-        <Tab></Tab>
-        <!--        <Button/>-->
-
-        <!--        <HelloWorld msg="Hello Tauri + Vue!"/>-->
-
-
-        <n-card title="Route View">
-            <n-tabs type="line" animated>
-
-                <n-tab-pane name="debug" tab="Debug">
-                    <router-link to="/debug">Debug 页面</router-link>
-                </n-tab-pane>
-
-                <n-tab-pane name="home" tab="Home">
-                    <router-link to="/">Go to Home</router-link>
-                </n-tab-pane>
-
-                <n-tab-pane name="about" tab="About">
-                    <router-link to="/about">Go to About</router-link>
-                </n-tab-pane>
-
-            </n-tabs>
-        </n-card>
-
-    </div>
-
-
-    <!-- 路由出口 -->
-    <!-- 路由匹配到的组件将渲染在这里 -->
-    <!--    <router-view></router-view>-->
+    </n-config-provider>
 
 </template>
