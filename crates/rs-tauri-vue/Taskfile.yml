@@ -5,9 +5,17 @@ tasks:
     - echo "init"
 
   dev:
-    - echo "dev install"
-    - cargo install --force cargo-edit
-    - cargo install --locked cargo-outdated
+    cmds:
+      - echo "dev install"
+      - cargo install --force cargo-edit
+      - cargo install --locked cargo-outdated
+
+  dev:fe:
+    cmds:
+      - pnpm i unplugin-vue-components -D
+      - pnpm i -D naive-ui
+      - pnpm i -D vfonts
+      - pnpm i -D @vicons/ionicons5
 
   install:
     cmds:
@@ -21,8 +29,9 @@ tasks:
       - pnpm dev
 
   test:
-    - echo "test"
-    - cd src-tauri; cargo test
+    cmds:
+      - echo "test"
+      - cd src-tauri; cargo test
 
   release:
     cmds:
