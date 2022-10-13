@@ -1,13 +1,17 @@
 <script setup>
 import {NCard, NTabs, NTabPane} from 'naive-ui'
 import Home from './home/Home.vue'
+import Settings from './settings/Settings.vue'
+import Drawer from "./drawer/Drawer.vue";
+import Debug from "./debug/Debug.vue";
 
 </script>
 
-
 <template>
+
     <n-card title="" style="margin-bottom: 16px">
-        <n-tabs default-value="home" justify-content="space-evenly" type="line">
+        <n-tabs trigger="hover" default-value="home" justify-content="space-evenly" type="line">
+
             <n-tab-pane name="home" tab="首页">
                 <Home></Home>
             </n-tab-pane>
@@ -22,8 +26,18 @@ import Home from './home/Home.vue'
             </n-tab-pane>
 
             <n-tab-pane name="settings" tab="设置">
-                用户设置页面
+                <Settings></Settings>
             </n-tab-pane>
+
+            <n-tab-pane name="debug" tab="Debug">
+                <Debug></Debug>
+            </n-tab-pane>
+
+
+            <n-tab-pane name="drawer" tab="我的">
+                <Drawer></Drawer>
+            </n-tab-pane>
+
 
         </n-tabs>
     </n-card>

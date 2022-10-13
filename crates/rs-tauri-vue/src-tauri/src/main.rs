@@ -56,7 +56,7 @@ fn main() {
             _ => {},
         })
         .invoke_handler(tauri::generate_handler![backend_add])
-        .menu(tauri::Menu::os_default("Tauri Vue Template").add_submenu(Submenu::new(
+        .menu(tauri::Menu::os_default("CryptoPie").add_submenu(Submenu::new(
             "Help",
             Menu::with_items([
                 CustomMenuItem::new("Online Documentation", "Online Documentation").into(),

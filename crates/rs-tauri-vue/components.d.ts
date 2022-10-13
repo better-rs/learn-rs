@@ -7,19 +7,29 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
-    Button: typeof import('./src/components/Button.vue')['default']
+    Debug: typeof import('./src/components/debug/Debug.vue')['default']
+    DebugButton: typeof import('./src/components/debug/DebugButton.vue')['default']
+    DebugTab: typeof import('./src/components/debug/DebugTab.vue')['default']
+    Drawer: typeof import('./src/components/drawer/Drawer.vue')['default']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     Home: typeof import('./src/components/home/Home.vue')['default']
     Layout: typeof import('./src/components/Layout.vue')['default']
-    Menu: typeof import('./src/components/Menu.vue')['default']
-    Menu2: typeof import('./src/components/Menu2.vue')['default']
+    NButton: typeof import('naive-ui')['NButton']
+    NButtonGroup: typeof import('naive-ui')['NButtonGroup']
+    NDrawer: typeof import('naive-ui')['NDrawer']
+    NDrawerContent: typeof import('naive-ui')['NDrawerContent']
+    NGrid: typeof import('naive-ui')['NGrid']
+    NGridItem: typeof import('naive-ui')['NGridItem']
     NH2: typeof import('naive-ui')['NH2']
+    NIcon: typeof import('naive-ui')['NIcon']
     NLayout: typeof import('naive-ui')['NLayout']
     NLayoutSider: typeof import('naive-ui')['NLayoutSider']
     NMenu: typeof import('naive-ui')['NMenu']
     NSpace: typeof import('naive-ui')['NSpace']
     NSwitch: typeof import('naive-ui')['NSwitch']
+    NTabPane: typeof import('naive-ui')['NTabPane']
+    NTabs: typeof import('naive-ui')['NTabs']
+    Settings: typeof import('./src/components/settings/Settings.vue')['default']
     Tab: typeof import('./src/components/Tab.vue')['default']
-    TabMenu: typeof import('./src/components/TabMenu.vue')['default']
   }
 }
