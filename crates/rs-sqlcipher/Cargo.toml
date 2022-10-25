@@ -5,6 +5,13 @@ edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
+
+# git 操作:
+[[bin]]
+name = "rs-sql"
+path = "bin/sqlx.rs"
+
+
 [workspace]
 members = []
 
@@ -16,3 +23,6 @@ libsqlite3-sys = { version = "0", features = ["sqlcipher"] }
 # Tokio:
 sqlx = { version = "^0.6", features = ["runtime-tokio-native-tls", "sqlite"] }
 tokio = { version = "1", features = ["full"] }
+
+anyhow = "1.0"
+structopt = "0.3"

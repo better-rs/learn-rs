@@ -1,19 +1,48 @@
 version: "3"
 
-tasks:
-  init:
-    cmds:
-      - echo "init"
+# global env:
+env:
+  ENV1: testing
+  DATABASE_URL: "sqlite:tmp/app.db"   # TODO X: 默认的 db 路径
 
+tasks:
   dev:
     cmds:
       - echo "dev install"
       - cargo install --force cargo-edit
 
+  ################################################################################################
+
+  init:
+    cmds:
+      - echo "init"
+#      - mkdir tmp/
+      - task: init:db
+    ignore_error: true
+
+  init:db:
+    cmds:
+      - sqlx database drop
+      - sqlx database create
+      - task: migrate
+    ignore_error: true
+
+  # 创建 migrations/
+  migrate:add:
+    cmds:
+      - sqlx migrate add app # 生成 db migration 文件, 手动编辑, 再执行 db 表创建+初始化
+
+  # 基于 sql 初始化 db, 建表
+  migrate:
+    cmds:
+      - sqlx migrate run
+
+  ################################################################################################
+
   run:
     cmds:
       - echo "run"
-      - cargo run
+      - cargo run --bin rs-sql
 
   build:
     - echo "build"

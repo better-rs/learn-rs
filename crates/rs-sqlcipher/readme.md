@@ -2,6 +2,30 @@
 
 - [SQLCipher]() 是 [Sqlite]() 的加密版本(fork 版本)
 
+## quickstart:
+
+- 初始化:
+
+```ruby
+cd crates/rs-sqlcipher/
+
+# 创建 tmp, 创建db文件
+task init
+
+```
+
+- 运行:
+
+```ruby
+
+cd crates/rs-sqlcipher/
+
+# run:
+task run
+
+
+```
+
 ## 搭配 rust 使用:
 
 > 依赖:
@@ -14,9 +38,26 @@
 libsqlite3-sys = { version = "0.25", features = ["bundled-sqlcipher"] }
 
 # Tokio:
-sqlx = { version = "0.6", features = [ "runtime-tokio-native-tls" , "sqlite" ] }
+sqlx = { version = "0.6", features = ["runtime-tokio-native-tls", "sqlite"] }
 tokio = { version = "1", features = ["full"] }
 
+
+```
+
+> sqlite url:
+
+- 通过环境变量注入
+
+```rust
+
+/// | URL | Description |
+/// | -- | -- |
+/// `sqlite::memory:` | Open an in-memory database. |
+/// `sqlite:data.db` | Open the file `data.db` in the current directory. |
+/// `sqlite://data.db` | Open the file `data.db` in the current directory. |
+/// `sqlite:///data.db` | Open the file `data.db` from the root (`/`) directory. |
+/// `sqlite://data.db?mode=ro` | Open the file `data.db` for read-only access. |
+///
 
 ```
 
