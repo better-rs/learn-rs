@@ -1,22 +1,23 @@
 [workspace]
 members = [
-    "crates/basic",
-#    "crates/rs-cms",
+    #
+    # Rust Tutorial
+    #
+    "crates/rs-101/basic",
+    "crates/rs-101/rust-by-example",
+    "crates/rs-101/rust-programming-in-action",
+    "crates/rs-101/rust-programming-cookbook",
+    #
+    #
+    #
+    #    "crates/rs-cms",
     "crates/rs-leetcode",
     "crates/rs-scripts",
     "crates/rs-ffi",
     "crates/rs-ffi-core",
-#    "crates/rs-tonic",
+    #    "crates/rs-tonic",
     "crates/rs-tauri-vue/src-tauri",
-#    "crates/rs-sqlcipher",
-
-    #
-    #
-    #
-    "crates/rust-by-example",
-    "crates/rust-programming-in-action",
-    "crates/rust-programming-cookbook",
-    #    "packages/axum/axum-axum-v0.4.5",
+    #    "crates/rs-sqlcipher",
 ]
 
 exclude = [

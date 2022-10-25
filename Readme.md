@@ -23,25 +23,26 @@
 
 > Rust 学习:
 
-| 子项目                                          | 说明                   | 备注         |
-|:---------------------------------------------|:---------------------|:-----------|
-| [rust-by-example](./crates/rust-by-example)  | Rust 官方练习代码          | ⭐⭐⭐        |
-| [rs-leetcode](./crates/rs-leetcode)          | 使用 Rust 刷题(leetcode) | TODO       |
-| [basic](./crates/basic)                      | Rust 语法练习            | ⭐ |
-| [rs-try](./crates/rs-try)                    | Rust 第三方lib 验证/调研  | ⭐⭐ |
-| [rs-ffi](./crates/rs-ffi)                    | Rust + FFI           | ⭐⭐⭐ |
-| [rs-tonic](./crates/rs-tonic)                | Rust + gRPC(Tonic)   | ⭐⭐⭐ |
-| [rs-volo](./crates/rs-volo)                  | Rust + gRPC(Volo)    | ⭐⭐⭐ |
-| xxxxxxxxxxxxxx                               | xxxxxxxxxxxxxxxxxx   | xxxxxxxxxx |
+| 子项目                                                          | 说明                   | 备注       |
+|:-------------------------------------------------------------|:---------------------|:---------|
+| [rust-by-example](./crates/rs-101/rust-by-example)           | Rust 官方练习代码          | ⭐⭐⭐      |
+| [basic](./crates/rs-101/basic)                               | Rust 语法练习            | ⭐        |
+| [rs-leetcode](./crates/rs-leetcode)                          | 使用 Rust 刷题(leetcode) | TODO     |
+| [rs-try](./crates/rs-try)                                    | Rust 第三方lib 验证/调研    | ⭐⭐       |
+| [rs-ffi](./crates/rs-ffi)                                    | Rust + FFI           | ⭐⭐⭐      |
+| [rs-tonic](./crates/rs-tonic)                                | Rust + gRPC(Tonic)   | ⭐⭐⭐      |
+| [rs-volo](./crates/rs-volo)                                  | Rust + gRPC(Volo)    | ⭐⭐⭐      |
+| [rs-sql](./crates/rs-sql)                                    | Rust + sqlx 使用       | ⭐⭐       |
+| xxxxxxxxxxxxxx                                               | xxxxxxxxxxxxxxxxxx   | xxxxxxxx |
 
 > 基于 Rust 写的脚本工具和业务系统:
 
-| 子项目          | 说明                              | 备注         |
-|:---------------|:--------------------------------|:-----------|
-| [rs-scripts](./crates/rs-scripts) | rust cli 脚本工具: Binance 持币成本计算器 | ⭐⭐⭐⭐⭐      |
-| [rs-cms](./crates/rs-cms) | rust 小型 CMS 系统, 小型电商原型          | ⭐⭐⭐ |
-| xxxxxxxxxxxxxx | xxxxxxxxxxxxxxxxxx              | xxxxxxxxxx |
-| xxxxxxxxxxxxxx | xxxxxxxxxxxxxxxxxx              | xxxxxxxxxx |
+| 子项目                                   | 说明                                     | 备注            |
+|:--------------------------------------|:---------------------------------------|:--------------|
+| [rs-scripts](./crates/rs-scripts)     | rust cli 脚本工具: Binance 持币成本计算器         | ⭐⭐⭐⭐⭐         |
+| [rs-cms](./crates/rs-cms)             | rust 小型 CMS 系统, 小型电商原型                 | ⭐⭐⭐           |
+| xxxxxxxxxxxxxx                        | xxxxxxxxxxxxxxxxxx                     | xxxxxxxxxx    |
+| xxxxxxxxxxxxxx                        | xxxxxxxxxxxxxxxxxx                     | xxxxxxxxxx    |
 
 ## 基于 Rust 写的小工具:
 
@@ -107,7 +108,7 @@ SUBCOMMANDS:
 
 > 源码位置:
 
-- ✅ [crates/rs-scripts/src/bin/binance.rs](crates/rs-scripts/src/bin/binance.rs)
+- ✅ [crates/rs-scripts/src/bin/binance.rs](crates/rs-scripts/bin/binance.rs)
 - ✅ 启动脚本: [crates/rs-scripts/Taskfile.yml](crates/rs-scripts/Taskfile.yml)
 
 > 功能说明:
@@ -170,4 +171,4 @@ rustc 1.65.0-nightly (17cbdfd07 2022-09-13)
 ## docs:
 
 - ✅ [本项目说明: 开发环境搭建](./docs/dev.md)
-- ✅ [Rust 学习笔记](./docs/README.md)
+- ✅ [Rust 学习笔记](./docs/readme.md)
