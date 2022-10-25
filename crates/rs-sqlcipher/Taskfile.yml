@@ -43,6 +43,7 @@ tasks:
     cmds:
       - echo "run"
       - cargo run --bin rs-sql add "todo description"  # add
+      - cargo run --bin rs-sql add2 "todo description by add2"  # add
       - cargo run --bin rs-sql done 1 # change status
       - cargo run -v --bin rs-sql                         # list all
 

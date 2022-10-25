@@ -1,19 +1,43 @@
-use rs_sqlcipher::sql::{add_todo, complete_todo, list_todos, Args, Command};
+use rs_sqlcipher::sql::{add_todo, add_todo2, complete_todo, list_todos, Args, Command};
 
-use sqlx::sqlite::SqlitePool;
-use std::env;
+use sqlx::{
+    sqlite::{SqliteConnectOptions, SqlitePool, SqlitePoolOptions},
+    ConnectOptions,
+};
+use std::{env, str::FromStr};
 use structopt::StructOpt;
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
     let args = Args::from_args_safe()?;
-    let pool = SqlitePool::connect(&env::var("DATABASE_URL")?).await?;
+
+    // todo x: 写法2
+    let _ = SqlitePool::connect(&env::var("DATABASE_URL")?).await?;
+
+    // todo x: 基于 db 连接池
+    let pool: SqlitePool = SqlitePoolOptions::new()
+        .min_connections(2)
+        .connect(&env::var("DATABASE_URL")?)
+        .await
+        .unwrap();
+
+    // todo x: 单个 db 连接
+    let mut _conn = SqliteConnectOptions::from_str(&env::var("DATABASE_URL")?)?
+        // .pragma("key", "the_password") // todo x: 关键参数
+        .connect()
+        .await?;
 
     match args.cmd {
         // todo x: 新增
         Some(Command::Add { description }) => {
             println!("Adding new todo with description '{}'", &description);
             let todo_id = add_todo(&pool, description).await?;
+            println!("Added new todo with id {}", todo_id);
+        },
+
+        Some(Command::Add2 { description }) => {
+            println!("Adding new todo with description '{}'", &description);
+            let todo_id = add_todo2(&mut _conn, description).await?;
             println!("Added new todo with id {}", todo_id);
         },
 

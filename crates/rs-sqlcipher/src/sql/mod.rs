@@ -1,4 +1,4 @@
-use sqlx::sqlite::SqlitePool;
+use sqlx::{sqlite::SqlitePool, Executor, SqliteConnection};
 use structopt::StructOpt;
 
 #[derive(StructOpt)]
@@ -10,6 +10,7 @@ pub struct Args {
 #[derive(StructOpt)]
 pub enum Command {
     Add { description: String },
+    Add2 { description: String },
     Done { id: i64 },
 }
 
@@ -25,6 +26,21 @@ VALUES ( ?1 )
         description
     )
     .execute(&mut conn)
+    .await?
+    .last_insert_rowid();
+
+    Ok(id)
+}
+
+pub async fn add_todo2(conn: &mut SqliteConnection, description: String) -> anyhow::Result<i64> {
+    let id = sqlx::query!(
+        r#"
+INSERT INTO todos ( description )
+VALUES ( ?1 )
+        "#,
+        description
+    )
+    .execute(conn)
     .await?
     .last_insert_rowid();
 

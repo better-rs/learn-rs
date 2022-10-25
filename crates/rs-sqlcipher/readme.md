@@ -61,6 +61,14 @@ tokio = { version = "1", features = ["full"] }
 
 ```
 
+
+## 加密参数: 
+
+
+- https://github.com/launchbadge/sqlx/blob/main/tests/sqlite/sqlcipher.rs#L51
+
+
+
 ## 使用说明:
 
 > 使用场景:
@@ -78,3 +86,9 @@ tokio = { version = "1", features = ["full"] }
 - 此加密方案, 防君子, 不防小人.
 - 并不能应对破解(原理上, 是比较容易破解的)
 - 但是可以规避大多数普通场景的数据安全, 应对普通用户, 不能随意获取`加密数据`.
+
+
+
+## reference:
+
+- https://github.com/rusqlite/rusqlite/issues/926
