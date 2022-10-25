@@ -12,8 +12,10 @@ use structopt::StructOpt;
 async fn main() -> anyhow::Result<()> {
     let args = Args::from_args_safe()?;
 
+    let url = env::var("DATABASE_URL")?;
+
     // todo x: 单个 db 连接
-    let mut conn = SqliteConnectOptions::from_str(&env::var("DATABASE_URL")?)?
+    let mut conn = SqliteConnectOptions::from_str(&url)?
         // .pragma("key", "the_password") // todo x: 关键参数
         .connect()
         .await?;
@@ -22,17 +24,13 @@ async fn main() -> anyhow::Result<()> {
     sqlx::migrate!("./migrations").run(&mut conn).await?;
 
     // todo x: 写法2
-    let _ = SqlitePool::connect(&env::var("DATABASE_URL")?).await?;
+    let _ = SqlitePool::connect(&url).await?;
 
     // todo x: 基于 db 连接池
-    let pool: SqlitePool = SqlitePoolOptions::new()
-        .min_connections(2)
-        .connect(&env::var("DATABASE_URL")?)
-        .await
-        .unwrap();
+    let pool: SqlitePool = SqlitePoolOptions::new().min_connections(2).connect(&url).await.unwrap();
 
     // todo x: 写法2
-    let _ = SqlitePool::connect(&env::var("DATABASE_URL")?).await?;
+    let _ = SqlitePool::connect(&url).await?;
 
     match args.cmd {
         // todo x: 新增
