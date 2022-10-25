@@ -7,10 +7,15 @@ pub async fn new_db_url() -> anyhow::Result<(String, PathBuf)> {
     let path = env::current_dir()?;
     let filepath = path.join("tmp/app.db");
 
+    let url = format!("sqlite://{}", filepath.display());
+    if filepath.exists() {
+        return Ok((url, path))
+    }
+
     // Touch the file, so DB driver will not complain it does not exist
     File::create(filepath.as_path()).await?;
 
-    Ok((format!("sqlite://{}", filepath.display()), path))
+    Ok((url, path))
 }
 
 #[derive(StructOpt)]
