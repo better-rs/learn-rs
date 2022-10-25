@@ -6,7 +6,7 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 
-# git 操作:
+# sqlx:
 [[bin]]
 name = "rs-sql"
 path = "bin/sqlx.rs"
@@ -17,8 +17,8 @@ members = []
 
 
 [dependencies]
-#libsqlite3-sys = { version = "0", features = ["bundled-sqlcipher-vendored-openssl"] }
-libsqlite3-sys = { version = "0", features = ["sqlcipher"] }
+# TODO X: 使用内置版本, 编译简单
+libsqlite3-sys = { version = "0", features = ["bundled-sqlcipher-vendored-openssl"] }
 
 # Tokio:
 sqlx = { version = "^0.6", features = ["runtime-tokio-native-tls", "sqlite"] }
@@ -26,3 +26,4 @@ tokio = { version = "1", features = ["full"] }
 
 anyhow = "1.0"
 structopt = "0.3"
+futures = "0.3"

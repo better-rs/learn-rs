@@ -42,7 +42,9 @@ tasks:
   run:
     cmds:
       - echo "run"
-      - cargo run --bin rs-sql
+      - cargo run --bin rs-sql add "todo description"  # add
+      - cargo run --bin rs-sql done 1 # change status
+      - cargo run -v --bin rs-sql                         # list all
 
   build:
     - echo "build"
