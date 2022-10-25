@@ -1,5 +1,17 @@
 use sqlx::{sqlite::SqlitePool, Executor, SqliteConnection};
+use sqlx_rt::fs::File;
+use std::{env, path::PathBuf};
 use structopt::StructOpt;
+
+pub async fn new_db_url() -> anyhow::Result<(String, PathBuf)> {
+    let path = env::current_dir()?;
+    let filepath = path.join("tmp/app.db");
+
+    // Touch the file, so DB driver will not complain it does not exist
+    File::create(filepath.as_path()).await?;
+
+    Ok((format!("sqlite://{}", filepath.display()), path))
+}
 
 #[derive(StructOpt)]
 pub struct Args {
@@ -79,4 +91,25 @@ ORDER BY id
     }
 
     Ok(())
+}
+
+#[cfg(test)]
+mod tests {
+    use crate::sql::new_db_url;
+    use std::env;
+
+    #[sqlx_macros::test]
+    async fn it_works() -> anyhow::Result<()> {
+        let path = env::current_dir()?;
+        println!("The current directory is {}", path.display());
+
+        let (url, _dir) = new_db_url().await?;
+
+        println!("db url is {}", url);
+
+        let result = 2 + 2;
+        assert_eq!(result, 4);
+
+        Ok(())
+    }
 }

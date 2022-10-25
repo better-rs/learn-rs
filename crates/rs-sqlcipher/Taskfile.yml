@@ -61,6 +61,10 @@ tasks:
       - echo "release"
       - cargo build --release
 
+  clean:
+    cmds:
+      - cargo clean
+
   fix:
     cmds:
       - cargo metadata --verbose --format-version 1 --all-features

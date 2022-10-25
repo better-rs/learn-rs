@@ -92,3 +92,4 @@ tokio = { version = "1", features = ["full"] }
 ## reference:
 
 - https://github.com/rusqlite/rusqlite/issues/926
+- 关键参数: https://github.com/launchbadge/sqlx/issues/2009

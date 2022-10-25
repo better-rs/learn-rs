@@ -22,8 +22,11 @@ libsqlite3-sys = { version = "0", features = ["bundled-sqlcipher-vendored-openss
 
 # Tokio:
 sqlx = { version = "^0.6", features = ["runtime-tokio-native-tls", "sqlite"] }
+sqlx-rt = "0.6"
+sqlx-macros = "0.6"
 tokio = { version = "1", features = ["full"] }
 
 anyhow = "1.0"
 structopt = "0.3"
 futures = "0.3"
+tempdir = "0.3"
