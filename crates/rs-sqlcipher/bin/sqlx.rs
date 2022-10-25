@@ -20,7 +20,9 @@ async fn main() -> anyhow::Result<()> {
 
     // todo x: 单个 db 连接
     let mut conn = SqliteConnectOptions::from_str(&url)?
-        // .pragma("key", "the_password") // todo x: 关键参数
+        .pragma("dummy", "pragma")
+        .pragma("cipher_compatibility", "3")
+        .pragma("key", "the_password") // todo x: 关键参数
         .pragma("cipher_kdf_algorithm", "PBKDF2_HMAC_SHA1")
         .journal_mode(sqlx::sqlite::SqliteJournalMode::Wal)
         .pragma("cipher_page_size", "1024")
