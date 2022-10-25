@@ -4,6 +4,7 @@ use rs_sqlcipher::sql::{
 
 use sqlx::{
     migrate::Migrate,
+    query,
     sqlite::{SqliteConnectOptions, SqlitePool, SqlitePoolOptions},
     ConnectOptions,
 };
@@ -22,6 +23,10 @@ async fn main() -> anyhow::Result<()> {
         // .pragma("key", "the_password") // todo x: 关键参数
         .connect()
         .await?;
+
+    // TODO X: 不 work
+    // The 'pragma rekey' can be called at any time
+    query("PRAGMA rekey = new_password;").execute(&mut conn).await?;
 
     // todo x: 自动执行 db migrations
     sqlx::migrate!("./migrations").run(&mut conn).await?;
