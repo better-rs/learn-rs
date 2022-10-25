@@ -1,4 +1,6 @@
-use rs_sqlcipher::sql::{add_todo, add_todo2, complete_todo, list_todos, Args, Command};
+use rs_sqlcipher::sql::{
+    add_todo, add_todo2, complete_todo, list_todos, new_db_url, Args, Command,
+};
 
 use sqlx::{
     migrate::Migrate,
@@ -12,7 +14,8 @@ use structopt::StructOpt;
 async fn main() -> anyhow::Result<()> {
     let args = Args::from_args_safe()?;
 
-    let url = env::var("DATABASE_URL")?;
+    // let url = env::var("DATABASE_URL")?;
+    let (url, _dir) = new_db_url().await?;
 
     // todo x: 单个 db 连接
     let mut conn = SqliteConnectOptions::from_str(&url)?
