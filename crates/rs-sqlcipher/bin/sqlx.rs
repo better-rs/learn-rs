@@ -21,12 +21,25 @@ async fn main() -> anyhow::Result<()> {
     // todo x: 单个 db 连接
     let mut conn = SqliteConnectOptions::from_str(&url)?
         // .pragma("key", "the_password") // todo x: 关键参数
+        .pragma("cipher_kdf_algorithm", "PBKDF2_HMAC_SHA1")
+        .journal_mode(sqlx::sqlite::SqliteJournalMode::Wal)
+        .pragma("cipher_page_size", "1024")
+        // .pragma("key", "the_password")
+        .foreign_keys(true)
+        .pragma("kdf_iter", "64000")
+        .auto_vacuum(sqlx::sqlite::SqliteAutoVacuum::Incremental)
+        .pragma("cipher_hmac_algorithm", "HMAC_SHA1")
+        // .pragma("cipher_use_hmac", "off")
+        // .pragma("key", "the_password") // todo x: 关键参数
+        .pragma("rekey", "the_password") // todo x: 关键参数
         .connect()
         .await?;
 
     // TODO X: 不 work
     // The 'pragma rekey' can be called at any time
     query("PRAGMA rekey = new_password;").execute(&mut conn).await?;
+
+    // "PRAGMA key=encrypted"
 
     // todo x: 自动执行 db migrations
     sqlx::migrate!("./migrations").run(&mut conn).await?;
