@@ -22,9 +22,9 @@ tasks:
 
   init:db:
     cmds:
-      - sqlx database drop
+      - sqlx database drop -y
       - sqlx database create
-      - task: migrate
+#      - task: migrate
     ignore_error: true
 
   # 创建 migrations/
@@ -42,7 +42,7 @@ tasks:
   run:
     cmds:
       - echo "run"
-      - cargo run --bin rs-sql add "todo description"  # add
+      - cargo run -v --bin rs-sql add2 "todo description"  # add
       - cargo run --bin rs-sql add2 "todo description by add2"  # add
       - cargo run --bin rs-sql done 1 # change status
       - cargo run -v --bin rs-sql                         # list all

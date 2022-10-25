@@ -1,6 +1,7 @@
 use rs_sqlcipher::sql::{add_todo, add_todo2, complete_todo, list_todos, Args, Command};
 
 use sqlx::{
+    migrate::Migrate,
     sqlite::{SqliteConnectOptions, SqlitePool, SqlitePoolOptions},
     ConnectOptions,
 };
@@ -10,6 +11,15 @@ use structopt::StructOpt;
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
     let args = Args::from_args_safe()?;
+
+    // todo x: 单个 db 连接
+    let mut conn = SqliteConnectOptions::from_str(&env::var("DATABASE_URL")?)?
+        // .pragma("key", "the_password") // todo x: 关键参数
+        .connect()
+        .await?;
+
+    // todo x: 自动执行 db migrations
+    sqlx::migrate!("./migrations").run(&mut conn).await?;
 
     // todo x: 写法2
     let _ = SqlitePool::connect(&env::var("DATABASE_URL")?).await?;
@@ -21,11 +31,8 @@ async fn main() -> anyhow::Result<()> {
         .await
         .unwrap();
 
-    // todo x: 单个 db 连接
-    let mut _conn = SqliteConnectOptions::from_str(&env::var("DATABASE_URL")?)?
-        // .pragma("key", "the_password") // todo x: 关键参数
-        .connect()
-        .await?;
+    // todo x: 写法2
+    let _ = SqlitePool::connect(&env::var("DATABASE_URL")?).await?;
 
     match args.cmd {
         // todo x: 新增
@@ -37,7 +44,7 @@ async fn main() -> anyhow::Result<()> {
 
         Some(Command::Add2 { description }) => {
             println!("Adding new todo with description '{}'", &description);
-            let todo_id = add_todo2(&mut _conn, description).await?;
+            let todo_id = add_todo2(&mut conn, description).await?;
             println!("Added new todo with id {}", todo_id);
         },
 
