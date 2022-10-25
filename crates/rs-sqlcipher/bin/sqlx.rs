@@ -15,25 +15,26 @@ use structopt::StructOpt;
 async fn main() -> anyhow::Result<()> {
     let args = Args::from_args_safe()?;
 
-    // let url = env::var("DATABASE_URL")?;
-    let (url, _dir) = new_db_url().await?;
+    let url = env::var("DATABASE_URL")?;
+    // let (url, _dir) = new_db_url().await?;
 
     // todo x: 单个 db 连接
     let mut conn = SqliteConnectOptions::from_str(&url)?
         .pragma("dummy", "pragma")
-        .pragma("cipher_compatibility", "3")
-        .pragma("key", "the_password") // todo x: 关键参数
-        .pragma("cipher_kdf_algorithm", "PBKDF2_HMAC_SHA1")
+        // .pragma("cipher_compatibility", "3")
+        // .pragma("key", "the_password") // todo x: 关键参数
+        .create_if_missing(true)
+        // .pragma("cipher_kdf_algorithm", "PBKDF2_HMAC_SHA1")
         .journal_mode(sqlx::sqlite::SqliteJournalMode::Wal)
-        .pragma("cipher_page_size", "1024")
+        // .pragma("cipher_page_size", "1024")
         // .pragma("key", "the_password")
-        .foreign_keys(true)
-        .pragma("kdf_iter", "64000")
+        // .foreign_keys(true)
+        // .pragma("kdf_iter", "64000")
         .auto_vacuum(sqlx::sqlite::SqliteAutoVacuum::Incremental)
-        .pragma("cipher_hmac_algorithm", "HMAC_SHA1")
+        // .pragma("cipher_hmac_algorithm", "HMAC_SHA1")
         // .pragma("cipher_use_hmac", "off")
         // .pragma("key", "the_password") // todo x: 关键参数
-        .pragma("rekey", "the_password") // todo x: 关键参数
+        // .pragma("rekey", "the_password") // todo x: 关键参数
         .connect()
         .await?;
 
