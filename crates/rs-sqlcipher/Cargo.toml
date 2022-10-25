@@ -1,0 +1,18 @@
+[package]
+name = "rs-sqlcipher"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[workspace]
+members = []
+
+
+[dependencies]
+#libsqlite3-sys = { version = "0", features = ["bundled-sqlcipher-vendored-openssl"] }
+libsqlite3-sys = { version = "0", features = ["sqlcipher"] }
+
+# Tokio:
+sqlx = { version = "^0.6", features = ["runtime-tokio-native-tls", "sqlite"] }
+tokio = { version = "1", features = ["full"] }

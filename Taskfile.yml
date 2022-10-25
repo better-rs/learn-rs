@@ -32,6 +32,11 @@ includes:
     taskfile: ./crates/rs-tauri-vue/
     dir: ./crates/rs-tauri-vue/
 
+  sqlc:
+    taskfile: crates/rs-sqlcipher/
+    dir: crates/rs-sqlcipher
+
+
 
 #
 # global vars: https://taskfile.dev/#/usage?id=variables
