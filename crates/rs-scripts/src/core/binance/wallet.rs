@@ -15,6 +15,7 @@ use chrono::{Duration, TimeZone, Utc};
 use log::{debug, error, info, warn};
 #[allow(unused_imports)]
 use pretty_env_logger;
+use serenity::cache::FromStrAndCache;
 
 // wallet:
 // api docs:
@@ -224,22 +225,23 @@ impl WalletService {
         match self.client.daily_account_snapshot(snapshot_req).await {
             Ok(answer) => {
                 for item in answer.snapshot_vos.iter() {
-                    info!("💰 snapshot: {:?}", item.update_time);
-                    match AccountSnapshotType::from_str(item.snapshot_type.as_str()) {
-                        AccountSnapshotType::Spot => {
-                            for balance in item.data.balances.iter() {
-                                if balance.free + balance.locked >= 0.0 {
-                                    info!("\t💰 coin: {:?}", balance);
-                                }
-                            }
-                        },
-                        AccountSnapshotType::Margin => {
-                            info!("💰 margin snapshot: {:?}", item);
-                        },
-                        AccountSnapshotType::Futures => {
-                            info!("💰 futures snapshot: {:?}", item);
-                        },
-                    }
+                    info!("💰 snapshot: {:?}", item);
+
+                    // match AccountSnapshotType::from_str(item.snapshot_type.as_str()) {
+                    //     AccountSnapshotType::Spot => {
+                    //         for balance in item.data.balances.iter() {
+                    //             if balance.free + balance.locked >= 0.0 {
+                    //                 info!("\t💰 coin: {:?}", balance);
+                    //             }
+                    //         }
+                    //     },
+                    //     AccountSnapshotType::Margin => {
+                    //         info!("💰 margin snapshot: {:?}", item);
+                    //     },
+                    //     AccountSnapshotType::Futures => {
+                    //         info!("💰 futures snapshot: {:?}", item);
+                    //     },
+                    // }
                 }
             },
 

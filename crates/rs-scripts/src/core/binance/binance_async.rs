@@ -20,7 +20,7 @@ pub async fn general() {
         Err(err) => {
             match err {
                 BinanceLibError::BinanceError { response } => match response.code {
-                    -1000_i16 => error!("An unknown error occured while processing the request"),
+                    -1000_i32 => error!("An unknown error occured while processing the request"),
                     _ => error!("Non-catched code {}: {}", response.code, response.msg),
                 },
                 _ => error!("Other errors: {:?}.", err),
