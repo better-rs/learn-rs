@@ -33,7 +33,7 @@ pub enum EthCommands {
     #[clap(arg_required_else_help = true)]
     Add {
         /// Stuff to add
-        #[clap(required = true, parse(from_os_str))]
+        #[clap(required = true)]
         path: Vec<PathBuf>,
     },
 }
