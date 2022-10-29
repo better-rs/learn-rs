@@ -4,6 +4,7 @@ import Home from './home/Home.vue'
 import Settings from './settings/Settings.vue'
 import Drawer from "./drawer/Drawer.vue";
 import Debug from "./debug/Debug.vue";
+import Demo from "./demo/Demo.vue"
 
 </script>
 
@@ -11,6 +12,12 @@ import Debug from "./debug/Debug.vue";
 
     <n-card title="" style="margin-bottom: 16px">
         <n-tabs trigger="hover" default-value="home" justify-content="space-evenly" type="line">
+
+
+            <n-tab-pane name="demo" tab="Demo">
+                <Demo></Demo>
+            </n-tab-pane>
+
 
             <n-tab-pane name="home" tab="首页">
                 <Home></Home>

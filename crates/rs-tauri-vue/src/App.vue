@@ -1,9 +1,6 @@
 <script lang="ts">
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
-import HelloWorld from './components/HelloWorld.vue'
-import Layout from './components/Layout.vue'
-import Tab from './components/Tab.vue'
 import {defineComponent} from 'vue'
 import {dateZhCN, zhCN} from 'naive-ui';
 import {NConfigProvider} from 'naive-ui'
@@ -20,6 +17,11 @@ export default defineComponent({
     }
 })
 </script>
+
+<script lang="ts" setup>
+import Tab from './components/Tab.vue'
+</script>
+
 
 <template>
     <n-config-provider :locale="zhCN" :date-locale="dateZhCN">
