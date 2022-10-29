@@ -35,6 +35,9 @@ window-vibrancy = "0.3"
 [target."cfg(any(target_os = \"ios\", target_os = \"macos\"))".dependencies]
 cocoa = "0.24"
 
+# sqlite
+sqlx = { version = "^0.6", features = ["runtime-tokio-native-tls", "sqlite"] }
+
 
 [features]
 # by default Tauri runs in production mode

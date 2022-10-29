@@ -29,6 +29,13 @@ tasks:
     cmds:
       - pnpm dev
 
+  # 创建 migrations/
+  migrate:add:
+    cmds:
+      - sqlx migrate add init # 生成 db migration 文件, 手动编辑, 再执行 db 表创建+初始化
+    dir: "src-tauri"
+
+
   test:
     cmds:
       - echo "test"
