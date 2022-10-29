@@ -29,6 +29,11 @@ tasks:
     cmds:
       - pnpm dev
 
+  run:rs:
+    cmds:
+      - cargo tauri dev
+    dir: "src-tauri"
+
   # 创建 migrations/
   migrate:add:
     cmds:
