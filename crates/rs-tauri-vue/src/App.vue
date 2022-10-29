@@ -26,43 +26,17 @@ import Tab from './components/Tab.vue'
 <template>
     <n-config-provider :locale="zhCN" :date-locale="dateZhCN">
 
-        <div class="flex flex-col p-2">
+        <div class="flex-col p-5">
+
             <div class="flex flex-row items-center justify-center">
-                <img src="/tauri.svg" class="w-10 h-10 logo tauri" alt="Tauri logo"/>
-                <img src="/vue.svg" class="w-10 h-10 logo vue" alt="Vue logo"/>
+                <img src="/tauri.svg" class="w-5 h-5 logo tauri" alt="Tauri logo"/>
+                <img src="/vue.svg" class="w-5 h-5 logo vue" alt="Vue logo"/>
             </div>
 
+
+            <!--            todo x: tab-->
             <Tab></Tab>
 
-            <n-card title="Route View">
-                <n-tabs type="line" animated>
-
-                    <n-tab-pane name="debug" tab="Debug">
-                        <router-link to="/debug">Debug 页面</router-link>
-                    </n-tab-pane>
-
-                    <n-tab-pane name="home" tab="Home">
-                        <router-link to="/">Go to Home</router-link>
-                    </n-tab-pane>
-
-                    <n-tab-pane name="about" tab="About">
-                        <router-link to="/about">Go to About</router-link>
-                    </n-tab-pane>
-
-                </n-tabs>
-
-
-                <n-divider/>
-
-                <!-- 路由出口 -->
-                <!-- 路由匹配到的组件将渲染在这里 -->
-                <router-view/>
-            </n-card>
-
-
-            <!--        <Button/>-->
-
-            <!--        <HelloWorld msg="Hello Tauri + Vue!"/>-->
         </div>
 
     </n-config-provider>

@@ -11,7 +11,7 @@ import Demo from "./demo/Demo.vue"
 <template>
 
     <n-card title="" style="margin-bottom: 16px">
-        <n-tabs trigger="hover" default-value="home" justify-content="space-evenly" type="line">
+        <n-tabs trigger="hover" default-value="demo" justify-content="space-evenly" type="line">
 
 
             <n-tab-pane name="demo" tab="Demo">
