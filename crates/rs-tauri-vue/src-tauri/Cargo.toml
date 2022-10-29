@@ -38,6 +38,9 @@ cocoa = "0.24"
 # sqlite
 sqlx = { version = "^0.6", features = ["runtime-tokio-native-tls", "sqlite"] }
 
+# logging
+tracing = "0.1"
+tracing-subscriber = "0.3"
 
 [features]
 # by default Tauri runs in production mode
