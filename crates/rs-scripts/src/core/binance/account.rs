@@ -167,7 +167,8 @@ pub async fn do_account_cmd(api_key: &str, secret_key: &str) {
     let cli = AccountService::new(Some(api_key.into()), Some(secret_key.into()));
 
     // 多个币种计算:
-    let coins = vec!["BTC", "ETH", "BNB", "SOL", "FIL", "KSM", "MATIC", "SFP", "GLMR", "DOT"];
+    let coins =
+        vec!["BTC", "ETH", "BNB", "SOL", "DOGE", "FIL", "KSM", "MATIC", "SFP", "GLMR", "DOT"];
 
     // 打印账号余额:
     cli.get_all_balance().await;
