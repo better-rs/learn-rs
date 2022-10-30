@@ -5,6 +5,7 @@ use tauri::{
     api::shell, CustomMenuItem, Manager, Menu, Runtime, Submenu, SystemTray, SystemTrayEvent,
     SystemTrayMenu, SystemTrayMenuItem, Window,
 };
+use tauri_plugin_sql::{Migration, MigrationKind, TauriSql};
 use tracing::{debug, info, info_span, trace_span, warn};
 use window_shadows::set_shadow;
 
@@ -23,7 +24,29 @@ fn main() {
 
     let ctx = tauri::generate_context!();
 
-    tauri::Builder::default()
+    #[cfg(not(target_os = "macos"))]
+    let builder = tauri::Builder::default();
+    #[cfg(target_os = "macos")]
+    let builder = tauri::Builder::default()
+        .menu(menu::menu())
+        .menu(Menu::os_default("CryptoPie").add_submenu(Submenu::new(
+            "Help",
+            Menu::with_items([
+                CustomMenuItem::new("Online Documentation", "Online Documentation").into(),
+            ]),
+        )))
+        .on_menu_event(|event| {
+            let event_name = event.menu_item_id();
+            match event_name {
+                "Online Documentation" => {
+                    let url = "https://github.com/Uninen/tauri-vue-template".to_string();
+                    shell::open(&event.window().shell_scope(), url, None).unwrap();
+                },
+                _ => {},
+            }
+        });
+
+    builder
         .system_tray(tray)
         .on_system_tray_event(|app, event| match event {
             SystemTrayEvent::LeftClick { position: _, size: _, .. } => {
@@ -48,23 +71,6 @@ fn main() {
             _ => {},
         })
         .invoke_handler(tauri::generate_handler![backend_add])
-        .menu(tauri::Menu::os_default("CryptoPie").add_submenu(Submenu::new(
-            "Help",
-            Menu::with_items([
-                CustomMenuItem::new("Online Documentation", "Online Documentation").into(),
-            ]),
-        )))
-        .menu(menu::menu())
-        .on_menu_event(|event| {
-            let event_name = event.menu_item_id();
-            match event_name {
-                "Online Documentation" => {
-                    let url = "https://github.com/Uninen/tauri-vue-template".to_string();
-                    shell::open(&event.window().shell_scope(), url, None).unwrap();
-                },
-                _ => {},
-            }
-        })
         .setup(|app| {
             #[cfg(debug_assertions)]
             {
@@ -86,6 +92,15 @@ fn main() {
 
             Ok(())
         })
+        .plugin(TauriSql::default().add_migrations(
+            "sqlite:app.db",
+            vec![Migration {
+                version: 1,
+                description: "create todo",
+                sql: include_str!("../migrations/20221029182115_init.sql"),
+                kind: MigrationKind::Up,
+            }],
+        ))
         .run(ctx)
         .expect("error while running tauri application");
 }

@@ -22,12 +22,12 @@ rust-version = "1.57"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [build-dependencies]
-tauri-build = { version = "1.1.1", features = [] }
+tauri-build = { version = "1", features = [] }
 
 [dependencies]
 serde_json = "1"
-serde = { version = "1.0.145", features = ["derive"] }
-tauri = { version = "1.1.1", features = ["api-all", "system-tray"] }
+serde = { version = "1", features = ["derive"] }
+tauri = { version = "1", features = ["api-all", "system-tray"] }
 window-shadows = "0.2"
 window-vibrancy = "0.3"
 
@@ -35,17 +35,21 @@ window-vibrancy = "0.3"
 [target."cfg(any(target_os = \"ios\", target_os = \"macos\"))".dependencies]
 cocoa = "0.24"
 
-# sqlite
-sqlx = { version = "^0.6", features = ["runtime-tokio-native-tls", "sqlite"] }
-
 # logging
 tracing = "0.1"
 tracing-subscriber = "0.3"
 
+# sqlite
+[dependencies.tauri-plugin-sql]
+git = "https://github.com/tauri-apps/tauri-plugin-sql"
+# tag = "v0.1.0" Not available yet
+features = ["sqlite"] # or "postgres", or "mysql"
+
+
 [features]
 # by default Tauri runs in production mode
 # when `tauri dev` runs it is executed with `cargo run --no-default-features` if `devPath` is an URL
-default = [ "custom-protocol" ]
+default = ["custom-protocol"]
 # this feature is used used for production builds where `devPath` points to the filesystem
 # DO NOT remove this
-custom-protocol = [ "tauri/custom-protocol" ]
+custom-protocol = ["tauri/custom-protocol"]

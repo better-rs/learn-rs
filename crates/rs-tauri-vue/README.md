@@ -1,5 +1,13 @@
 # Tauri + Vue + Vite Template
 
+
+
+## 插件集成:
+
+- https://github.com/tauri-apps/awesome-tauri#plugins
+
+
+
 ![Screenshot](./public/screenshot.png)
 
 Simple project template for Tauri and Vue 3.
