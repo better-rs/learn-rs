@@ -1,6 +1,6 @@
 use sys_locale::get_locale;
 
-pub fn sys_locale() -> String {
+pub fn platform_locale() -> String {
     // 转换系统语言: 匹配多语言配置文件
     match get_locale().unwrap_or(String::from("en")).as_str() {
         // "zh-Hans-CN" => String::from("zh-CN"),
@@ -17,11 +17,11 @@ pub fn sys_locale() -> String {
 
 #[cfg(test)]
 mod tests {
-    use crate::util::sys_locale;
+    use crate::util::platform_locale;
 
     #[test]
     fn it_works() {
-        let l = sys_locale();
+        let l = platform_locale();
         println!("The current locale is {}", l);
     }
 }
