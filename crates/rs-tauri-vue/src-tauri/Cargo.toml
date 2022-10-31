@@ -39,11 +39,27 @@ cocoa = "0.24"
 tracing = "0.1"
 tracing-subscriber = "0.3"
 
+# i18n
+once_cell = "1"
+rust-i18n = "0"
+sys-locale = "0"
+
 # sqlite
 [dependencies.tauri-plugin-sql]
 git = "https://github.com/tauri-apps/tauri-plugin-sql"
 # tag = "v0.1.0" Not available yet
 features = ["sqlite"] # or "postgres", or "mysql"
+
+# i18n
+[package.metadata.i18n]
+# The available locales for your application, default: ["en"].
+available-locales = ["en", "zh-CN", "zh-HK", "fr"]
+
+# The default locale, default: "en".
+# default-locale = "en"
+
+# Path for your translations YAML file, default: "locales".
+# load-path = "locales"
 
 
 [features]

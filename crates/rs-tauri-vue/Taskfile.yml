@@ -4,11 +4,20 @@ tasks:
   init:
     - echo "init"
 
+  # 初始化目录, 自动生成多语言空模板文件
+  init:i18n:
+    cmds:
+      - mkdir locales/
+      - RUST_BACKTRACE=1 cargo i18n
+    dir: "src-tauri"
+    ignore_error: true
+
   dev:
     cmds:
       - echo "dev install"
       - cargo install --force cargo-edit
       - cargo install --locked cargo-outdated
+      - cargo install rust-i18n
 
   dev:fe:
     cmds:
@@ -29,6 +38,11 @@ tasks:
     cmds:
       - pnpm dev
 
+  build:
+    cmds:
+      - RUST_I18N_DEBUG=1 cargo build
+    dir: "src-tauri"
+
   run:rs:
     cmds:
       - cargo tauri dev
@@ -40,11 +54,11 @@ tasks:
       - sqlx migrate add init # 生成 db migration 文件, 手动编辑, 再执行 db 表创建+初始化
     dir: "src-tauri"
 
-
   test:
     cmds:
       - echo "test"
-      - cd src-tauri; cargo test
+      - RUST_BACKTRACE=1 RUST_LOG=debug cargo test -- --nocapture
+    dir: "src-tauri"
 
   release:
     cmds:
@@ -54,7 +68,7 @@ tasks:
   # generate app icon
   icon:
     cmds:
-#      - pnpm add -D @tauri-apps/cli
+      #      - pnpm add -D @tauri-apps/cli
       - pnpm tauri icon ./public/logo2.png
 
   fix:

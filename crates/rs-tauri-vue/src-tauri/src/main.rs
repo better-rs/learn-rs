@@ -12,8 +12,15 @@ use window_shadows::set_shadow;
 mod command;
 mod menu;
 mod sql;
+mod util;
+
+use rust_i18n::t;
+
+// Init translations for current crate.
+rust_i18n::i18n!("locales");
 
 fn main() {
+    rust_i18n::set_locale("en");
     tracing_subscriber::fmt().with_max_level(tracing::Level::TRACE).init();
 
     // tips:
