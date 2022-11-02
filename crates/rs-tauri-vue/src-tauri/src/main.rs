@@ -20,7 +20,7 @@ use rust_i18n::t;
 rust_i18n::i18n!("locales");
 
 fn main() {
-    rust_i18n::set_locale("en");
+    rust_i18n::set_locale("zh-CN");
     tracing_subscriber::fmt().with_max_level(tracing::Level::TRACE).init();
 
     // tips:
@@ -35,9 +35,9 @@ fn main() {
     let builder = tauri::Builder::default();
     #[cfg(target_os = "macos")]
     let builder = tauri::Builder::default()
-        .menu(menu::menu())
-        .menu(Menu::os_default("CryptoPie").add_submenu(Submenu::new(
-            "Help",
+        // .menu(menu::menu())
+        .menu(Menu::os_default(t!("app_name").as_str()).add_submenu(Submenu::new(
+            t!("help"),
             Menu::with_items([
                 CustomMenuItem::new("Online Documentation", "Online Documentation").into(),
             ]),

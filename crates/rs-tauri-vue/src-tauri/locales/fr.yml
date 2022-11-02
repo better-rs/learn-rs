@@ -1,3 +1,11 @@
 fr:
-  appName: "Tauri App"
+  app_name: "CryptoPie"
+  version: "0.1.0"
+  author: "Henry Huang"
+  description: "Crypto Currency Watcher"
+  copyright: "GPL-3.0 License"
+  license: "GPL-3.0 License"
+  website: "https://github.com/better-rs/learn-rs"
+  website_label: "learn rust"
+  help: "Help"
   hello: Bonjour, %{name}!

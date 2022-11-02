@@ -1,3 +1,4 @@
+use rust_i18n::t;
 use tauri::{AboutMetadata, Menu, MenuItem, Submenu};
 
 // macOS only
@@ -7,11 +8,11 @@ pub fn menu() -> Menu {
 
 fn submenu_app() -> Submenu {
     let about_menu = AboutMetadata::new()
-        .version(String::from("0.1.0"))
-        .authors(vec![String::from("Henry Huang")])
-        .comments(String::from("Crypto Currency Watcher"))
-        .copyright(String::from("GPL-3.0 License"))
-        .license(String::from("GPL-3.0 License"))
+        .version(t!("version"))
+        .authors(vec![t!("author")])
+        .comments(t!("description"))
+        .copyright(t!("copyright"))
+        .license(t!("license"))
         .website(String::from("https://github.com/better-rs/learn-rs"))
         .website_label(String::from("Source Code"));
 

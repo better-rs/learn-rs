@@ -1,3 +1,11 @@
 zh-HK:
-  appName: "Tauri 应用"
+  app_name: "数字货币助手"
+  version: "0.1.0"
+  author: "Henry Huang"
+  description: "数字货币监控助手"
+  copyright: "GPL-3.0 License"
+  license: "GPL-3.0 License"
+  website: "https://github.com/better-rs/learn-rs"
+  website_label: "学习 Rust"
+  help: "帮助"
   hello: "你好, %{name}!"
