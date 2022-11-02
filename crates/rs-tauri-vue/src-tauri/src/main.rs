@@ -10,8 +10,10 @@ use tracing::{debug, info, info_span, trace_span, warn};
 use window_shadows::set_shadow;
 
 mod command;
+mod config;
 mod menu;
-mod sql;
+mod service;
+mod storage;
 mod util;
 
 use rust_i18n::t;

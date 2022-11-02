@@ -1,5 +1,4 @@
-use tauri::{api::process::restart, Wry};
-
-pub fn app_restart(app: tauri::Builder<Wry>) {
-    restart(&app.env());
+use tauri::{api::process::restart, Env, Manager, Wry};
+pub fn restart_app(env: &Env) {
+    restart(env);
 }
