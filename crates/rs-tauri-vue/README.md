@@ -5,6 +5,14 @@
 - https://github.com/tauri-apps/awesome-tauri#plugins
 - [ ] https://github.com/ex0dus-0x/microkv
     - 加密 kv 存储方案, 高性能
+- [ ] https://crates.io/crates/pickledb
+    - kv 存储
+- [ ] cronjob 定时任务集成
+    - https://crates.io/crates/cron
+    - https://crates.io/crates/tokio-cron-scheduler
+
+
+---
 
 ![Screenshot](./public/screenshot.png)
 
