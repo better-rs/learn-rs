@@ -15,3 +15,5 @@ pub fn show_main_window(app: &AppHandle<Wry>) {
         win.set_focus().unwrap();
     }
 }
+
+pub fn open_browser(url: &str) {}
