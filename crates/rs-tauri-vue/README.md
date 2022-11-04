@@ -3,6 +3,16 @@
 ## 插件集成:
 
 - https://github.com/tauri-apps/awesome-tauri#plugins
+
+> Completed:
+
+- ✅ 集成多语言插件(i18n)
+    - https://github.com/longbridgeapp/rust-i18n
+- ✅ 集成db: sqlx + sqlite
+- ✅ 集成日志模块: tracing
+
+> TODO:
+
 - [ ] https://github.com/ex0dus-0x/microkv
     - 加密 kv 存储方案, 高性能
 - [ ] https://crates.io/crates/pickledb
@@ -10,7 +20,6 @@
 - [ ] cronjob 定时任务集成
     - https://crates.io/crates/cron
     - https://crates.io/crates/tokio-cron-scheduler
-
 
 ---
 
