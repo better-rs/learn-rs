@@ -1,11 +1,29 @@
 use std::path::PathBuf;
 use tauri::api::path;
 
-pub struct AppConfig {}
+// 解析系统配置文件, 加载配置
+pub struct AppConfig {
+    // 应用配置文件
+    config_file: String,
+
+    // 应用kv存储:
+    kv_storage_file: String,
+
+    // 应用加密kv存储:
+    encrypted_kv_storage_file: String,
+
+    // 应用 sql 存储:
+    sql_storage_file: String,
+}
 
 impl AppConfig {
     pub fn new() -> AppConfig {
-        Self {}
+        Self {
+            config_file: String::from("app.config.json"),
+            kv_storage_file: String::from("app.kv.db"),
+            encrypted_kv_storage_file: "app.kv.enc.db".to_string(),
+            sql_storage_file: "app.sql.db".to_string(),
+        }
     }
 
     pub fn get_locale() {}
@@ -27,5 +45,17 @@ impl AppConfig {
 
     pub fn data_dir() -> Option<PathBuf> {
         path::data_dir()
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn it_works() {
+        let cfg = AppConfig::new();
+
+        println!("The current locale is {}", l);
     }
 }
