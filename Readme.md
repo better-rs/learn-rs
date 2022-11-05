@@ -23,26 +23,29 @@
 
 > Rust 学习:
 
-| 子项目                                                          | 说明                   | 备注       |
-|:-------------------------------------------------------------|:---------------------|:---------|
-| [rust-by-example](./crates/rs-101/rust-by-example)           | Rust 官方练习代码          | ⭐⭐⭐      |
-| [basic](./crates/rs-101/basic)                               | Rust 语法练习            | ⭐        |
-| [rs-leetcode](./crates/rs-leetcode)                          | 使用 Rust 刷题(leetcode) | TODO     |
-| [rs-try](./crates/rs-try)                                    | Rust 第三方lib 验证/调研    | ⭐⭐       |
-| [rs-ffi](./crates/rs-ffi)                                    | Rust + FFI           | ⭐⭐⭐      |
-| [rs-tonic](./crates/rs-tonic)                                | Rust + gRPC(Tonic)   | ⭐⭐⭐      |
-| [rs-volo](./crates/rs-volo)                                  | Rust + gRPC(Volo)    | ⭐⭐⭐      |
-| [rs-sql](./crates/rs-sql)                                    | Rust + sqlx 使用       | ⭐⭐       |
-| xxxxxxxxxxxxxx                                               | xxxxxxxxxxxxxxxxxx   | xxxxxxxx |
+| 子项目                                                | 说明                              | 备注          |
+|:---------------------------------------------------|:--------------------------------|:------------|
+| [rust-by-example](./crates/rs-101/rust-by-example) | Rust 官方练习代码                     | ⭐⭐⭐         |
+| [basic](./crates/rs-101/basic)                     | Rust 语法练习                       | ⭐           |
+| [rs-leetcode](./crates/rs-leetcode)                | 使用 Rust 刷题(leetcode)            | TODO        |
+| [rs-try](./crates/rs-try)                          | Rust 第三方lib 验证/调研               | ⭐⭐          |
+| [rs-ffi](./crates/rs-ffi)                          | Rust + FFI                      | ⭐⭐⭐         |
+| [rs-tonic](./crates/rs-tonic)                      | Rust + gRPC(Tonic)              | ⭐⭐⭐         |
+| [rs-volo](./crates/rs-volo)                        | Rust + gRPC(Volo)               | ⭐⭐⭐         |
+| [rs-sql](./crates/rs-sql)                          | Rust + sqlx 使用                  | ⭐⭐          |
+| xxxxxxxxxxxxxx                                     | xxxxxxxxxxxxxxxxxx              | xxxxxxxx    |
+| xxxxxxxxxxxxxx                                     | xxxxxxxxxxxxxxxxxx              | xxxxxxxx    |
+
 
 > 基于 Rust 写的脚本工具和业务系统:
 
-| 子项目                                   | 说明                                     | 备注            |
-|:--------------------------------------|:---------------------------------------|:--------------|
-| [rs-scripts](./crates/rs-scripts)     | rust cli 脚本工具: Binance 持币成本计算器         | ⭐⭐⭐⭐⭐         |
-| [rs-cms](./crates/rs-cms)             | rust 小型 CMS 系统, 小型电商原型                 | ⭐⭐⭐           |
-| xxxxxxxxxxxxxx                        | xxxxxxxxxxxxxxxxxx                     | xxxxxxxxxx    |
-| xxxxxxxxxxxxxx                        | xxxxxxxxxxxxxxxxxx                     | xxxxxxxxxx    |
+| 子项目                                 | 说明                               | 备注                  |
+|:------------------------------------|:---------------------------------|:--------------------|
+| [rs-scripts](./crates/rs-scripts)   | rust cli 脚本工具: Binance 持币成本计算器   | ⭐⭐⭐⭐⭐               |
+| [rs-tauri-vue](crates/rs-tauri-vue) | Rust + Tauri + Vue.js 桌面App开发脚手架 | ⭐⭐⭐                 |
+| [rs-cms](./crates/rs-cms)           | rust 小型 CMS 系统, 小型电商原型           | ⭐⭐⭐                 |
+| xxxxxxxxxxxxxx                      | xxxxxxxxxxxxxxxxxx               | xxxxxxxxxx          |
+| xxxxxxxxxxxxxx                      | xxxxxxxxxxxxxxxxxx               | xxxxxxxxxx          |
 
 ## 基于 Rust 写的小工具:
 
