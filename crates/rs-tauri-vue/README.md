@@ -1,6 +1,6 @@
 # Tauri + Vue + Vite Template
 
-## 插件集成:
+## Rust 插件集成:
 
 - https://github.com/tauri-apps/awesome-tauri#plugins
 
@@ -20,6 +20,14 @@
 - [ ] cronjob 定时任务集成
     - https://crates.io/crates/cron
     - https://crates.io/crates/tokio-cron-scheduler
+
+## Vue.js 集成:
+
+- [package.json](package.json)
+- ✅ naive-ui: Vue3 UI 组件库
+- ✅ vue-router
+- ✅ vite
+- ✅ typescript
 
 ---
 
