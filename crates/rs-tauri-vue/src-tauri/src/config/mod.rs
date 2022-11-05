@@ -26,6 +26,16 @@ impl AppConfig {
         }
     }
 
+    pub fn to_string(&self) -> String {
+        format!(
+            "AppConfig: cfg={}, kv={}, kv_enc={}, sql={}.",
+            self.config_file,
+            self.kv_storage_file,
+            self.encrypted_kv_storage_file,
+            self.sql_storage_file
+        )
+    }
+
     pub fn get_locale() {}
 
     pub fn set_locale(&mut self, locale: &str) {}
@@ -56,6 +66,6 @@ mod tests {
     fn it_works() {
         let cfg = AppConfig::new();
 
-        println!("The current locale is {}", l);
+        println!("The current locale is {:?}", cfg.to_string());
     }
 }
