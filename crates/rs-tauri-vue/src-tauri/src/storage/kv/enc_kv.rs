@@ -1,4 +1,6 @@
+use crate::storage::AppStorageKeys;
 use microkv::MicroKV;
+use serde::de::DeserializeOwned;
 use std::path::{Path, PathBuf};
 
 // 加密kv存储方案:
@@ -33,7 +35,8 @@ impl AppEncryptedKVStorage {
     }
 
     pub fn set_locale(&mut self, locale: &str) -> microkv::errors::Result<()> {
-        let key = "app:locale";
+        // let key = "app:locale";
+        let key = AppStorageKeys::AppLocale.parse();
 
         self.db.put(key, &locale)
     }
@@ -54,7 +57,7 @@ mod tests {
     fn it_works() {
         let mut kv = AppEncryptedKVStorage::default();
 
-        kv.set_locale("zh-CN").expect("set locale error: panic message");
+        kv.set_locale("fr").expect("set locale error: panic message");
 
         let ret = kv.get_locale();
         println!("get locale: {:?}", ret);
