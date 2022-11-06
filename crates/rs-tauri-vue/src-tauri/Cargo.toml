@@ -44,6 +44,12 @@ once_cell = "1"
 rust-i18n = "0"
 sys-locale = "0"
 
+# encrypted kv:
+microkv = "0"
+
+
+################################################################################
+
 # sqlite
 [dependencies.tauri-plugin-sql]
 git = "https://github.com/tauri-apps/tauri-plugin-sql"
@@ -60,10 +66,6 @@ available-locales = ["en", "zh-CN", "zh-HK", "fr"]
 
 # Path for your translations YAML file, default: "locales".
 # load-path = "locales"
-
-
-# encrypted kv:
-microkv = "0"
 
 
 [features]
