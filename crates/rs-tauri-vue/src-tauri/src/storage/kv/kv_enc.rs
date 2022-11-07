@@ -15,7 +15,7 @@ impl AppEncryptedKVStorage {
 
         // TODO X: 默认使用 用户文档目录
         let root_dir = tauri::api::path::document_dir().unwrap_or(tmp_dir);
-        let db_name = "app.test.kv.db";
+        let db_name = "app.test";
         let unsafe_pwd = "unsafe_pwd";
 
         let db: MicroKV = MicroKV::open_with_base_path(db_name, root_dir)
@@ -76,7 +76,7 @@ mod tests {
 
         println!("current directory: {:?}", dir);
 
-        let mut kv = AppEncryptedKVStorage::new(dir, "app.test.kv.json", "test pwd");
+        let mut kv = AppEncryptedKVStorage::new(dir, "app_test", "test pwd");
 
         kv.set_locale("zh-HK").expect("set locale error:");
 
@@ -91,7 +91,7 @@ mod tests {
         let tmp_dir = current_dir.join("tmp");
         println!("current kv file: {:?}", tmp_dir);
 
-        let mut kv = AppEncryptedKVStorage::new(tmp_dir, "app.test.kv.json", "test pwd");
+        let mut kv = AppEncryptedKVStorage::new(tmp_dir, "app_test", "test pwd");
 
         kv.set_locale("zh-HK").expect("set locale error:");
 
