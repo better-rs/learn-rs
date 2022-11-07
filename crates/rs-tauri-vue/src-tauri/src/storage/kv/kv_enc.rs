@@ -83,4 +83,19 @@ mod tests {
         let ret = kv.get_locale();
         println!("get locale: {:?}", ret);
     }
+
+    #[test]
+    fn test_new2() {
+        // 使用当前 tmp 目录:
+        let current_dir = env::current_dir().expect("get current directory failed");
+        let tmp_dir = current_dir.join("tmp");
+        println!("current kv file: {:?}", tmp_dir);
+
+        let mut kv = AppEncryptedKVStorage::new(tmp_dir, "app.test.kv.json", "test pwd");
+
+        kv.set_locale("zh-HK").expect("set locale error:");
+
+        let ret = kv.get_locale();
+        println!("get locale: {:?}", ret);
+    }
 }
