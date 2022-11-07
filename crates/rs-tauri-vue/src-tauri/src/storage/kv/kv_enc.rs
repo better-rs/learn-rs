@@ -10,8 +10,11 @@ pub struct AppEncryptedKVStorage {
 
 impl AppEncryptedKVStorage {
     pub fn default() -> AppEncryptedKVStorage {
+        let mut tmp_dir = PathBuf::from(".");
+        tmp_dir.push("tmp");
+
         // TODO X: 默认使用 用户文档目录
-        let root_dir = tauri::api::path::document_dir().unwrap_or("./tmp/".parse().unwrap());
+        let root_dir = tauri::api::path::document_dir().unwrap_or(tmp_dir);
         let db_name = "app.test.kv.db";
         let unsafe_pwd = "unsafe_pwd";
 

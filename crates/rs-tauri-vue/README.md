@@ -4,22 +4,17 @@
 
 - https://github.com/tauri-apps/awesome-tauri#plugins
 
-> Completed:
+> 插件集成列表:
 
-- ✅ 集成多语言插件(i18n)
-    - https://github.com/longbridgeapp/rust-i18n
-- ✅ 集成db: sqlx + sqlite
+- ✅ 集成多语言插件(i18n): [rust-i18n](https://github.com/longbridgeapp/rust-i18n)
 - ✅ 集成日志模块: tracing
-
-> TODO:
-
-- [ ] https://github.com/ex0dus-0x/microkv
-    - 加密 kv 存储方案, 高性能
-- [ ] https://crates.io/crates/pickledb
-    - kv 存储
-- [ ] cronjob 定时任务集成
-    - https://crates.io/crates/cron
-    - https://crates.io/crates/tokio-cron-scheduler
+- ✅ 集成 db: sqlx + sqlite
+- ✅ 集成 kv db 存储:
+    - 加密 kv 存储: [microkv](https://github.com/ex0dus-0x/microkv)
+    - kv 存储: [pickledb](https://crates.io/crates/pickledb)
+- [ ] cronjob 定时任务集成:
+    - [cron](https://crates.io/crates/cron)
+    - [tokio-cron-scheduler](https://crates.io/crates/tokio-cron-scheduler)
 
 ## Vue.js 集成:
 
