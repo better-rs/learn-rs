@@ -1,7 +1,10 @@
 use crate::storage::AppStorageKeys;
 use microkv::MicroKV;
 use serde::de::DeserializeOwned;
-use std::path::{Path, PathBuf};
+use std::{
+    env,
+    path::{Path, PathBuf},
+};
 
 // 加密kv存储方案:
 pub struct AppEncryptedKVStorage {
@@ -10,12 +13,12 @@ pub struct AppEncryptedKVStorage {
 
 impl AppEncryptedKVStorage {
     pub fn default() -> AppEncryptedKVStorage {
-        let mut tmp_dir = PathBuf::from(".");
-        tmp_dir.push("tmp");
+        let current_dir = env::current_dir().expect("get current directory failed");
+        let tmp_dir = current_dir.join("tmp");
 
         // TODO X: 默认使用 用户文档目录
         let root_dir = tauri::api::path::document_dir().unwrap_or(tmp_dir);
-        let db_name = "app.test";
+        let db_name = "app_test";
         let unsafe_pwd = "unsafe_pwd";
 
         let db: MicroKV = MicroKV::open_with_base_path(db_name, root_dir)
