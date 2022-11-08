@@ -3,7 +3,7 @@ use pickledb::{
     error::ErrorType::Serialization, PickleDb, PickleDbDumpPolicy, SerializationMethod,
 };
 use std::{
-    env, fs,
+    env, fmt, fs,
     io::Write,
     path,
     path::{Path, PathBuf},
@@ -12,7 +12,7 @@ use tracing::info;
 
 // kv存储方案:
 pub struct AppKvStorage {
-    db: PickleDb,
+    pub db: PickleDb,
 }
 
 impl AppKvStorage {

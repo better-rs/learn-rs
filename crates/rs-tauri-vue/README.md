@@ -8,13 +8,36 @@
 
 - ✅ 集成多语言插件(i18n): [rust-i18n](https://github.com/longbridgeapp/rust-i18n)
 - ✅ 集成日志模块: tracing
-- ✅ 集成 db: sqlx + sqlite
+    - [ ] [tauri-plugin-log](https://github.com/tauri-apps/tauri-plugin-log)
+- ✅ 集成 db: sqlx + sqlite:
+    - [tauri-plugin-sql](https://github.com/tauri-apps/tauri-plugin-sql)
+- ✅ 集成 单例模式(app context), 全局变量:
+    - [once_cell](https://github.com/matklad/once_cell)
 - ✅ 集成 kv db 存储:
     - 加密 kv 存储: [microkv](https://github.com/ex0dus-0x/microkv)
-    - kv 存储: [pickledb](https://crates.io/crates/pickledb)
-- [ ] cronjob 定时任务集成:
+    - kv 存储:
+        - [sled](https://github.com/spacejam/sled)
+        - [rust-kv](https://github.com/zshipko/rust-kv)
+        - [pickledb](https://crates.io/crates/pickledb)
+- [ ] 集成 内存型 cache kv 方案:
+    - [microkv](https://github.com/ex0dus-0x/microkv)
+    - [redb](https://github.com/cberner/redb)
+    - [nebari](https://github.com/khonsulabs/nebari)
+    - [memdb](https://github.com/yoshuawuyts/memdb)
+- [ ] 集成 cache:
+    - [cached](https://lib.rs/crates/cached)
+    - [lru-rs](https://github.com/jeromefroe/lru-rs)
+    - [moka](https://github.com/moka-rs/moka)
+- [ ] 集成 cronjob 定时任务:
     - [cron](https://crates.io/crates/cron)
     - [tokio-cron-scheduler](https://crates.io/crates/tokio-cron-scheduler)
+- [ ] 集成 retry 重试:
+    - [tokio-retry](https://github.com/srijs/rust-tokio-retry)
+    - [again](https://crates.io/crates/again)
+- [ ] 集成 websocket 插件:
+    - [tauri-plugin-websocket](https://github.com/tauri-apps/tauri-plugin-websocket)
+    - [tokio-tungstenite](https://github.com/snapview/tokio-tungstenite)
+        - 当前社区首选
 
 ## Vue.js 集成:
 

@@ -4,16 +4,16 @@ use tauri::api::path;
 // 解析系统配置文件, 加载配置
 pub struct AppConfig {
     // 应用配置文件
-    config_file: String,
+    pub config_file: String,
 
     // 应用kv存储:
-    kv_storage_file: String,
+    pub kv_storage_file: String,
 
     // 应用加密kv存储:
-    encrypted_kv_storage_file: String,
+    pub encrypted_kv_storage_file: String,
 
     // 应用 sql 存储:
-    sql_storage_file: String,
+    pub sql_storage_file: String,
 }
 
 impl AppConfig {

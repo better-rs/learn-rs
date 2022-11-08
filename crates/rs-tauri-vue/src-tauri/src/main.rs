@@ -11,6 +11,7 @@ use window_shadows::set_shadow;
 
 mod command;
 mod config;
+mod ctx;
 mod menu;
 mod service;
 mod storage;

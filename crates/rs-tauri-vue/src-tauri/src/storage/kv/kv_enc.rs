@@ -8,7 +8,7 @@ use std::{
 
 // 加密kv存储方案:
 pub struct AppEncryptedKVStorage {
-    db: MicroKV,
+    pub db: MicroKV,
 }
 
 impl AppEncryptedKVStorage {
