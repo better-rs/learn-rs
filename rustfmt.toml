@@ -1,5 +1,6 @@
 #
 # ref:
+#   - https://rust-lang.github.io/rustfmt/?version=v1.5.1&search=
 #   - https://gist.github.com/haruleekim/55e015778a325c01866350d5b0b2cbba
 #   - https://github.com/rust-lang/rust/blob/master/rustfmt.toml
 #   - https://github.com/tikv/tikv/blob/master/rustfmt.toml
@@ -21,6 +22,7 @@ ignore = [
 
 # Basic
 hard_tabs = false   # 是否使用硬制表符
+tab_spaces = 4
 max_width = 100
 use_small_heuristics = "Max"
 
