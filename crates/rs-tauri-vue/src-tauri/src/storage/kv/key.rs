@@ -1,7 +1,8 @@
 // 存储 key 定义:
 pub enum AppStorageKeys {
-    AppLocale,
+    AppName,
     AppVersion,
+    AppLocale,
 }
 
 impl AppStorageKeys {
@@ -9,6 +10,8 @@ impl AppStorageKeys {
         match self {
             AppStorageKeys::AppLocale => "app:locale",
             AppStorageKeys::AppVersion => "app:version",
+            AppStorageKeys::AppName => "app:name",
+            _ => "not:found",
         }
     }
 }

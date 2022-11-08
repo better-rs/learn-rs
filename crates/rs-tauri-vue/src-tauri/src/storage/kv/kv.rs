@@ -69,6 +69,11 @@ impl AppKvStorage {
         Self { db }
     }
 
+    pub fn get_app_name(&self) -> String {
+        let key = AppStorageKeys::AppName.parse();
+        self.db.get(key).unwrap_or("app".to_string())
+    }
+
     pub fn set_locale(&mut self, locale: &str) -> pickledb::error::Result<()> {
         // let key = "app:locale";
         let key = AppStorageKeys::AppLocale.parse();

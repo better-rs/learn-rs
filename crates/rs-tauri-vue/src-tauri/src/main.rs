@@ -13,6 +13,7 @@ mod command;
 mod config;
 mod ctx;
 mod menu;
+mod proto;
 mod service;
 mod storage;
 mod util;
