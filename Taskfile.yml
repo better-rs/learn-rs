@@ -161,6 +161,15 @@ tasks:
 
   ################################################################################
 
+  build:
+    cmds:
+      - cargo build
+
+  update:
+    cmds:
+      - cargo upgrade --verbose --compatible
+      - cargo upgrade --incompatible
+
   # search lib:
   search:
     cmds:

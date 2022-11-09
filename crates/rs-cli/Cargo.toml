@@ -85,7 +85,7 @@ binance-async = { version = "1", package = "binance-rs-async", features = ["all_
 tui = "0.19"       # terminal ui
 crossterm = "0.25" # terminal ui required
 chrono = "0.4"    # time format
-chrono-tz = "0.7"  # time zone
+chrono-tz = "0.8"  # time zone
 log = "0.4.17"               # log
 pretty_env_logger = "0" # colorful log
 
