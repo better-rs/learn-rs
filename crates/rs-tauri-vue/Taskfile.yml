@@ -40,6 +40,7 @@ tasks:
 
   build:
     cmds:
+      - task: update
       - RUST_I18N_DEBUG=1 cargo build
     dir: "src-tauri"
 
@@ -58,6 +59,11 @@ tasks:
     cmds:
       - echo "test"
       - RUST_BACKTRACE=1 RUST_LOG=debug cargo test -- --nocapture
+    dir: "src-tauri"
+
+  update:
+    cmds:
+      - RUST_BACKTRACE=1 RUST_LOG=debug cargo update
     dir: "src-tauri"
 
   release:
