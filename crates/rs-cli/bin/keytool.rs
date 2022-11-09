@@ -2,7 +2,7 @@ use clap::Parser;
 use log::info;
 use pretty_env_logger;
 
-use rs_scripts::commands::keytool::{KeyToolCli, KeyToolCommand, QueryCommand};
+use rs_cli::commands::keytool::{KeyToolCli, KeyToolCommand, QueryCommand};
 
 fn main() {
     pretty_env_logger::init();

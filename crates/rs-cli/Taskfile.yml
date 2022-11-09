@@ -8,7 +8,7 @@ tasks:
     cmds:
       - cargo build
 
-  run:scripts:
+  run:cli:
     cmds:
       - cargo run --bin rs-cli -- -n "Henry"
 

@@ -8,7 +8,7 @@ includes:
     taskfile: ./crates/rs-try/
     dir: ./crates/rs-try/
 
-  scripts:
+  cli:
     taskfile: ./crates/rs-cli/
     dir: ./crates/rs-cli/
 
@@ -131,31 +131,31 @@ tasks:
 
   release:
     cmds:
-      - task: scripts:release
+      - task: cli:release
       - open ./target/release
 
   install:this:
     cmds:
-      - task: scripts:install
+      - task: cli:install
       - open ./target/release
 
   run:
     cmds:
       - cargo run
 
-  run:scripts:
+  run:cli:
     cmds:
-      - task: scripts:run:scripts
+      - task: cli:run:scripts
 
   run:eth:scanner:
     cmds:
-      - task: scripts:run:eth:scanner
+      - task: cli:run:eth:scanner
 
   run:discord:
     cmds:
-      - task: scripts:run:discord
+      - task: cli:run:discord
 
-  run:scripts:help:
+  run:cli:help:
     cmds:
       - cargo run --bin rs-cli -- -h
 

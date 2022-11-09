@@ -61,7 +61,7 @@
 cd learn-rs/
 
 # install:
-task scripts:install
+task cli:install
 
 ```
 
@@ -132,7 +132,7 @@ SUBCOMMANDS:
 # 项目根目录内执行: (Taskfile.yml 支持嵌套)
 #
 # 自动计算币安币种的持有成本, 比如 ETH/BTC/DOT
-task scripts:run:binance
+task cli:run:binance
 
 ```
 

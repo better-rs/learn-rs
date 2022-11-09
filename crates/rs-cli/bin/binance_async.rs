@@ -4,7 +4,7 @@ use clap::Parser;
 use log::{info, warn};
 use pretty_env_logger;
 
-use rs_scripts::{
+use rs_cli::{
     commands::binance::{BinanceCli, BinanceCommands, WalletCommand},
     core::binance::{account, binance_async, market::do_market_cmd, wallet},
 };

@@ -2,7 +2,7 @@ use clap::Parser;
 use log::{info, warn};
 use pretty_env_logger;
 
-use rs_scripts::{
+use rs_cli::{
     commands::binance::{BinanceCli, BinanceCommands},
     core::binance::binance::{account_data, market_data},
 };

@@ -1,6 +1,6 @@
 use clap::Parser;
 
-use rs_scripts::{
+use rs_cli::{
     commands::eth::{EthCli, EthCommands},
     core::eth,
 };
