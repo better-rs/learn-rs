@@ -1,5 +1,5 @@
 [package]
-name = "rs-scripts"
+name = "rs-cli"
 version = "0.1.0"
 edition = "2021"
 
@@ -10,7 +10,7 @@ edition = "2021"
 ################################################################################
 
 [[bin]]
-name = "rs-scripts"
+name = "rs-cli"
 path = "bin/main.rs"
 
 
@@ -76,7 +76,7 @@ serenity = { version = "0.11", default-features = true, features = ["client", "g
 
 binance = "0"         # binance api
 #binance-rs-async = "1.1.7" # binance async api
-binance-async = { version = "1", package = "binance-rs-async", features=["all_apis"] } # fix conflict with binance-rs
+binance-async = { version = "1", package = "binance-rs-async", features = ["all_apis"] } # fix conflict with binance-rs
 #binance-async = {  package = "binance-rs-async" ,features=["all_apis"], git = 'https://github.com/Igosuki/binance-rs-async', branch = "master"} # fix conflict with binance-rs
 #binance-async = { package = "binance-rs-async", features = ["all_apis"], git = 'https://github.com/better-rs/binance-rs-async', branch = "dev/wallet-api" } # fix conflict with binance-rs
 #binance-async = { package = "binance-rs-async", features=["all_apis"], path = '../../tmp/binance-rs-async' }

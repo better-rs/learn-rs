@@ -9,8 +9,8 @@ includes:
     dir: ./crates/rs-try/
 
   scripts:
-    taskfile: ./crates/rs-scripts/
-    dir: ./crates/rs-scripts/
+    taskfile: ./crates/rs-cli/
+    dir: ./crates/rs-cli/
 
   cms:
     taskfile: ./crates/rs-cms/
@@ -157,7 +157,7 @@ tasks:
 
   run:scripts:help:
     cmds:
-      - cargo run --bin rs-scripts -- -h
+      - cargo run --bin rs-cli -- -h
 
   ################################################################################
 

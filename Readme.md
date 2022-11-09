@@ -36,12 +36,11 @@
 | xxxxxxxxxxxxxx                                     | xxxxxxxxxxxxxxxxxx              | xxxxxxxx    |
 | xxxxxxxxxxxxxx                                     | xxxxxxxxxxxxxxxxxx              | xxxxxxxx    |
 
-
 > 基于 Rust 写的脚本工具和业务系统:
 
 | 子项目                                 | 说明                               | 备注                  |
 |:------------------------------------|:---------------------------------|:--------------------|
-| [rs-scripts](./crates/rs-scripts)   | rust cli 脚本工具: Binance 持币成本计算器   | ⭐⭐⭐⭐⭐               |
+| [rs-cli](./crates/rs-cli)   | rust cli 脚本工具: Binance 持币成本计算器   | ⭐⭐⭐⭐⭐               |
 | [rs-tauri-vue](crates/rs-tauri-vue) | Rust + Tauri + Vue.js 桌面App开发脚手架 | ⭐⭐⭐                 |
 | [rs-cms](./crates/rs-cms)           | rust 小型 CMS 系统, 小型电商原型           | ⭐⭐⭐                 |
 | xxxxxxxxxxxxxx                      | xxxxxxxxxxxxxxxxxx               | xxxxxxxxxx          |
@@ -49,7 +48,7 @@
 
 ## 基于 Rust 写的小工具:
 
-- ✅ [rs-scripts](./crates/rs-scripts)
+- ✅ [rs-cli](./crates/rs-cli)
     - 写的一些 rust 脚本工具
         - [x] ETH 链上交易查询
         - [x] Binance 交易所个人交易数据查询/K 线数据查询(支持 api key 方式下单/撤单)
@@ -70,11 +69,11 @@ task scripts:install
 
 ```ruby
 
-rs-scripts v0.1.0 (/better-rs/learn-rs/crates/rs-scripts):
+rs-cli v0.1.0 (/better-rs/learn-rs/crates/rs-cli):
     discord-bot
     rs-binance
     rs-eth-scanner
-    rs-scripts
+    rs-cli
     rs-tui
 
 ```
@@ -111,8 +110,8 @@ SUBCOMMANDS:
 
 > 源码位置:
 
-- ✅ [crates/rs-scripts/src/bin/binance.rs](crates/rs-scripts/bin/binance.rs)
-- ✅ 启动脚本: [crates/rs-scripts/Taskfile.yml](crates/rs-scripts/Taskfile.yml)
+- ✅ [crates/rs-cli/src/bin/binance.rs](crates/rs-cli/bin/binance.rs)
+- ✅ 启动脚本: [crates/rs-cli/Taskfile.yml](crates/rs-cli/Taskfile.yml)
 
 > 功能说明:
 

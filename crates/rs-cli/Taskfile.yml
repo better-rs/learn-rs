@@ -10,7 +10,7 @@ tasks:
 
   run:scripts:
     cmds:
-      - cargo run --bin rs-scripts -- -n "Henry"
+      - cargo run --bin rs-cli -- -n "Henry"
 
   #
   # parse env vars:

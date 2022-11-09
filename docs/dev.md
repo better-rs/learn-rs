@@ -1,4 +1,3 @@
-
 # development:
 
 ## Project Structure:
@@ -13,7 +12,7 @@
 ├── basic
 │   ├── Cargo.toml
 │   └── src
-├── rs-scripts            // 使用 rust 写的工具脚本
+├── rs-cli            // 使用 rust 写的工具脚本
 │   ├── Cargo.toml
 │   └── src
 ├── rust-by-example       // rust 官方学习教程 // 练习代码

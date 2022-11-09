@@ -1,4 +1,4 @@
-# rs-scripts:
+# rs-cli:
 
 - 使用 rust 编写的一些脚本工具
 
@@ -41,10 +41,10 @@ task run:discord
 ```ruby
 
 # 查看 cli 工具的帮助
-cargo run --bin rs-scripts -- -h
+cargo run --bin rs-cli -- -h
 
 # 示例传参:
-cargo run --bin rs-scripts -- -n "Henry"
+cargo run --bin rs-cli -- -n "Henry"
 ```
 
 > cli 示例:

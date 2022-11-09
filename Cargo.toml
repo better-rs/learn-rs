@@ -12,7 +12,7 @@ members = [
     #
     #    "crates/rs-cms",
     "crates/rs-leetcode",
-    "crates/rs-scripts",
+    "crates/rs-cli",
     "crates/rs-ffi",
     "crates/rs-ffi-core",
     #    "crates/rs-tonic",
@@ -46,5 +46,5 @@ codegen-units = 1   # Reduce number of codegen units to increase optimizations.
 panic = "abort"     # Abort on panic
 strip = true        # Automatically strip symbols from the binary.
 
-[profile.release.package.rs-scripts]
+[profile.release.package.rs-cli]
 strip = true        # Automatically strip symbols from the binary.
