@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import {invoke} from '@tauri-apps/api/tauri'
 
 defineProps<{ msg: string }>()
@@ -12,32 +12,39 @@ async function backendAdd() {
 
 <template>
 
-    <n-card title="rust command 测试:" style="background:mediumpurple; margin-bottom:5px">
-        <n-list align="center">
-            <n-list-item >
-                <n-tag>Count is: {{ count }}</n-tag>
-            </n-list-item>
-        </n-list>
-
-        <n-grid cols="2" align="center">
-            <n-grid-item>
-                <n-button type="success" class="btn" @click="count++">Add 1</n-button>
-            </n-grid-item>
-            <n-grid-item>
-                <n-button type="success" class="btn" @click="backendAdd">Add 2 (call rust in backend)</n-button>
-            </n-grid-item>
-        </n-grid>
+    <n-card style="background:gainsboro; margin-bottom:5px" title="rust command 测试:">
+        <n-space vertical>
+            <n-list align="center">
+                <n-list-item>
+                    <n-tag>Count is: {{ count }}</n-tag>
+                </n-list-item>
+            </n-list>
 
 
-        <n-text>
-            Edit
-            <code>src/components/HelloWorld.vue</code> to test hot module replacement. Find the backend
-            function from <code>src-tauri/src/main.rs</code>.
-        </n-text>
+            <n-grid align="center" cols="3">
 
+                <n-grid-item>
+                    <n-button style="background-color: cadetblue" type="success" @click="count++">Add 1</n-button>
+                </n-grid-item>
+
+                <n-grid-item>
+                    <n-button style="background-color: orange" type="error" @click="backendAdd">
+                        Add 2 (call rust in backend)
+                    </n-button>
+                </n-grid-item>
+
+
+            </n-grid>
+
+
+            <n-text>
+                Edit
+                <code>src/components/HelloWorld.vue</code> to test hot module replacement. Find the backend
+                function from <code>src-tauri/src/main.rs</code>.
+            </n-text>
+        </n-space>
 
     </n-card>
-
 
 
 </template>

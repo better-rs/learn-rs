@@ -25,6 +25,7 @@ declare module '@vue/runtime-core' {
     NGridItem: typeof import('naive-ui')['NGridItem']
     NH1: typeof import('naive-ui')['NH1']
     NH2: typeof import('naive-ui')['NH2']
+    NIcon: typeof import('naive-ui')['NIcon']
     NLayout: typeof import('naive-ui')['NLayout']
     NLayoutSider: typeof import('naive-ui')['NLayoutSider']
     NList: typeof import('naive-ui')['NList']
@@ -46,5 +47,6 @@ declare module '@vue/runtime-core' {
     RouterView: typeof import('vue-router')['RouterView']
     Settings: typeof import('./src/components/settings/Settings.vue')['default']
     Tab: typeof import('./src/components/Tab.vue')['default']
+    WebsiteNav: typeof import('./src/components/demo/WebsiteNav.vue')['default']
   }
 }

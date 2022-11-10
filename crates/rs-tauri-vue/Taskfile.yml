@@ -15,9 +15,10 @@ tasks:
   dev:
     cmds:
       - echo "dev install"
-      - cargo install --force cargo-edit
-      - cargo install --locked cargo-outdated
+      - cargo install cargo-edit
+      - cargo install cargo-outdated
       - cargo install rust-i18n
+      - cargo install tauri-cli
 
   dev:fe:
     cmds:
@@ -30,23 +31,22 @@ tasks:
   install:
     cmds:
       - pnpm i
-      - cd src-tauri/; cargo outdated
-      - cd src-tauri/; cargo upgrade
-      - cd src-tauri/; cargo build
+      - task: build
 
   run:
     cmds:
       - pnpm dev
 
+  run:rs:
+    cmds:
+      - cargo tauri dev -h
+      - cargo tauri dev --no-watch  # 不自动 watch 文件修改
+    dir: "src-tauri"
+
   build:
     cmds:
       - task: update
       - RUST_I18N_DEBUG=1 cargo build
-    dir: "src-tauri"
-
-  run:rs:
-    cmds:
-      - cargo tauri dev
     dir: "src-tauri"
 
   # 创建 migrations/
@@ -63,7 +63,8 @@ tasks:
 
   update:
     cmds:
-      - RUST_BACKTRACE=1 RUST_LOG=debug cargo update
+      - RUST_BACKTRACE=1 RUST_LOG=debug cargo outdated
+      - RUST_BACKTRACE=1 RUST_LOG=debug cargo upgrade
     dir: "src-tauri"
 
   release:
