@@ -16,7 +16,7 @@ tasks:
   init:
     cmds:
       - echo "init"
-#      - mkdir tmp/
+      #      - mkdir tmp/
       - task: init:db
     ignore_error: true
 
@@ -24,7 +24,7 @@ tasks:
     cmds:
       - sqlx database drop -y
       - sqlx database create
-#      - task: migrate
+    #      - task: migrate
     ignore_error: true
 
   # 创建 migrations/
@@ -42,6 +42,7 @@ tasks:
   run:
     cmds:
       - echo "run"
+      - cargo fix --bin rs-sql --allow-dirty
       - cargo run -v --bin rs-sql add2 "todo description"  # add
       - cargo run --bin rs-sql add2 "todo description by add2"  # add
       - cargo run --bin rs-sql done 1 # change status

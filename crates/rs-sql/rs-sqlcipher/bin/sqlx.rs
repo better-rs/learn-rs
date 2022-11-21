@@ -1,9 +1,8 @@
 use rs_sqlcipher::sql::{
-    add_todo, add_todo2, complete_todo, list_todos, new_db_url, Args, Command,
+    add_todo, add_todo2, complete_todo, list_todos, Args, Command,
 };
 
 use sqlx::{
-    migrate::Migrate,
     query,
     sqlite::{SqliteConnectOptions, SqlitePool, SqlitePoolOptions},
     ConnectOptions,
