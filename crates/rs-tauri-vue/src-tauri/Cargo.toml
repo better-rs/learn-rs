@@ -13,7 +13,8 @@ rust-version = "1.57"
 
 #
 # TODO X: 注意, 不作为上层 workspace 的子项目.
-#
+#   - fix: 编译报错(误报)
+#       - https://github.com/launchbadge/sqlx/issues/1604
 [workspace]
 members = []
 

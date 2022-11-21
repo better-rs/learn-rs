@@ -5,7 +5,8 @@
 > cargo workspace 问题:
 
 - ❌ `子 repo`, 尽量独立, 不要使用`父 workspace`, 会导致 tauri build 失败
-    - case: sqlx 在 workspace 下, build 依赖报错, 但是单独 build 是可以的
+    - case: sqlx 在 workspace 下, build [依赖报错(误报)](https://github.com/launchbadge/sqlx/issues/1604), 但是单独
+      build 是可以的
 - ❌ workspace 过大, 会导致 IDE 索引宏, 失效
 - ❌ 猜测: workspace 公共的lib, 版本(开启 feature)不一致, 在编译时, 会冲突.
     - 部分冲突, 是隐式的. cargo clean + build 就会发现很多问题
