@@ -46,7 +46,8 @@ tasks:
   build:
     cmds:
       - task: update
-      - RUST_I18N_DEBUG=1 cargo build
+      #      - RUST_I18N_DEBUG=1 cargo build
+      - cargo build
     dir: "src-tauri"
 
   # 创建 migrations/
@@ -63,8 +64,8 @@ tasks:
 
   update:
     cmds:
-      - RUST_BACKTRACE=1 RUST_LOG=debug cargo outdated
-      - RUST_BACKTRACE=1 RUST_LOG=debug cargo upgrade
+      - cargo outdated  # RUST_BACKTRACE=1 RUST_LOG=debug
+      - cargo upgrade # RUST_BACKTRACE=1 RUST_LOG=debug
     dir: "src-tauri"
 
   release:

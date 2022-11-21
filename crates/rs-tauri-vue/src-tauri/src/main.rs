@@ -1,13 +1,17 @@
 #![cfg_attr(all(not(debug_assertions), target_os = "windows"), windows_subsystem = "windows")]
 
-use command::calc::backend_add;
+#[cfg(target_os = "macos")]
+use cocoa::appkit::{NSWindow, NSWindowStyleMask, NSWindowTitleVisibility};
+use rust_i18n::t;
 use tauri::{
     api::shell, CustomMenuItem, Manager, Menu, Runtime, Submenu, SystemTray, SystemTrayEvent,
-    SystemTrayMenu, SystemTrayMenuItem, Window,
+    Window,
 };
 use tauri_plugin_sql::{Migration, MigrationKind, TauriSql};
-use tracing::{debug, info, info_span, trace_span, warn};
+use tracing::info;
 use window_shadows::set_shadow;
+
+use command::calc::backend_add;
 
 mod command;
 mod config;
@@ -17,8 +21,6 @@ mod proto;
 mod service;
 mod storage;
 mod util;
-
-use rust_i18n::t;
 
 // Init translations for current crate.
 rust_i18n::i18n!("locales");
@@ -115,9 +117,6 @@ fn main() {
         .run(ctx)
         .expect("error while running tauri application");
 }
-
-#[cfg(target_os = "macos")]
-use cocoa::appkit::{NSWindow, NSWindowStyleMask, NSWindowTitleVisibility};
 
 pub trait WindowExt {
     #[cfg(target_os = "macos")]

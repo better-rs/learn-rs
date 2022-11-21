@@ -2,7 +2,7 @@
 name = "tauri_vue_template"
 version = "0.1.0"
 description = "A Tauri App"
-authors = ["Ville Säävuori"]
+authors = ["Henry Huang"]
 license = "MIT"
 repository = "https://github.com/Uninen/tauri-vue-template"
 default-run = "tauri_vue_template"
@@ -52,10 +52,13 @@ microkv = "0"
 # kv:
 pickledb = "0"
 
+# sqlx, for rust use:
+sqlx = { version = "^0.6", features = ["runtime-tokio-rustls", "json", "sqlite"] }
+tokio = { version = "1", features = ["full"] }
 
 ################################################################################
 
-# sqlite
+# sqlite, for js/ts use:
 [dependencies.tauri-plugin-sql]
 git = "https://github.com/tauri-apps/tauri-plugin-sql"
 # tag = "v0.1.0" Not available yet
