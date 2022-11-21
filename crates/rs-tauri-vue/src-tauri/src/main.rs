@@ -27,7 +27,12 @@ rust_i18n::i18n!("locales");
 
 fn main() {
     rust_i18n::set_locale("zh-CN");
+
+    // todo x: 二选一 log level:
     tracing_subscriber::fmt().with_max_level(tracing::Level::TRACE).init();
+
+    // todo x: 二选一, for debug:
+    // console_subscriber::init();
 
     // tips:
     info!("tauri main started");

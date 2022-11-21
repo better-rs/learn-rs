@@ -15,7 +15,7 @@ pub struct AppSqlStorage {
 }
 
 impl AppSqlStorage {
-    pub async fn default() -> AppSqlStorage {
+    pub async fn default() -> Self {
         let mut _root_dir = tauri::api::path::document_dir();
 
         // sqlite:tmp/app.db
@@ -34,7 +34,7 @@ impl AppSqlStorage {
         match db {
             Ok(db) => {
                 info!("connect to sqlite db success");
-                AppSqlStorage { db }
+                Self { db }
             },
             Err(e) => {
                 panic!("db create error: {:?}", e);
@@ -69,5 +69,12 @@ mod test {
     async fn test_sqlite() {
         let mut db = AppSqlStorage::default().await;
         db.init_migrations().await;
+        println!("test sqlite success");
+    }
+
+    #[test]
+    fn test2() {
+        info!("hello");
+        println!("test2 success");
     }
 }

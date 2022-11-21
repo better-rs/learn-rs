@@ -56,6 +56,10 @@ pickledb = "0"
 sqlx = { version = "^0.6", features = ["runtime-tokio-rustls", "json", "sqlite"] }
 tokio = { version = "1", features = ["full"] }
 
+# debug tool:
+console-subscriber = "0"
+
+
 ################################################################################
 
 # sqlite, for js/ts use:

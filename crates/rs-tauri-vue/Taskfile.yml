@@ -40,7 +40,7 @@ tasks:
   run:rs:
     cmds:
       - cargo tauri dev -h
-      - cargo tauri dev --no-watch  # 不自动 watch 文件修改
+      - RUST_BACKTRACE=1 RUST_LOG=debug RUSTFLAGS="--cfg tokio_unstable" cargo tauri dev --no-watch  # 不自动 watch 文件修改
     dir: "src-tauri"
 
   build:
