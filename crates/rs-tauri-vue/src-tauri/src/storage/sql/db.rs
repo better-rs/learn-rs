@@ -86,23 +86,6 @@ impl AppSqlStorage {
         }
     }
 
-    //     pub async fn add_todo(&self, todo: &TodoEntity) -> anyhow::Result<i64> {
-    //         let mut conn = self.db.acquire().await?;
-    //         // Insert the task, then obtain the ID of this row
-    //         let id = sqlx::query!(
-    //             r#"
-    // INSERT INTO todos ( description )
-    // VALUES ( ?1 )
-    //         "#,
-    //             description
-    //         )
-    //         .execute(&mut conn)
-    //         .await?
-    //         .last_insert_rowid();
-    //
-    //         Ok(id)
-    //     }
-
     // pub async fn add_todo2(&self, todo: &TodoEntity) -> anyhow::Result<i64> {
     //     let mut conn = self.db.acquire().await?;
     //

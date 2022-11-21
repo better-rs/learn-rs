@@ -76,6 +76,12 @@ tasks:
       - cargo upgrade # RUST_BACKTRACE=1 RUST_LOG=debug
     dir: "src-tauri"
 
+  clean:
+    cmds:
+      - cargo clean
+    dir: "src-tauri"
+
+
   release:
     cmds:
       - echo "release"

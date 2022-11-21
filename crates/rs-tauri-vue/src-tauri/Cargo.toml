@@ -14,8 +14,8 @@ rust-version = "1.57"
 #
 # TODO X: 注意, 不作为上层 workspace 的子项目.
 #
-#[workspace]
-#members = []
+[workspace]
+members = []
 
 
 
