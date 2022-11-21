@@ -6,6 +6,7 @@
         "crates/rs-volo/Cargo.toml",
         "crates/rs-tonic/Cargo.toml",
         "crates/rs-sql/rs-sqlcipher/Cargo.toml",
+        "crates/rs-tauri-vue/src-tauri/Cargo.toml",
         "Cargo.toml"
     ],
     "sqltools.connections": [
