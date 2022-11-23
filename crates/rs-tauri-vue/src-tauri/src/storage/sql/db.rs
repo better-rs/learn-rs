@@ -11,19 +11,18 @@ use crate::{storage::todo::TodoSqlScope, util};
 
 // sql storage biz
 pub struct AppSqlStorage {
-    pub g: SqlConn,
+    g: SqlConn,
 
     // biz units:
     pub todo: TodoSqlScope,
 }
 
 impl AppSqlStorage {
-    pub async fn new() -> anyhow::Result<Self> {
+    pub async fn new() -> Self {
         let g = SqlConn::default().await;
 
         let todo = TodoSqlScope::new(g.clone());
-
-        Ok(Self { g, todo })
+        Self { g, todo }
     }
 }
 
