@@ -78,7 +78,7 @@ impl AppSqlStorage {
 
         match m.run(&self.db).await {
             Ok(_) => {
-                info!("migrations run success");
+                println!("migrations run success");
             },
             Err(e) => {
                 panic!("migrations run error: {:?}", e);

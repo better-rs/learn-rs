@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS todos
     description TEXT         NOT NULL,
     done        BOOLEAN      NOT NULL DEFAULT 0,
     title       VARCHAR(200) NOT NULL,
-    completed   BOOLEAN               DEFAULT FALSE
+    completed   BOOLEAN      NOT NULL DEFAULT 0
 );
 
 --
