@@ -3,7 +3,7 @@ use std::{env, str::FromStr};
 use sqlx::{
     migrate::Migrator,
     sqlite::{SqliteConnectOptions, SqlitePool, SqlitePoolOptions},
-    Acquire, ConnectOptions, Executor,
+    Acquire, ConnectOptions, Error, Executor, Pool, Sqlite,
 };
 use tracing::info;
 
@@ -11,7 +11,7 @@ use crate::util;
 
 // kv存储方案:
 pub struct AppSqlStorage {
-    pub db: SqlitePool,
+    pub conn: SqlitePool,
 }
 
 impl AppSqlStorage {
@@ -29,15 +29,15 @@ impl AppSqlStorage {
             .connect()
             .await;
 
-        let db = SqlitePoolOptions::new().min_connections(2).connect(&url).await;
+        let conn = SqlitePoolOptions::new().min_connections(2).connect(&url).await;
 
-        match db {
-            Ok(db) => {
-                info!("connect to sqlite db success");
-                Self { db }
+        match conn {
+            Ok(conn) => {
+                info!("sqlite conn: {:?}", conn);
+                Self { conn }
             },
             Err(e) => {
-                panic!("db create error: {:?}", e);
+                panic!("sqlite conn err: {:?}", e);
             },
         }
     }
@@ -62,7 +62,7 @@ impl AppSqlStorage {
         match db {
             Ok(db) => {
                 info!("connect to sqlite db success");
-                Self { db }
+                Self { conn: db }
             },
             Err(e) => {
                 panic!("db create error: {:?}", e);
@@ -76,7 +76,7 @@ impl AppSqlStorage {
             .await
             .expect("migrations failed");
 
-        match m.run(&self.db).await {
+        match m.run(&self.conn).await {
             Ok(_) => {
                 println!("migrations run success");
             },

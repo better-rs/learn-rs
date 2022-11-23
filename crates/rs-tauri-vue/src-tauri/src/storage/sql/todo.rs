@@ -2,9 +2,17 @@ use sqlx::{Acquire, Executor, Statement};
 
 use crate::{proto::TodoEntity, storage::db::AppSqlStorage};
 
-impl AppSqlStorage {
+pub struct TodoStorage {
+    pub db: AppSqlStorage,
+}
+
+impl TodoStorage {
+    pub fn new(db: AppSqlStorage) -> Self {
+        Self { db }
+    }
+
     pub async fn add_todo(&self, todo: &TodoEntity) -> anyhow::Result<i64> {
-        let mut conn = self.db.acquire().await?;
+        let mut conn = self.db.conn.acquire().await?;
 
         // Insert the task, then obtain the ID of this row
         let id = sqlx::query!(
@@ -23,7 +31,7 @@ impl AppSqlStorage {
     }
 
     pub async fn list_todo(&self) -> anyhow::Result<Vec<TodoEntity>> {
-        let mut conn = self.db.acquire().await?;
+        let mut conn = self.db.conn.acquire().await?;
 
         let rows = sqlx::query!(
             r#"
@@ -51,7 +59,7 @@ ORDER BY id
     }
 
     pub async fn get_todo(&self, id: i64) -> anyhow::Result<TodoEntity> {
-        let mut conn = self.db.acquire().await?;
+        let mut conn = self.db.conn.acquire().await?;
 
         let row =
             sqlx::query!(r#"SELECT id, title, description, completed FROM todos WHERE id = ?"#, id)
@@ -76,10 +84,11 @@ mod test {
 
     use super::*;
 
-    async fn setup() -> AppSqlStorage {
+    async fn setup() -> TodoStorage {
         let mut db = AppSqlStorage::new("test.db").await;
         db.init_migrations().await;
-        db
+
+        TodoStorage::new(db)
     }
 
     #[tokio::test]

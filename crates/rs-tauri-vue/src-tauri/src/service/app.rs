@@ -1,9 +1,12 @@
-pub struct AppService {}
+use crate::ctx::AppContext;
+
+pub struct AppService {
+    pub ctx: &'static AppContext,
+}
 
 impl AppService {
-    pub fn new() -> AppService {
-        Self {}
+    pub async fn new() -> Self {
+        let ctx = AppContext::global().await;
+        Self { ctx }
     }
-
-    pub fn update_locale() {}
 }
