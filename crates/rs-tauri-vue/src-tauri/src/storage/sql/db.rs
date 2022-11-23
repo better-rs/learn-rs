@@ -10,17 +10,16 @@ use tracing::info;
 use crate::{storage::todo::TodoSqlScope, util};
 
 // sql storage biz
-
-pub struct AppSqlStorageBiz {
+pub struct AppSqlStorage {
     pub g: SqlConn,
 
     // biz units:
     pub todo: TodoSqlScope,
 }
 
-impl AppSqlStorageBiz {
+impl AppSqlStorage {
     pub async fn new() -> anyhow::Result<Self> {
-        let g = SqlConn::default().await?;
+        let g = SqlConn::default().await;
 
         let todo = TodoSqlScope::new(g.clone());
 
@@ -31,6 +30,12 @@ impl AppSqlStorageBiz {
 // kv存储方案: SqlConn
 pub struct SqlConn {
     pub conn: SqlitePool,
+}
+
+impl Clone for SqlConn {
+    fn clone(&self) -> Self {
+        Self { conn: self.conn.clone() }
+    }
 }
 
 impl SqlConn {

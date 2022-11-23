@@ -12,7 +12,7 @@ impl TodoSqlScope {
     }
 
     pub async fn add_todo(&self, todo: &TodoEntity) -> anyhow::Result<i64> {
-        let mut conn = self.g.conn.acquire().await?;
+        let mut conn = (self.g).conn.acquire().await?;
 
         // Insert the task, then obtain the ID of this row
         let id = sqlx::query!(
