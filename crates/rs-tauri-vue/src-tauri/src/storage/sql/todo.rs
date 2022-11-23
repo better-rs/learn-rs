@@ -17,9 +17,9 @@ impl TodoSqlScope {
         // Insert the task, then obtain the ID of this row
         let id = sqlx::query!(
             r#"
-    INSERT INTO todos ( description, title )
-    VALUES ( ?1, ?2 )
-            "#,
+        INSERT INTO todos ( description, title )
+        VALUES ( ?1, ?2 )
+                "#,
             todo.description,
             todo.title
         )
@@ -35,10 +35,10 @@ impl TodoSqlScope {
 
         let rows = sqlx::query!(
             r#"
-SELECT id, description, title, done, completed
-FROM todos
-ORDER BY id
-        "#
+    SELECT id, description, title, done, completed
+    FROM todos
+    ORDER BY id
+            "#
         )
         .fetch_all(&mut conn)
         .await?;
@@ -61,10 +61,13 @@ ORDER BY id
     pub async fn get_todo(&self, id: i64) -> anyhow::Result<TodoEntity> {
         let mut conn = self.g.conn.acquire().await?;
 
-        let row =
-            sqlx::query!(r#"SELECT id, title, description, completed FROM todos WHERE id = ?"#, id)
-                .fetch_one(&mut conn)
-                .await?;
+        let row = sqlx::query!(
+            r#"SELECT id, title, description, completed FROM todos WHERE id =
+    ?"#,
+            id
+        )
+        .fetch_one(&mut conn)
+        .await?;
 
         println!("get_todo row: {:?}", row);
 
@@ -85,8 +88,11 @@ mod test {
     use super::*;
 
     async fn setup() -> TodoSqlScope {
-        let mut db = SqlConn::new("test.db").await;
-        db.init_migrations().await;
+        let mut db = SqlConn::new("app.db").await;
+        // let mut db = SqlConn::default().await;
+        // db.init_migrations().await;
+
+        println!("💖💖💖💖💖 setup");
 
         TodoSqlScope::new(db)
     }

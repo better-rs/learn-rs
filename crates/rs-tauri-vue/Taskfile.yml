@@ -67,7 +67,8 @@ tasks:
   test:
     cmds:
       - echo "test"
-      - RUST_BACKTRACE=1 RUST_LOG=debug cargo test -- --nocapture
+      #      - task: clean:test
+      - RUST_BACKTRACE=1 RUST_LOG=debug macro_backtrace=1 cargo test -- --nocapture
     dir: "src-tauri"
 
   update:
@@ -80,6 +81,12 @@ tasks:
     cmds:
       - cargo clean
     dir: "src-tauri"
+
+  clean:test:
+    cmds:
+      - rm *.db
+    dir: "src-tauri/tmp"
+    ignore_error: true
 
 
   release:
