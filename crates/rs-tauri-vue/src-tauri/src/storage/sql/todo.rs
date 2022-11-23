@@ -1,18 +1,18 @@
 use sqlx::{Acquire, Executor, Statement};
 
-use crate::{proto::TodoEntity, storage::db::AppSqlStorage};
+use crate::{proto::TodoEntity, storage::db::SqlConn};
 
-pub struct TodoStorage {
-    pub db: AppSqlStorage,
+pub struct TodoSqlScope {
+    pub g: SqlConn,
 }
 
-impl TodoStorage {
-    pub fn new(db: AppSqlStorage) -> Self {
-        Self { db }
+impl TodoSqlScope {
+    pub fn new(g: SqlConn) -> Self {
+        Self { g }
     }
 
     pub async fn add_todo(&self, todo: &TodoEntity) -> anyhow::Result<i64> {
-        let mut conn = self.db.conn.acquire().await?;
+        let mut conn = self.g.conn.acquire().await?;
 
         // Insert the task, then obtain the ID of this row
         let id = sqlx::query!(
@@ -31,7 +31,7 @@ impl TodoStorage {
     }
 
     pub async fn list_todo(&self) -> anyhow::Result<Vec<TodoEntity>> {
-        let mut conn = self.db.conn.acquire().await?;
+        let mut conn = self.g.conn.acquire().await?;
 
         let rows = sqlx::query!(
             r#"
@@ -59,7 +59,7 @@ ORDER BY id
     }
 
     pub async fn get_todo(&self, id: i64) -> anyhow::Result<TodoEntity> {
-        let mut conn = self.db.conn.acquire().await?;
+        let mut conn = self.g.conn.acquire().await?;
 
         let row =
             sqlx::query!(r#"SELECT id, title, description, completed FROM todos WHERE id = ?"#, id)
@@ -84,11 +84,11 @@ mod test {
 
     use super::*;
 
-    async fn setup() -> TodoStorage {
-        let mut db = AppSqlStorage::new("test.db").await;
+    async fn setup() -> TodoSqlScope {
+        let mut db = SqlConn::new("test.db").await;
         db.init_migrations().await;
 
-        TodoStorage::new(db)
+        TodoSqlScope::new(db)
     }
 
     #[tokio::test]

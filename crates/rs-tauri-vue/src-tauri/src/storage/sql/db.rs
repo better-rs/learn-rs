@@ -3,18 +3,37 @@ use std::{env, str::FromStr};
 use sqlx::{
     migrate::Migrator,
     sqlite::{SqliteConnectOptions, SqlitePool, SqlitePoolOptions},
-    Acquire, ConnectOptions, Error, Executor, Pool, Sqlite,
+    Acquire, ConnectOptions, Executor,
 };
 use tracing::info;
 
-use crate::util;
+use crate::{storage::todo::TodoSqlScope, util};
 
-// kv存储方案:
-pub struct AppSqlStorage {
+// sql storage biz
+
+pub struct AppSqlStorageBiz {
+    pub g: SqlConn,
+
+    // biz units:
+    pub todo: TodoSqlScope,
+}
+
+impl AppSqlStorageBiz {
+    pub async fn new() -> anyhow::Result<Self> {
+        let g = SqlConn::default().await?;
+
+        let todo = TodoSqlScope::new(g.clone());
+
+        Ok(Self { g, todo })
+    }
+}
+
+// kv存储方案: SqlConn
+pub struct SqlConn {
     pub conn: SqlitePool,
 }
 
-impl AppSqlStorage {
+impl SqlConn {
     pub async fn default() -> Self {
         let mut _root_dir = tauri::api::path::document_dir();
 
@@ -142,7 +161,7 @@ mod test {
 
     #[tokio::test]
     async fn test_sqlite() {
-        let mut db = AppSqlStorage::default().await;
+        let mut db = SqlConn::default().await;
         db.init_migrations().await;
 
         // let mut conn = db.db.acquire().await.unwrap();

@@ -5,7 +5,7 @@ use parking_lot::Mutex;
 
 use crate::{
     config::AppConfig,
-    storage::{db::AppSqlStorage, AppEncryptedKVStorage, AppKvStorage},
+    storage::{db::SqlConn, AppEncryptedKVStorage, AppKvStorage},
 };
 
 #[derive(Clone)]
@@ -25,7 +25,7 @@ pub struct AppContext {
     pub kv_enc: Arc<Mutex<AppEncryptedKVStorage>>,
 
     // sqlite3
-    pub sql: Arc<Mutex<AppSqlStorage>>,
+    pub sql: Arc<Mutex<SqlConn>>,
 }
 
 impl AppContext {
@@ -33,7 +33,7 @@ impl AppContext {
     pub async fn global() -> &'static AppContext {
         static DATA: OnceCell<AppContext> = OnceCell::new();
 
-        let sql = AppSqlStorage::default().await;
+        let sql = SqlConn::default().await;
 
         DATA.get_or_init(|| AppContext {
             config: Arc::new(Mutex::new(AppConfig::default())),
