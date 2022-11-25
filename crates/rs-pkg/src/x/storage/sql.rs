@@ -22,15 +22,14 @@ impl SqliteClient {
         Self::new(None, None).await
     }
 
-    pub async fn new(db_name: Option<&str>, migrations: Option<&str>) -> Self {
+    pub async fn new(db_url: Option<&str>, migrations: Option<&str>) -> Self {
         // let mut _root_dir = tauri::api::path::document_dir();
 
         // sqlite:tmp/app.db
-        // let url = env::var("").unwrap_or(util::app_cfg::get_local_sqlite_url(Some(db_name)));
-        let db_url = util::fmt_local_sqlite_url(db_name);
+        let url = db_url.unwrap_or(util::local_sqlite_url(None));
 
         // todo x: 仅用于创建 db 文件
-        let _ = SqliteConnectOptions::from_str(&db_url)
+        let _ = SqliteConnectOptions::from_str(&url)
             .unwrap()
             .create_if_missing(true)
             .connect()
@@ -38,7 +37,7 @@ impl SqliteClient {
             .expect("connect to sqlite failed");
 
         // connect pool
-        let cli = SqlitePoolOptions::new().min_connections(2).connect(&db_url).await;
+        let cli = SqlitePoolOptions::new().min_connections(2).connect(&url).await;
 
         match cli {
             Ok(c) => {
@@ -78,21 +77,26 @@ impl SqliteClient {
 pub mod util {
     use std::{env, path::PathBuf};
 
-    pub fn local_tmp_dir() -> PathBuf {
-        let tmp_local = "tmp";
-
+    pub fn local_dir(folder: Option<&str>) -> PathBuf {
         let mut current_dir = env::current_dir().expect("get current directory failed");
-        let tmp_dir = current_dir.join(tmp_local);
-        if !tmp_dir.exists() {
-            std::fs::create_dir(&tmp_dir).expect("create tmp dir failed");
+
+        let dest_dir = current_dir.join(folder.unwrap_or("tmp"));
+        if !dest_dir.exists() {
+            std::fs::create_dir(&dest_dir).expect("create tmp dir failed");
         }
-        tmp_dir
+        dest_dir
     }
 
-    pub fn fmt_local_sqlite_url(db_name: Option<&str>) -> String {
+    pub fn local_sqlite_url(db_name: Option<&str>) -> &str {
         let fp = db_name.unwrap_or("app.db");
-        let prefix = "sqlite:";
-        format!("{}{}", prefix, local_tmp_dir().join(fp).to_str().unwrap())
+        let mut prefix = "sqlite:";
+
+        // get or create:
+        let d = local_dir(None);
+
+        // return db url
+        let db_url = format!("{}{}", prefix, d.join(fp).to_str().unwrap());
+        Box::leak(db_url.into_boxed_str())
     }
 
     #[cfg(test)]
@@ -105,7 +109,7 @@ pub mod util {
 
             // iter
             for case in cases.iter() {
-                let url = fmt_local_sqlite_url(*case);
+                let url = local_sqlite_url(*case);
                 println!("url: {}", url);
             }
         }
@@ -121,5 +125,11 @@ mod test {
     #[tokio::test]
     async fn test_new_sqlite_client() {
         let db = SqliteClient::default().await;
+
+        let cases = ["tmp/test1.db", "tmp/test2.db"];
+
+        for item in cases.iter() {
+            let _ = SqliteClient::new(Some(item), None).await;
+        }
     }
 }
