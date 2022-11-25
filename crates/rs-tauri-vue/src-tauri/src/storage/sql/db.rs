@@ -41,8 +41,7 @@ impl Clone for SqlConn {
 
 impl SqlConn {
     pub async fn default() -> Self {
-        let conn = new_sql_conn("app.db").await;
-        Self { conn }
+        Self::new("app.db").await
     }
 
     pub async fn new(db_name: &str) -> Self {

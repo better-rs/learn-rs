@@ -1,4 +1,5 @@
 use sqlx::{Acquire, Executor, Statement};
+use tracing::info;
 
 use crate::{proto::TodoEntity, storage::db::SqlConn};
 
@@ -26,6 +27,8 @@ impl TodoSqlScope {
         .execute(&mut conn)
         .await?
         .last_insert_rowid();
+
+        info!("add todo: {:?}", todo);
 
         Ok(id)
     }

@@ -4,10 +4,20 @@ import {invoke} from '@tauri-apps/api/tauri'
 defineProps<{ msg: string }>()
 
 const count = ref(0)
+const addRet = ref(0)
+
 
 async function backendAdd() {
     count.value = await invoke('backend_add', {number: count.value})
 }
+
+async function addTodo() {
+    // todo x: sqlite crud
+    addRet.value = await invoke('add_todo', {title: "test from fe", description: "test from fe"})
+    console.log("addTodo", addRet)
+}
+
+
 </script>
 
 <template>
@@ -30,6 +40,13 @@ async function backendAdd() {
                 <n-grid-item>
                     <n-button style="background-color: orange" type="error" @click="backendAdd">
                         Add 2 (call rust in backend)
+                    </n-button>
+                </n-grid-item>
+
+
+                <n-grid-item>
+                    <n-button style="background-color: orange" type="error" @click="addTodo">
+                        Add Todo (call rust in backend)
                     </n-button>
                 </n-grid-item>
 

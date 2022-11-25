@@ -13,6 +13,8 @@ use window_shadows::set_shadow;
 
 use command::calc::backend_add;
 
+use crate::ctx::AppContext;
+
 mod command;
 mod config;
 mod ctx;
@@ -36,6 +38,8 @@ fn main() {
 
     // tips:
     info!("tauri main started");
+
+    init_app();
 
     // todo x: 系统托盘菜单
     let tray = SystemTray::new().with_menu(menu::tray_menu());
@@ -88,7 +92,7 @@ fn main() {
             },
             _ => {},
         })
-        .invoke_handler(tauri::generate_handler![backend_add])
+        .invoke_handler(tauri::generate_handler![backend_add, command::add_todo,])
         .setup(|app| {
             #[cfg(debug_assertions)]
             {
@@ -121,6 +125,11 @@ fn main() {
         ))
         .run(ctx)
         .expect("error while running tauri application");
+}
+
+fn init_app() {
+    // init sqlite
+    AppContext::global();
 }
 
 pub trait WindowExt {

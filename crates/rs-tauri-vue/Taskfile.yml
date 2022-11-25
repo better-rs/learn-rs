@@ -63,6 +63,9 @@ tasks:
     dir: "src-tauri"
     ignore_error: true
 
+  kill:
+    cmds:
+      - fig run kill-all-processes-at-port --port 7173
 
   test:
     cmds:
