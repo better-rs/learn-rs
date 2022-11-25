@@ -1,7 +1,7 @@
 pub use kv::*;
 pub use sql::*;
 
-use crate::storage::db::AppSqlStorage;
+use crate::storage::AppSqlStorage;
 
 pub mod kv;
 pub mod sql;
