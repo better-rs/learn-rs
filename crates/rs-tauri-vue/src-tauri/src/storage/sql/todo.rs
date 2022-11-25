@@ -1,4 +1,4 @@
-use sqlx::{Acquire, Executor, Statement};
+use sqlx::{Acquire, Executor, Row, Statement};
 use tracing::info;
 
 use crate::{proto::TodoEntity, storage::db::SqlConn};
@@ -13,17 +13,17 @@ impl TodoSqlScope {
     }
 
     pub async fn add_todo(&self, todo: &TodoEntity) -> anyhow::Result<i64> {
-        let mut conn = (self.g).conn.acquire().await?;
+        let mut conn = self.g.conn.acquire().await?;
 
         // Insert the task, then obtain the ID of this row
-        let id = sqlx::query!(
+        let id = sqlx::query(
             r#"
         INSERT INTO todos ( description, title )
         VALUES ( ?1, ?2 )
                 "#,
-            todo.description,
-            todo.title
         )
+        .bind(&todo.description)
+        .bind(&todo.title)
         .execute(&mut conn)
         .await?
         .last_insert_rowid();
@@ -33,28 +33,49 @@ impl TodoSqlScope {
         Ok(id)
     }
 
+    // pub async fn add_todo2(&self, todo: &TodoEntity) -> anyhow::Result<i64> {
+    //     let mut conn = self.g.conn.acquire().await?;
+    //
+    //     // Insert the task, then obtain the ID of this row
+    //     let id = sqlx::query!(
+    //         r#"
+    //     INSERT INTO todos ( description, title )
+    //     VALUES ( ?1, ?2 )
+    //             "#,
+    //         todo.description,
+    //         todo.title
+    //     )
+    //     .execute(&mut conn)
+    //     .await?
+    //     .last_insert_rowid();
+    //
+    //     info!("add todo: {:?}", todo);
+    //
+    //     Ok(id)
+    // }
+
     pub async fn list_todo(&self) -> anyhow::Result<Vec<TodoEntity>> {
         let mut conn = self.g.conn.acquire().await?;
 
-        let rows = sqlx::query!(
+        let rows = sqlx::query(
             r#"
     SELECT id, description, title, done, completed
     FROM todos
     ORDER BY id
-            "#
+            "#,
         )
         .fetch_all(&mut conn)
         .await?;
 
         let mut todos = Vec::new();
         for row in rows {
-            println!("row: {:?}", row);
+            // println!("row: {:?}", row);
             todos.push(TodoEntity {
-                id: row.id,
-                description: row.description,
-                title: row.title,
-                done: row.done,
-                completed: row.completed,
+                id: row.get(0),
+                description: row.get(1),
+                title: row.get(2),
+                done: row.get(3),
+                completed: row.get(4),
             });
         }
 
@@ -64,22 +85,22 @@ impl TodoSqlScope {
     pub async fn get_todo(&self, id: i64) -> anyhow::Result<TodoEntity> {
         let mut conn = self.g.conn.acquire().await?;
 
-        let row = sqlx::query!(
+        let row = sqlx::query(
             r#"SELECT id, title, description, completed FROM todos WHERE id =
     ?"#,
-            id
         )
+        .bind(id)
         .fetch_one(&mut conn)
         .await?;
 
-        println!("get_todo row: {:?}", row);
+        // println!("get_todo row: {:?}", row);
 
         Ok(TodoEntity {
-            id: row.id,
-            description: row.description,
-            title: row.title,
+            id: row.get("id"),
+            description: row.get("description"),
+            title: row.get("title"),
             done: false,
-            completed: row.completed,
+            completed: row.get("completed"),
         })
     }
 }

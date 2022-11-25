@@ -13,7 +13,7 @@ use window_shadows::set_shadow;
 
 use command::calc::backend_add;
 
-use crate::ctx::AppContext;
+use crate::{ctx::AppContext, util::app_cfg::get_local_sqlite_url};
 
 mod command;
 mod config;
@@ -94,6 +94,14 @@ fn main() {
         })
         .invoke_handler(tauri::generate_handler![backend_add, command::add_todo,])
         .setup(|app| {
+            // todo x: init app
+
+            tauri::async_runtime::spawn(async move {
+                // A loop that takes output from the async process and sends it
+                // to the webview via a Tauri Event
+                init_app().await;
+            });
+
             #[cfg(debug_assertions)]
             {
                 let main_window = app.get_window("main").unwrap();
@@ -115,7 +123,7 @@ fn main() {
             Ok(())
         })
         .plugin(TauriSql::default().add_migrations(
-            "sqlite:app.db",
+            get_local_sqlite_url(Some("app.db")).as_str(),
             vec![Migration {
                 version: 1,
                 description: "create todo",
@@ -127,9 +135,11 @@ fn main() {
         .expect("error while running tauri application");
 }
 
-fn init_app() {
+async fn init_app() {
     // init sqlite
-    AppContext::global();
+    AppContext::global().await;
+
+    info!("init app context");
 }
 
 pub trait WindowExt {
