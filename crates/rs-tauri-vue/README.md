@@ -1,16 +1,5 @@
 # Tauri + Vue + Vite Template
 
-## Rust 踩坑:
-
-> cargo workspace 问题:
-
-- ❌ `子 repo`, 尽量独立, 不要使用`父 workspace`, 会导致 tauri build 失败
-    - case: sqlx 在 workspace 下, build [依赖报错(误报)](https://github.com/launchbadge/sqlx/issues/1604), 但是单独
-      build 是可以的
-- ❌ workspace 过大, 会导致 IDE 索引宏, 失效
-- ❌ 猜测: workspace 公共的lib, 版本(开启 feature)不一致, 在编译时, 会冲突.
-    - 部分冲突, 是隐式的. cargo clean + build 就会发现很多问题
-
 ## Rust 插件集成:
 
 - https://github.com/tauri-apps/awesome-tauri#plugins
@@ -49,6 +38,30 @@
     - [tauri-plugin-websocket](https://github.com/tauri-apps/tauri-plugin-websocket)
     - [tokio-tungstenite](https://github.com/snapview/tokio-tungstenite)
         - 当前社区首选
+
+## Rust 踩坑:
+
+> cargo workspace 问题:
+
+- ❌ `子 repo`, 尽量独立, 不要使用`父 workspace`, 会导致 tauri build 失败
+    - case: sqlx 在 workspace 下, build [依赖报错(误报)](https://github.com/launchbadge/sqlx/issues/1604), 但是单独
+      build 是可以的
+- ❌ workspace 过大, 会导致 IDE 索引宏, 失效
+- ❌ 猜测: workspace 公共的lib, 版本(开启 feature)不一致, 在编译时, 会冲突.
+    - 部分冲突, 是隐式的. cargo clean + build 就会发现很多问题
+
+> sqlx 问题:
+
+- ❌ `sqlx::query!() vs sqlx::query()`
+    - query!() 宏误报 `找不到 db`, 而 query() 方法写法不会误报
+    - new() 方法中含有 db conn 初始化
+    - 猜测 query!() 是编译期, 尝试找 db conn, 而 query() 是运行时, 所以不会报错.
+- ❌ 故不建议在 app + sqlite 代码中使用 query!() 宏,
+    - 搜索 GitHub 代码, 发现大多数人, 也都不用 query!().
+      [    - 官方 example 给的示例代码, 误导人.
+    - query() 方法, 虽然用起来, 稍微麻烦一点, 但是运行时检测 db conn, 是更安全的.
+    - 在运行时动态创建 sqlite 是很正常的.
+    - 当然, 如果是写 sever 代码(远程连 mysql 这种), 继续使用 query!() 宏, 应该没问题(db一般都预创建好了)
 
 ## Vue.js 集成:
 
