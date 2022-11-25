@@ -39,8 +39,6 @@ fn main() {
     // tips:
     info!("tauri main started");
 
-    init_app();
-
     // todo x: 系统托盘菜单
     let tray = SystemTray::new().with_menu(menu::tray_menu());
 
@@ -94,11 +92,10 @@ fn main() {
         })
         .invoke_handler(tauri::generate_handler![backend_add, command::add_todo,])
         .setup(|app| {
-            // todo x: init app
-
+            //
+            // todo x: init app, 注册+初始化资源
+            //
             tauri::async_runtime::spawn(async move {
-                // A loop that takes output from the async process and sends it
-                // to the webview via a Tauri Event
                 init_app().await;
             });
 
