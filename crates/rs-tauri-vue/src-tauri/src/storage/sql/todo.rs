@@ -1,19 +1,21 @@
 use sqlx::{Acquire, Executor, Row, Statement};
 use tracing::info;
 
-use crate::{proto::TodoEntity, storage::db::SqlConn};
+use rs_pkg::x::SqliteClient;
+
+use crate::proto::TodoEntity;
 
 pub struct TodoSqlScope {
-    pub g: SqlConn,
+    pub g: SqliteClient,
 }
 
 impl TodoSqlScope {
-    pub fn new(g: SqlConn) -> Self {
+    pub fn new(g: SqliteClient) -> Self {
         Self { g }
     }
 
     pub async fn add_todo(&self, todo: &TodoEntity) -> anyhow::Result<i64> {
-        let mut conn = self.g.conn.acquire().await?;
+        let mut conn = self.g.cli.acquire().await?;
 
         // Insert the task, then obtain the ID of this row
         let id = sqlx::query(
@@ -33,29 +35,8 @@ impl TodoSqlScope {
         Ok(id)
     }
 
-    // pub async fn add_todo2(&self, todo: &TodoEntity) -> anyhow::Result<i64> {
-    //     let mut conn = self.g.conn.acquire().await?;
-    //
-    //     // Insert the task, then obtain the ID of this row
-    //     let id = sqlx::query!(
-    //         r#"
-    //     INSERT INTO todos ( description, title )
-    //     VALUES ( ?1, ?2 )
-    //             "#,
-    //         todo.description,
-    //         todo.title
-    //     )
-    //     .execute(&mut conn)
-    //     .await?
-    //     .last_insert_rowid();
-    //
-    //     info!("add todo: {:?}", todo);
-    //
-    //     Ok(id)
-    // }
-
     pub async fn list_todo(&self) -> anyhow::Result<Vec<TodoEntity>> {
-        let mut conn = self.g.conn.acquire().await?;
+        let mut conn = self.g.cli.acquire().await?;
 
         let rows = sqlx::query(
             r#"
@@ -83,7 +64,7 @@ impl TodoSqlScope {
     }
 
     pub async fn get_todo(&self, id: i64) -> anyhow::Result<TodoEntity> {
-        let mut conn = self.g.conn.acquire().await?;
+        let mut conn = self.g.cli.acquire().await?;
 
         let row = sqlx::query(
             r#"SELECT id, title, description, completed FROM todos WHERE id =
@@ -112,7 +93,7 @@ mod test {
     use super::*;
 
     async fn setup() -> TodoSqlScope {
-        let mut db = SqlConn::new("app.db").await;
+        let mut db = SqliteClient::new(None, None).await;
         // let mut db = SqlConn::default().await;
         // db.init_migrations().await;
 

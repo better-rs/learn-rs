@@ -3,9 +3,11 @@ use std::sync::Arc;
 use once_cell::sync::OnceCell;
 use parking_lot::Mutex;
 
+use rs_pkg::x::SqliteClient;
+
 use crate::{
     config::AppConfig,
-    storage::{db::SqlConn, AppEncryptedKVStorage, AppKvStorage},
+    storage::{AppEncryptedKVStorage, AppKvStorage},
 };
 
 #[derive(Clone)]
@@ -25,7 +27,7 @@ pub struct AppContext {
     pub kv_enc: Arc<Mutex<AppEncryptedKVStorage>>,
 
     // sqlite3
-    pub sql: Arc<Mutex<SqlConn>>,
+    pub sql: Arc<Mutex<SqliteClient>>,
 }
 
 impl AppContext {
@@ -33,7 +35,7 @@ impl AppContext {
     pub async fn global() -> &'static AppContext {
         static DATA: OnceCell<AppContext> = OnceCell::new();
 
-        let sql = SqlConn::default().await;
+        let sql = SqliteClient::default().await;
 
         DATA.get_or_init(|| AppContext {
             config: Arc::new(Mutex::new(AppConfig::default())),

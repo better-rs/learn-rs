@@ -19,6 +19,8 @@ rust-version = "1.57"
 members = []
 
 
+################################################################################
+
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
@@ -44,7 +46,7 @@ once_cell = "1"
 parking_lot = "0"
 
 # i18n
-rust-i18n = "0"
+rust-i18n = "1"
 sys-locale = "0"
 
 # encrypted kv:
@@ -66,6 +68,13 @@ anyhow = "1"
 # debug tool:
 console-subscriber = "0"
 
+################################################################################
+
+#
+# workspace internal dependencies:
+#
+rs-pkg = { path = "../../rs-pkg" }
+
 
 ################################################################################
 
@@ -86,6 +95,7 @@ available-locales = ["en", "zh-CN", "zh-HK", "fr"]
 # Path for your translations YAML file, default: "locales".
 # load-path = "locales"
 
+################################################################################
 
 [features]
 # by default Tauri runs in production mode
