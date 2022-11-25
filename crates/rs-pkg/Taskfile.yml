@@ -1,0 +1,65 @@
+version: "3"
+
+tasks:
+  init:
+    - echo "init"
+
+  dev:
+    cmds:
+      - echo "dev install"
+      - cargo install cargo-edit
+      - cargo install cargo-outdated
+      - cargo install rust-i18n
+      - cargo install tauri-cli
+
+  install:
+    cmds:
+      - task: build
+
+  build:
+    cmds:
+      - task: update
+      #      - RUST_I18N_DEBUG=1 cargo build
+      - cargo build
+
+  check:
+    cmds:
+      - cargo sqlx prepare
+      - cargo sqlx prepare --check
+    dir: "src-tauri"
+    ignore_error: true
+
+  kill:
+    cmds:
+      - fig run kill-all-processes-at-port --port 7173
+
+  test:
+    cmds:
+      - echo "test"
+      #      - task: clean:test
+      - RUST_BACKTRACE=1 RUST_LOG=debug macro_backtrace=1 cargo test -- --nocapture
+
+  update:
+    cmds:
+      - cargo outdated  # RUST_BACKTRACE=1 RUST_LOG=debug
+      - cargo upgrade # RUST_BACKTRACE=1 RUST_LOG=debug
+
+  clean:
+    cmds:
+      - cargo clean
+
+  clean:test:
+    cmds:
+      - rm *.db
+    dir: "tmp/"
+    ignore_error: true
+
+
+  release:
+    cmds:
+      - echo "release"
+      - pnpm build
+
+  fix:
+    cmds:
+      - cargo metadata --verbose --format-version 1 --all-features

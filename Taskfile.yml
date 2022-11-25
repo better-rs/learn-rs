@@ -36,6 +36,9 @@ includes:
     taskfile: crates/rs-sql/rs-sqlcipher
     dir: crates/rs-sql/rs-sqlcipher
 
+  pkg:
+    taskfile: crates/rs-pkg
+    dir: crates/rs-pkg
 
 
 #
