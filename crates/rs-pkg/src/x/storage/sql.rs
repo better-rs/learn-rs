@@ -6,6 +6,8 @@ use sqlx::{
     ConnectOptions, SqlitePool,
 };
 
+use crate::util;
+
 // db 存储方案: SqlClient
 pub struct SqliteClient {
     pub cli: SqlitePool,
@@ -70,48 +72,6 @@ impl SqliteClient {
             Err(e) => {
                 panic!("connect to sqlite db failed: {}", e);
             },
-        }
-    }
-}
-
-pub mod util {
-    use std::{env, path::PathBuf};
-
-    pub fn local_dir(folder: Option<&str>) -> PathBuf {
-        let mut current_dir = env::current_dir().expect("get current directory failed");
-
-        let dest_dir = current_dir.join(folder.unwrap_or("tmp"));
-        if !dest_dir.exists() {
-            std::fs::create_dir(&dest_dir).expect("create tmp dir failed");
-        }
-        dest_dir
-    }
-
-    pub fn local_sqlite_url(db_name: Option<&str>) -> &str {
-        let fp = db_name.unwrap_or("app.db");
-        let mut prefix = "sqlite:";
-
-        // get or create:
-        let d = local_dir(None);
-
-        // return db url
-        let db_url = format!("{}{}", prefix, d.join(fp).to_str().unwrap());
-        Box::leak(db_url.into_boxed_str())
-    }
-
-    #[cfg(test)]
-    mod test {
-        use super::*;
-
-        #[test]
-        fn test_get_local_sqlite_url() {
-            let cases = [None, Some("test.db")];
-
-            // iter
-            for case in cases.iter() {
-                let url = local_sqlite_url(*case);
-                println!("url: {}", url);
-            }
         }
     }
 }

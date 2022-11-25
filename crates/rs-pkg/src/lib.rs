@@ -1,3 +1,4 @@
+pub mod util;
 pub mod x;
 
 pub fn add(left: usize, right: usize) -> usize {
