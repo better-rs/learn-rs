@@ -1,14 +1,36 @@
 <template>
-    <n-card item-responsive="true" style="background:gainsboro; margin-bottom:5px" title="网址导航">
+    <n-card item-responsive="true" style="background:lightcoral; margin-bottom:5px" title="网址导航">
         <n-grid :x-gap="12" :y-gap="8" cols="4">
             <!-- 分组 -->
-            <n-grid-item v-for="item in websites">
-                <n-button size="small" style="background:cadetblue;" type="success"
+            <n-grid-item v-for="item in webJp">
+                <n-button size="small" style="background:lightblue;"
                           @click="open_webview(item.url)">
                     {{ item.title }}
                 </n-button>
             </n-grid-item>
         </n-grid>
+        <br>
+        <n-grid :x-gap="12" :y-gap="8" cols="4">
+            <!-- 分组 -->
+            <n-grid-item v-for="item in webDocs">
+                <n-button size="small" style="background:greenyellow;"
+                          @click="open_webview(item.url)">
+                    {{ item.title }}
+                </n-button>
+            </n-grid-item>
+        </n-grid>
+        <br>
+        <n-grid :x-gap="12" :y-gap="8" cols="4">
+            <!-- 分组 -->
+            <n-grid-item v-for="item in webSearch">
+                <n-button size="small" style="background:yellow;"
+                          @click="open_webview(item.url)">
+                    {{ item.title }}
+                </n-button>
+            </n-grid-item>
+        </n-grid>
+
+
     </n-card>
 </template>
 
@@ -19,15 +41,23 @@ import {defineComponent, getCurrentInstance, ref} from 'vue'
 import {WebviewWindow} from '@tauri-apps/api/window';
 
 // 数据: 需要注册到下面
-const websites = ref([
+const webDocs = ref([
+    {title: 'Tauri 官网', url: "https://tauri.app/zh-cn/"},
+    {title: 'Tauri Docs', url: "https://tauri.app/v1/api/js/"},
+    {title: 'NaiveUI Docs', url: "https://www.naiveui.com/zh-CN/light/components/button"},
+    {title: 'Vue Docs', url: "https://cn.vuejs.org/guide/essentials/list.html#v-for"},
+]);
+const webSearch = ref([
     {title: 'Google', url: "https://google.com"},
     {title: 'Bing', url: "https://bing.com"},
     {title: 'Github', url: "https://github.com"},
 
-    //
-    {title: 'NaiveUI Docs', url: "https://www.naiveui.com/zh-CN/light/components/button"},
-    {title: 'Tauri Docs', url: "https://tauri.app/v1/api/js/"},
-    {title: 'Vue Docs', url: "https://cn.vuejs.org/guide/essentials/list.html#v-for"},
+]);
+const webJp = ref([
+    {title: 'NHK 日语教程', url: "https://www.nhk.or.jp/lesson/zh/letters/hiragana.html"},
+    {title: '日语五十音', url: "https://inihongo.github.io/Japanese_syllabary_learning/index.html"},
+    {title: '新华字典', url: "https://zd.hwxnet.com/"},
+
 ])
 
 
@@ -37,7 +67,9 @@ export default defineComponent({
     props: ['waited'],
 
     data: () => ({
-        websites,
+        webDocs,
+        webJp,
+        webSearch,
         toggle: false,
         counter: 0,
     }),
