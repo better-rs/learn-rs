@@ -1,5 +1,5 @@
 <template>
-    <n-card item-responsive="true" style="background:lightcoral; margin-bottom:5px" title="网址导航">
+    <n-card item-responsive="true" style="background:lightcoral; margin-bottom:5px" title="网址导航(Webview)">
         <n-grid :x-gap="12" :y-gap="8" cols="4">
             <!-- 分组 -->
             <n-grid-item v-for="item in webJp">
@@ -10,10 +10,10 @@
             </n-grid-item>
         </n-grid>
         <br>
-        <n-grid :x-gap="12" :y-gap="8" cols="4">
+        <n-grid :x-gap="12" :y-gap="8" cols="4" draggable="true">
             <!-- 分组 -->
             <n-grid-item v-for="item in webDocs">
-                <n-button size="small" style="background:greenyellow;"
+                <n-button size="medium" style="background:greenyellow;"
                           @click="open_webview(item.url)">
                     {{ item.title }}
                 </n-button>
@@ -44,6 +44,7 @@ import {WebviewWindow} from '@tauri-apps/api/window';
 const webDocs = ref([
     {title: 'Tauri 官网', url: "https://tauri.app/zh-cn/"},
     {title: 'Tauri Docs', url: "https://tauri.app/v1/api/js/"},
+    {title: 'Pake', url: "https://github.com/tw93/Pake"},
     {title: 'NaiveUI Docs', url: "https://www.naiveui.com/zh-CN/light/components/button"},
     {title: 'Vue Docs', url: "https://cn.vuejs.org/guide/essentials/list.html#v-for"},
 ]);

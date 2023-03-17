@@ -22,7 +22,7 @@ async function addTodo() {
 
 <template>
 
-    <n-card style="background:blanchedalmond; margin-bottom:5px" title="js/ts call rust 示例:">
+    <n-card style="background:blanchedalmond; margin-bottom:5px" title="js/ts call rust 示例">
         <n-space vertical>
             <n-list align="center">
                 <n-list-item>

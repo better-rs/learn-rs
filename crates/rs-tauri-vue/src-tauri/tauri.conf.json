@@ -1,6 +1,6 @@
 {
     "package": {
-        "productName": "CryptoPie",
+        "productName": "Tauri+Vue",
         "version": "0.3.0"
     },
     "build": {
@@ -12,7 +12,7 @@
     "tauri": {
         "systemTray": {
             "iconPath": "icons/icon.png",
-            "iconAsTemplate": true
+            "iconAsTemplate": false
         },
         "bundle": {
             "active": true,
@@ -55,7 +55,7 @@
         },
         "windows": [
             {
-                "title": "Crypto Pie",
+                "title": "Tauri+Vue",
                 "width": 1000,
                 "height": 800,
                 "resizable": true,

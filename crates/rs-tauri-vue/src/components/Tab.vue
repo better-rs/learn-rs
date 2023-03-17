@@ -27,7 +27,7 @@ const tabs = ref([
     {"tab": "Demo", "name": "demo", "widget": Demo,},
     {"tab": "Home", "name": "home", "widget": Home},
     {"tab": "Debug", "name": "debug", "widget": Debug},
-    {"tab": "行情", "name": "trending", "widget": Settings},
+    // {"tab": "行情", "name": "trending", "widget": Settings},
     {"tab": "资讯", "name": "news", "widget": Settings},
     {"tab": "设置", "name": "settings", "widget": Settings},
     {"tab": "我的", "name": "drawer", "widget": Drawer},
