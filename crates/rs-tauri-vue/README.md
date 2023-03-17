@@ -1,4 +1,14 @@
-# Tauri + Vue + Vite Template
+# Tauri + Vue3 + Naive-UI Template
+
+> 特性:
+
+- ✅ 激活`系统托盘(tray)`图标(MacOS).
+- ✅ `ts/js` 和 `rust` 互操作代码示例(js call rust).
+- ✅ 前端框架: `typescript + vue3 + naive-ui`.
+
+> 运行效果图:
+
+![Screenshot](./public/screenshot.png)
 
 ## Rust 插件集成:
 
@@ -71,9 +81,10 @@
 - ✅ vite
 - ✅ typescript
 
----
-
 ![Screenshot](./public/screenshot.png)
+
+
+---
 
 Simple project template for Tauri and Vue 3.
 
