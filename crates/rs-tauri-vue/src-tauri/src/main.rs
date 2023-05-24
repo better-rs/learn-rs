@@ -38,6 +38,9 @@ fn main() {
 
     // tips:
     info!("tauri main started");
+    info!("app_name: {}", t!("app.app_name").as_str());
+    info!("description: {}", t!("app.description"));
+    info!("lang: {}", rust_i18n::locale());
 
     // todo x: 系统托盘菜单
     let tray = SystemTray::new().with_menu(menu::tray_menu());
@@ -49,8 +52,8 @@ fn main() {
     #[cfg(target_os = "macos")]
     let builder = tauri::Builder::default()
         // .menu(menu::menu())
-        .menu(Menu::os_default(t!("app_name").as_str()).add_submenu(Submenu::new(
-            t!("help"),
+        .menu(Menu::os_default(t!("app.app_name").as_str()).add_submenu(Submenu::new(
+            t!("app.help"),
             Menu::with_items([
                 CustomMenuItem::new("Online Documentation", "Online Documentation").into(),
             ]),

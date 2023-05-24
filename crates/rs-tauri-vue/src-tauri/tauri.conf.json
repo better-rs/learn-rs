@@ -25,7 +25,9 @@
                 "icons/icon.icns",
                 "icons/icon.ico"
             ],
-            "resources": [],
+            "resources": [
+                "locales/*"
+            ],
             "externalBin": [],
             "copyright": "",
             "category": "DeveloperTool",

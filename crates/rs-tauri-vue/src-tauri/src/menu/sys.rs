@@ -8,11 +8,11 @@ pub fn menu() -> Menu {
 
 fn submenu_app() -> Submenu {
     let about_menu = AboutMetadata::new()
-        .version(t!("version"))
-        .authors(vec![t!("author")])
-        .comments(t!("description"))
-        .copyright(t!("copyright"))
-        .license(t!("license"))
+        .version(t!("app.version"))
+        .authors(vec![t!("app.author")])
+        .comments(t!("app.description"))
+        .copyright(t!("app.copyright"))
+        .license(t!("app.license"))
         .website(String::from("https://github.com/better-rs/learn-rs"))
         .website_label(String::from("Source Code"));
 
