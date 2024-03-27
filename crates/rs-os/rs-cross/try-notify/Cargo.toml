@@ -12,7 +12,7 @@ chrono = { version = "0.4", optional = true }
 
 #
 # cli usage:
-#   -  cargo run --bin rs-eth-scanner -- scan "http://abc.url" "0xxxxx" "deposit" "100"
+#   - cargo run -- --bin run2
 #
 [[bin]]
 name = "run2"
@@ -21,3 +21,8 @@ path = "src/run2.rs"
 [[bin]]
 name = "run3"
 path = "src/run3.rs"
+
+# sound
+[[bin]]
+name = "run4"
+path = "src/run4.rs"
