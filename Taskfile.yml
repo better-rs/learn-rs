@@ -118,17 +118,14 @@ tasks:
     vars:
       APP_NAME: "crates/rs-cms-migration"
 
+
+  # usage:
+  #   - task n -- --lib tmp/demo1
+  #   - task n -- --bin tmp/demo2
   new:
+    aliases: [ "n" ]
     cmds:
-      - cd ${WORKSPACE}; cargo new --lib ${NEW_PROJECT_NAME}
-
-  new:bin:
-    cmds:
-      - cd ${WORKSPACE}; cargo new ${NEW_PROJECT_NAME}
-
-  new:lib:
-    cmds:
-      - cd ${WORKSPACE}; cargo new --lib ${NEW_PROJECT_NAME}
+      - cargo new {{.CLI_ARGS}}
 
   ################################################################################
 
