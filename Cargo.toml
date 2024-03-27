@@ -16,6 +16,7 @@ members = [
     "crates/rs-ffi",
     "crates/rs-ffi-core",
     "crates/rs-os/rs-macos/try-notification",
+    "crates/rs-os/rs-cross/try-notify",
     #    "crates/rs-tonic",
     #    "crates/rs-tauri-vue/src-tauri",
     #    "crates/rs-sqlcipher",

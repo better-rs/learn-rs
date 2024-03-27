@@ -1,0 +1,15 @@
+version: "3"
+
+includes:
+  notify:
+    taskfile: ./try-notify/
+    dir: ./try-notify/
+    optional: true
+
+
+################################################################################################
+
+tasks:
+  run:
+    cmds:
+      - task: run:server

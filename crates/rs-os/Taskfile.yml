@@ -1,0 +1,22 @@
+version: "3"
+
+includes:
+  cross:
+    aliases: [ "c" ]
+    taskfile: ./rs-cross/
+    dir: ./rs-cross/
+    optional: true
+
+  macos:
+    aliases: [ "m" ]
+    taskfile: ./rs-macos/
+    dir: ./rs-macos/
+    optional: true
+
+
+################################################################################################
+
+tasks:
+  clean:
+    cmds:
+      - cargo clean
