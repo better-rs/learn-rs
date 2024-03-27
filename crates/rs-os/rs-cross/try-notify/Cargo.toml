@@ -7,3 +7,17 @@ edition = "2021"
 
 [dependencies]
 notify-rust = "4"
+chrono = { version = "0.4", optional = true }
+
+
+#
+# cli usage:
+#   -  cargo run --bin rs-eth-scanner -- scan "http://abc.url" "0xxxxx" "deposit" "100"
+#
+[[bin]]
+name = "run2"
+path = "src/run2.rs"
+
+[[bin]]
+name = "run3"
+path = "src/run3.rs"

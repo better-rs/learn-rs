@@ -23,7 +23,7 @@ tasks:
   run:
     aliases: [ "r" ]
     cmds:
-      - cargo run
+      - cargo run {{.CLI_ARGS}}
 
   build:
     aliases: [ "b" ]
