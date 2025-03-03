@@ -3,6 +3,12 @@ name = "try-wry"
 version = "0.1.0"
 edition = "2024"
 
+
+[[bin]]
+name = "t01"
+path = "examples/try01.rs"
+
+
 [dependencies]
 tao = "0.32.6"
 winit = "0.30.9"

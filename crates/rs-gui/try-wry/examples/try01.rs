@@ -9,6 +9,13 @@ use wry::{
     dpi::{LogicalPosition, LogicalSize},
 };
 
+/*
+
+
+ref: https://github.com/tauri-apps/wry/blob/dev/examples/multiwebview.rs
+
+*/
+
 #[derive(Default)]
 struct State {
     window: Option<Window>,
