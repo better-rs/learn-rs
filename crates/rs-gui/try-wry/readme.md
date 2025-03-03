@@ -16,6 +16,9 @@ cargo add wry
 
 cd git-repo-root-dir/
 
+# simple
+task gui:wry:r -- --bin t00
+
 # multiwebview
 task gui:wry:r -- --bin t01
 
