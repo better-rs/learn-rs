@@ -13,17 +13,19 @@ members = [
     #
     "crates/rs-leetcode",
     "crates/rs-cli",
-    "crates/rs-ffi/*",
+    "crates/rs-ffi/rs-ffi-core",
     "crates/rs-os/rs-macos/try-notification",
     "crates/rs-os/rs-cross/try-notify",
     "crates/rs-gui/try-wry",
-    #    "crates/rs-tonic",
-    #    "crates/rs-tauri-vue/src-tauri",
+    "crates/rs-rpc/rs-tonic",
+    "crates/rs-pkg",
+    # "crates/rs-gui/rs-tauri-vue/src-tauri",
     #    "crates/rs-sqlcipher",
 ]
 
 exclude = [
     "tmp", # 不需要 ** 子目录
+    # "crates/rs-gui/rs-tauri-vue/src-tauri", # 不需要 ** 子目录
 ]
 
 

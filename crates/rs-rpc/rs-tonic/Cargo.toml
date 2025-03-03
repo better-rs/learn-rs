@@ -24,13 +24,11 @@ name = "helloworld-client2"
 path = "bin/helloworld2/client.rs"
 
 
-
 #
 # TODO X: 注意, 不能作为上层 workspace 的子项目. 要做根项目, 否则 Clion 的索引, 无法识别 include!() 代码
 #
-[workspace]
-members = []
-
+# [workspace]
+# members = []
 
 
 [dependencies]
