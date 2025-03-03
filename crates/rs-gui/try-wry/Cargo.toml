@@ -4,9 +4,15 @@ version = "0.1.0"
 edition = "2024"
 
 
+# multiwebview
 [[bin]]
 name = "t01"
 path = "examples/try01.rs"
+
+# multiwindow
+[[bin]]
+name = "t02"
+path = "examples/try02.rs"
 
 
 [dependencies]
