@@ -1,12 +1,11 @@
 {
     // monorepo:
     "rust-analyzer.linkedProjects": [
-        "crates/rs-cms/Cargo.toml",
-        "crates/rs-try/Cargo.toml",
-        "crates/rs-volo/Cargo.toml",
-        "crates/rs-tonic/Cargo.toml",
-        "crates/rs-sql/rs-sqlcipher/Cargo.toml",
-        "crates/rs-tauri-vue/src-tauri/Cargo.toml",
+        "crates/try/rs-cms/Cargo.toml",
+        "crates/try/rs-try/Cargo.toml",
+        "crates/rs-rpc/rs-volo/Cargo.toml",
+        "crates/rs-rpc/rs-tonic/Cargo.toml",
+        "crates/rs-gui/rs-tauri-vue/src-tauri/Cargo.toml",
         "Cargo.toml"
     ],
     "sqltools.connections": [
