@@ -4,6 +4,12 @@ version = "0.1.0"
 edition = "2024"
 
 
+# simple
+[[bin]]
+name = "t00"
+path = "examples/try00.rs"
+
+
 # multiwebview
 [[bin]]
 name = "t01"
