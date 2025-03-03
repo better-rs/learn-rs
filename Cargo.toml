@@ -10,12 +10,12 @@ members = [
     #
     #
     #
-    #    "crates/rs-cms",
     "crates/rs-leetcode",
     "crates/rs-cli",
     "crates/rs-ffi/*",
     "crates/rs-os/rs-macos/try-notification",
     "crates/rs-os/rs-cross/try-notify",
+    "crates/rs-gui/try-wry",
     #    "crates/rs-tonic",
     #    "crates/rs-tauri-vue/src-tauri",
     #    "crates/rs-sqlcipher",

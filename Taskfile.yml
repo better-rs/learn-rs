@@ -38,6 +38,11 @@ includes:
     dir: ./crates/rs-rpc/rs-volo/
     optional: true
 
+  gui:
+    taskfile: ./crates/rs-gui/
+    dir: ./crates/rs-gui/
+    optional: true
+
   tauri:
     taskfile: ./crates/rs-gui/rs-tauri-vue/
     dir: ./crates/rs-gui/rs-tauri-vue/
@@ -50,7 +55,6 @@ includes:
   pkg:
     taskfile: crates/rs-pkg
     dir: crates/rs-pkg
-
 
 #
 # global vars: https://taskfile.dev/#/usage?id=variables
@@ -129,12 +133,11 @@ tasks:
     vars:
       APP_NAME: "crates/rs-cms-migration"
 
-
   # usage:
   #   - task n -- --lib tmp/demo1
   #   - task n -- --bin tmp/demo2
   new:
-    aliases: [ "n" ]
+    aliases: ["n"]
     cmds:
       - cargo new {{.CLI_ARGS}}
 
@@ -186,11 +189,10 @@ tasks:
     cmds:
       - cargo search
 
-
   ###########################################################################
 
   quick:
-    aliases: [ "q" ]
+    aliases: ["q"]
     cmds:
       - task: commit
       - task: commit
@@ -199,20 +201,19 @@ tasks:
     ignore_error: true
 
   commit:
-    aliases: [ "c" ]
+    aliases: ["c"]
     cmds:
       - git add .
       - git commit -m "update" --no-verify
     ignore_error: true
 
-
   pull:
-    aliases: [ "pl" ]
+    aliases: ["pl"]
     cmds:
       - git pull
 
   push:
-    aliases: [ "p" ]
+    aliases: ["p"]
     cmds:
       - git push origin main --tags
       - repo_url=`git remote -v | grep push | awk -F ":" '{print $2}' | awk -F ".git" '{print "https://github.com/"$1}'`; open $repo_url

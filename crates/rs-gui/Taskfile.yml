@@ -1,0 +1,14 @@
+version: "3"
+
+includes:
+  wry:
+    aliases: ["w"]
+    taskfile: ./try-wry/
+    dir: ./try-wry/
+    optional: true
+
+  tauri:
+    aliases: ["t"]
+    taskfile: ./rs-tauri-vue/
+    dir: ./rs-tauri-vue/
+    optional: true

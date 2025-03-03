@@ -1,0 +1,9 @@
+[package]
+name = "try-wry"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+tao = "0.32.6"
+winit = "0.30.9"
+wry = "0.50.3"

@@ -1,0 +1,28 @@
+version: "3"
+
+tasks:
+  cargo:
+    aliases: ["pkg", "pm"]
+    cmds:
+      - cargo {{.CLI_ARGS}}
+
+  run:
+    aliases: ["r"]
+    cmds:
+      - cargo run {{.CLI_ARGS}}
+    dir: .
+
+  build:
+    aliases: ["b"]
+    cmds:
+      - cargo build {{.CLI_ARGS}}
+
+  test:
+    aliases: ["t"]
+    cmds:
+      - cargo test {{.CLI_ARGS}}
+
+  clean:
+    aliases: ["cl"]
+    cmds:
+      - cargo clean
