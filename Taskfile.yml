@@ -10,32 +10,38 @@ includes:
     optional: true
 
   try:
-    taskfile: ./crates/rs-try/
-    dir: ./crates/rs-try/
+    taskfile: ./crates/try/
+    dir: ./crates/try/
+    optional: true
 
   cli:
     taskfile: ./crates/rs-cli/
     dir: ./crates/rs-cli/
 
   cms:
-    taskfile: ./crates/rs-cms/
-    dir: ./crates/rs-cms/
+    taskfile: ./crates/try/rs-cms/
+    dir: ./crates/try/rs-cms/
+    optional: true
 
   ffi:core:
-    taskfile: ./crates/rs-ffi-core/
-    dir: ./crates/rs-ffi-core/
+    taskfile: ./crates/rs-ffi/rs-ffi-core/
+    dir: ./crates/rs-ffi/rs-ffi-core/
+    optional: true
 
   tonic:
-    taskfile: ./crates/rs-tonic/
-    dir: ./crates/rs-tonic/
+    taskfile: ./crates/rs-rpc/rs-tonic/
+    dir: ./crates/rs-rpc/rs-tonic/
+    optional: true
 
   volo:
-    taskfile: ./crates/rs-volo/
-    dir: ./crates/rs-volo/
+    taskfile: ./crates/rs-rpc/rs-volo/
+    dir: ./crates/rs-rpc/rs-volo/
+    optional: true
 
   tauri:
-    taskfile: ./crates/rs-tauri-vue/
-    dir: ./crates/rs-tauri-vue/
+    taskfile: ./crates/rs-gui/rs-tauri-vue/
+    dir: ./crates/rs-gui/rs-tauri-vue/
+    optional: true
 
   sqlc:
     taskfile: crates/rs-sql/rs-sqlcipher
