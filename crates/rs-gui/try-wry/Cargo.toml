@@ -9,6 +9,11 @@ edition = "2024"
 name = "t01"
 path = "examples/try01.rs"
 
+# gtk_multiwebview
+[[bin]]
+name = "t01b"
+path = "examples/try01b.rs"
+
 # multiwindow
 [[bin]]
 name = "t02"
