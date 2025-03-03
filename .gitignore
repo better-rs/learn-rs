@@ -15,6 +15,7 @@ bin/node/runtime/wasm/target/
 !**/.vscode/extensions.json
 !**/.vscode/launch.json
 !**/.vscode/tasks.json
+!**/.vscode/faq.md
 
 
 polkadot.*
