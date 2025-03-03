@@ -24,6 +24,13 @@ task gui:wry:r -- --bin t01b
 
 # multiwindow
 task gui:wry:r -- --bin t02
+
+# streaming
+task gui:wry:r -- --bin t03
+
+# custom_titlebar, 自定义窗口标题栏 & 窗口关闭按扭
+task gui:wry:r -- --bin t04
+
 ```
 
 

@@ -19,10 +19,15 @@ path = "examples/try01b.rs"
 name = "t02"
 path = "examples/try02.rs"
 
-# multiwindow
+# streaming
 [[bin]]
 name = "t03"
 path = "examples/try03.rs"
+
+# custom_titlebar
+[[bin]]
+name = "t04"
+path = "examples/try04.rs"
 
 
 [dependencies]
